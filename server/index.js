@@ -1,10 +1,19 @@
 import express from 'express';
+import { createServer } from 'http'
+import { Server } from 'socket.io';
 import cors from 'cors'
 import si from 'systeminformation';
 
 const app = express()
 const port = 3000
 app.use(cors())
+
+const httpServer = createServer(app)
+const io = new Server(httpServer,{
+    cors: {
+        origin: ["*"]
+    }
+})
 
 app.get('/staticData', async (req, res) => {
     try {
@@ -31,10 +40,41 @@ app.get('/staticData', async (req, res) => {
         res.status(200).json(staticData)
     } catch (error) {
         console.error(error)
-        res.status(500).json({error: error.message, message:"Error trying to obtain system data"})
+        res.status(500).json({error: error.message, message:"Error trying to obtain static system data"})
     }
 })
 
-app.listen(port, () => {
+io.on('connection', (socket)=>{
+    console.log(`Client connected: ${socket.id}`)
+    try {
+        const intervalId = setInterval(async ()=>{
+            const [rawCpuLoad, rawCpuSpeed, rawCpuTemp, rawMemoryData] = await Promise.all([
+                si.currentLoad(),
+                si.cpuCurrentSpeed(),
+                si.cpuTemperature(),
+                si.mem()
+            ])
+            const dynamicData = {
+                cpuLoad: rawCpuLoad.currentLoad,
+                cpuSpeed: rawCpuSpeed,
+                cpuTemp: rawCpuTemp.main == null ? null : {
+                    avg: rawCpuTemp.main,
+                    max: rawCpuTemp.max
+                },
+                memFree: rawMemoryData.free,
+                memUsed: rawMemoryData.used
+            }
+            socket.emit('dynamicData', dynamicData)
+        },2000)
+        socket.on('disconnect', ()=>{
+            console.log(`Client disconnected: ${socket.id}`)
+            clearInterval(intervalId)
+        })
+    } catch (error) {
+        console.error(error)
+    }
+})
+
+httpServer.listen(port, () => {
     console.log(`Server running at port ${port}`)
 })
