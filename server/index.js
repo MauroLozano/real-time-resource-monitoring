@@ -11,7 +11,7 @@ app.use(cors())
 const httpServer = createServer(app)
 const io = new Server(httpServer,{
     cors: {
-        origin: ["*"]
+        origin: "*",
     }
 })
 
@@ -64,6 +64,7 @@ io.on('connection', (socket)=>{
                 memFree: rawMemoryData.free,
                 memUsed: rawMemoryData.used
             }
+            console.log('Emit')
             socket.emit('dynamicData', dynamicData)
         },2000)
         socket.on('disconnect', ()=>{
