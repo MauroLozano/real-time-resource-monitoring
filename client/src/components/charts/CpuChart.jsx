@@ -1,30 +1,16 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import React from "react";
-import { useEffect, useState } from "react";
-import { io } from 'socket.io-client';
 
-const socket = io('http://localhost:3000')
 
-export default function cpuChart() {
-  const [history, setHistory] = useState([])
-  useEffect(()=>{
-      socket.on('dynamicData', (data)=>{
-        setHistory((prevHistory)=>{
-          let updatedHistory = [...prevHistory, data]
-          if (updatedHistory.length > 25) {
-            updatedHistory = updatedHistory.slice(1)
-          }
-          return updatedHistory
-        })
-      })
-    return ()=> socket.off('dynamicData')
-  },[])
+export default function CpuChart({data}) {
+  
   return (
     <LineChart
+      style={{ backgroundColor: '#f0f0f0', padding: '1rem 1rem 1rem 0', borderRadius: '1rem'}}
       width={800}
       height={500}
       responsive
-      data={history}
+      data={data}
       margin={{
         top: 5,
         right: 0,

@@ -1,4 +1,5 @@
 import React from "react";
+import styles from '../css/StaticSection.module.css'
 const serverUrl = 'http://localhost:3000'
 
 import { useState, useEffect } from "react";
@@ -18,7 +19,7 @@ function StaticSection(){
     }, [])
 
     return (
-        <section>
+        <section className={styles.staticSection}>
             {!staticData? (<p>Cargando</p>) : (
                 <>
                     <h2>Static Data</h2>

@@ -1,0 +1,9 @@
+.sidebar{
+    background-color: var(--color-black);
+    width: 250px;
+    height: 100vh;
+
+    position: relative;
+    transition: transform 0.3s ease-in-out;
+    color: var(--color-white);
+}

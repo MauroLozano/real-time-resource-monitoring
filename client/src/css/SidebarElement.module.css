@@ -1,0 +1,13 @@
+.sidebarElement{
+    width: 90%;
+    margin: .2rem 0;
+    color: var(--color-white);
+    background-color: transparent;
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 0;
+}
+.active{
+    background-color: #9589ff;
+}

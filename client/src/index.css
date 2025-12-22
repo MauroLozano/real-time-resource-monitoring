@@ -1,0 +1,21 @@
+:root{
+    /* Colors */
+    --color-black: #353535;
+    --color-dull-green: #3c6e71;
+    --color-white: #ffffff;
+    --color-grey: #d9d9d9;
+    --color-blue: #284b63;
+}
+@font-face {
+    font-family: 'Archivo';
+    src: url('/fonts/Archivo/Archivo-VariableFont_wdth,wght.ttf') format('truetype');
+    font-weight: 100 / 900;
+}
+*{
+    box-sizing: border-box;
+}
+body, h1, h2, h3, p, ul, ol, input, textarea, button {
+    margin: 0;
+    padding: 0;
+    font-family: 'Archivo';
+}

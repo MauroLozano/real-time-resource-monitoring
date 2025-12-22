@@ -3,6 +3,7 @@ import { createServer } from 'http'
 import { Server } from 'socket.io';
 import cors from 'cors'
 import si from 'systeminformation';
+import { timeStamp } from 'console';
 
 const app = express()
 const port = 3000
@@ -62,7 +63,8 @@ io.on('connection', (socket)=>{
                     max: rawCpuTemp.max
                 },
                 memFree: rawMemoryData.free,
-                memUsed: rawMemoryData.used
+                memUsed: rawMemoryData.used,
+                timestamp: Date.now()
             }
             console.log('Emit')
             socket.emit('dynamicData', dynamicData)
