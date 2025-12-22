@@ -64,7 +64,7 @@ io.on('connection', (socket)=>{
                 },
                 memFree: rawMemoryData.free,
                 memUsed: rawMemoryData.used,
-                timestamp: Date.now()
+                timestamp: new Date().toLocaleTimeString("it-IT")
             }
             console.log('Emit')
             socket.emit('dynamicData', dynamicData)
