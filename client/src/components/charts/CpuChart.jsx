@@ -6,7 +6,7 @@ export default function CpuChart({data}) {
   
   return (
     <LineChart
-      style={{ backgroundColor: '#f0f0f0', padding: '1rem 1rem 1rem 0', borderRadius: '1rem'}}
+      style={{ backgroundColor: '#f0f0f0', padding: '1rem', borderRadius: '1rem'}}
       width={800}
       height={500}
       responsive

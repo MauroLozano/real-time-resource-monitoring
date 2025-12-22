@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+const serverUrl = 'http://localhost:3000'
 // Components
 import StaticSection from "./StaticSection";
 import CpuChart from "./charts/CpuChart";
@@ -15,7 +16,18 @@ const socket = io('http://localhost:3000')
 function App() {
   const [activeView, setActiveView] = useState('CPUGeneralView')
   const [history, setHistory] = useState([])
+  const [staticData, setStaticData] = useState(null) 
   useEffect(()=>{
+    fetch(`${serverUrl}/staticData`)
+      .then((res)=>{
+        if(!res.ok) console.error('Server error') 
+        return res.json()
+      })
+      .then(data =>{ 
+        setStaticData(data)
+      })
+      .catch(error => console.error(error))
+
       socket.on('dynamicData', (data)=>{
         setHistory((prevHistory)=>{
           let updatedHistory = [...prevHistory, data]
@@ -27,15 +39,14 @@ function App() {
       })
     return ()=> socket.off('dynamicData')
   },[])
-  
   return (
     <div className={styles.wrapper}>
       <Sidebar setView={setActiveView} activeView={activeView}></Sidebar>
       <DynamicSection className={styles.dynamicSection}>
         {activeView === 'CPUGeneralView' && <CpuChart data={history}></CpuChart>}
-        {activeView === 'CPUCoresView' && <CpuCoresChart data={history}></CpuCoresChart>}
+        {activeView === 'CPUCoresView' && staticData && <CpuCoresChart data={history} amountCores={staticData.cpu.cores}></CpuCoresChart>}
       </DynamicSection>
-      <StaticSection></StaticSection>
+      {staticData && <StaticSection staticData={staticData}></StaticSection>} 
     </div>
   )
 }
