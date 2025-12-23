@@ -1,6 +1,7 @@
 import React from "react";
 import { Cell, Pie, PieChart, Area, AreaChart, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { RechartsDevtools } from '@recharts/devtools';
+import LoadingModal from '../LoadingModal'
 import styles from '../../css/MemAvailableChart.module.css'
 const colors = ['#3cb44b', '#e6194bff'];
 const RADIAN = Math.PI / 180;
@@ -25,7 +26,7 @@ export default function MemAvailableChart({data, totalMem}){
     if(!data || data.length === 0) {
         return(
             <div className={styles.chartWrapper}>
-                <p>Loading metrics...</p>
+                <LoadingModal color='#6ac9bf'></LoadingModal>
             </div>
         )
     }

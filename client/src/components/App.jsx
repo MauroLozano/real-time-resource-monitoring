@@ -48,7 +48,7 @@ function App() {
         {activeView === 'CPUCoresView' && staticData && <CpuCoresChart data={history} amountCores={staticData.cpu.cores}></CpuCoresChart>}
         {activeView === 'MEMAvailableView' && staticData && <MemAvailableChart data={history} totalMem={staticData.memory.total}></MemAvailableChart>}
       </DynamicSection>
-      {staticData && <StaticSection staticData={staticData}></StaticSection>} 
+      <StaticSection staticData={staticData}></StaticSection>
     </div>
   )
 }
