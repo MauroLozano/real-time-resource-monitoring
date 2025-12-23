@@ -1,5 +1,7 @@
 .staticSection{
+    color: var(--color-white);
     top: 0;
     right: 0;
     padding: 1rem;
+    background-color: var(--color-black);
 }

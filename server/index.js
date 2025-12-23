@@ -30,7 +30,7 @@ app.get('/staticData', async (req, res) => {
                 cores: rawCpuData.cores
             },
             memory:{
-                total: rawMemoryData.total
+                total: parseFloat((rawMemoryData.total / (1024 ** 3)).toFixed(2))
             },
             storage: rawStorageData.map(disk=>({
                 name: disk.name,
@@ -62,8 +62,8 @@ io.on('connection', (socket)=>{
                     avg: rawCpuTemp.main,
                     max: rawCpuTemp.max
                 },
-                memFree: rawMemoryData.free,
-                memUsed: rawMemoryData.used,
+                memFree: parseFloat((rawMemoryData.free / (1024 ** 3)).toFixed(2)),
+                memUsed: parseFloat((rawMemoryData.used / (1024 ** 3)).toFixed(2)),
                 timestamp: new Date().toLocaleTimeString("it-IT")
             }
             console.log('Emit')

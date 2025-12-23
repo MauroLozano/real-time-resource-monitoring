@@ -4,6 +4,7 @@ const serverUrl = 'http://localhost:3000'
 import StaticSection from "./StaticSection";
 import CpuChart from "./charts/CpuChart";
 import CpuCoresChart from "./charts/CpuCoresChart";
+import MemAvailableChart from './charts/MemAvailableChart'
 import Sidebar from "./Sidebar";
 import DynamicSection from './DynamicSection'
 // Style
@@ -45,6 +46,7 @@ function App() {
       <DynamicSection className={styles.dynamicSection}>
         {activeView === 'CPUGeneralView' && <CpuChart data={history}></CpuChart>}
         {activeView === 'CPUCoresView' && staticData && <CpuCoresChart data={history} amountCores={staticData.cpu.cores}></CpuCoresChart>}
+        {activeView === 'MEMAvailableView' && staticData && <MemAvailableChart data={history} totalMem={staticData.memory.total}></MemAvailableChart>}
       </DynamicSection>
       {staticData && <StaticSection staticData={staticData}></StaticSection>} 
     </div>

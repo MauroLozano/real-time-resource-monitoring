@@ -1,7 +1,7 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import React from "react";
 const colors = [
-    '#e6194b', '#3cb44b', '#4363d8', '#f58231', 
+    '#e6194bff', '#3cb44b', '#4363d8', '#f58231', 
     '#911eb4', '#469990', '#f032e6', '#808000', 
     '#f9c74f', '#00b4d8', '#9a6324', '#ff6b6b', 
     '#574b90', '#2d6a4f', '#ff8f70', '#4682b4'

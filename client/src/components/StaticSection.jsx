@@ -6,7 +6,7 @@ function StaticSection(staticData){
         <section className={styles.staticSection}>
             {!staticData? (<p>Cargando</p>) : (
                 <>
-                    <h2>Static Data</h2>
+                    <h2>System Components</h2>
                     <h3>CPU</h3>
                     <p>Brand: {staticData.staticData.cpu.brand}</p>
                     <p>Manufacturer: {staticData.staticData.cpu.manufacturer}</p>
