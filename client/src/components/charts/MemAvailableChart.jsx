@@ -16,56 +16,59 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
     const y = ncy + radius * Math.sin(-(midAngle ?? 0) * RADIAN);
 
     return (
-        <text x={x} y={y} fill="white" textAnchor={x > ncx ? 'start' : 'end'} dominantBaseline="central">
+        <text x={x} y={y} fill="white" textAnchor="middle" dominantBaseline="middle">
             {`${((percent ?? 1) * 100).toFixed(0)}%`}
         </text>
     );
 };
-
 export default function MemAvailableChart({data, totalMem}){
-    console.log(data)
+    if(!data || data.length === 0) {
+        return(
+            <div className={styles.chartWrapper}>
+                <p>Loading metrics...</p>
+            </div>
+        )
+    }
     const pieData = [
         {name: 'Free Memory', value: data[data.length -1].memFree},
         {name: 'Used Memory', value: data[data.length -1].memUsed}
-    ]
+    ]   
     return (
         <div className={styles.chartWrapper}>
-            <AreaChart
-                style={{ backgroundColor: '#f0f0f0', padding: '1rem', borderRadius: '1rem'}}
-                width={800}
-                height={500}
-                responsive
-                data={data}
-                margin={{
-                    top: 20,
-                    right: 0,
-                    left: 0,
-                    bottom: 0,
-                }}
-            >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="timestamp" />
-                <YAxis domain={[0, totalMem]} unit="Gb"/>
-                <Tooltip />
-                <Area type="monotone" dataKey='memUsed'stackId="1" stroke="#e6194bff" fill="#e6194bff" />
-                <Area type="monotone" dataKey='memFree'stackId="1" stroke="#3cb44b" fill="#3cb44b" />
-                <RechartsDevtools />
-            </AreaChart>
-
-            <div style={{ width: '100%', height: '400px' }}> {/* Contenedor con altura fija */}
-                <ResponsiveContainer>
+            <div style={{ width: '100%', maxWidth: '1000px', height: '500px', marginBottom: '2rem', margin:'2rem auto'}}>
+                <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart
+                        data={data}
+                        margin={{ top: 20, right: 30, left: 0, bottom: 0 }}
+                        style={{ backgroundColor: '#f0f0f0', borderRadius: '1rem', padding: '1rem'}}
+                    >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="timestamp" />
+                        <YAxis domain={[0, totalMem]} unit="Gb"/>
+                        <Tooltip />
+                        <Area type="monotone" dataKey='memUsed' stackId="1" stroke="#e6194bff" fill="#e6194bff" isAnimationActive={false} />
+                        <Area type="monotone" dataKey='memFree' stackId="1" stroke="#3cb44b" fill="#3cb44b" isAnimationActive={false} />
+                    </AreaChart>
+                </ResponsiveContainer>
+            </div>
+            <div style={{ width: '420px', height: '420px', margin:'0 auto' }}>
+                <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                         <Pie
                             data={pieData}
                             labelLine={false}
                             label={renderCustomizedLabel}
                             dataKey="value"
-                            isAnimationActive={false} // Desactivar para debuguear rápido
+                            isAnimationActive={false}
+                            cx="50%"
+                            cy="50%"
+                            outerRadius={200}
                         >
                             {pieData.map((entry, index) => (
                                 <Cell key={`cell-${entry.name}`} fill={colors[index % colors.length]} />
                             ))}
                         </Pie>
+                        <Tooltip />
                     </PieChart>
                 </ResponsiveContainer>
             </div>
