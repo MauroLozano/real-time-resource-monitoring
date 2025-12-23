@@ -6,20 +6,20 @@ function StaticSection(staticData){
         <section className={styles.staticSection}>
             {!staticData? (<p>Cargando</p>) : (
                 <>
-                    <h2>System Components</h2>
-                    <h3>CPU</h3>
-                    <p>Brand: {staticData.staticData.cpu.brand}</p>
-                    <p>Manufacturer: {staticData.staticData.cpu.manufacturer}</p>
-                    <p>Amount of cores: {staticData.staticData.cpu.cores}</p>
-                    <h3>Memory</h3>
-                    <p>Total: {staticData.staticData.memory.total}</p>
-                    <h3>Storage</h3>
+                    <h1 className={styles.sectionTitle}>System Components</h1>
+                    <h2 className={styles.componentName}>CPU</h2>
+                    <p><span className={styles.attributeName}>Brand:</span> {staticData.staticData.cpu.brand}</p>
+                    <p><span className={styles.attributeName}>Manufacturer:</span> {staticData.staticData.cpu.manufacturer}</p>
+                    <p><span className={styles.attributeName}>Amount of cores:</span> {staticData.staticData.cpu.cores}</p>
+                    <h2 className={styles.componentName}>Memory</h2>
+                    <p><span className={styles.attributeName}>Total:</span> {staticData.staticData.memory.total} Gb</p>
+                    <h2 className={styles.componentName}>Storage</h2>
                     {
                         staticData.staticData.storage.map((disk, index) =>(
-                            <div key={index}>
-                                <p>Name: {disk.name}</p>
-                                <p>Type: {disk.type}</p>
-                                <p>Total size: {disk.size}</p>
+                            <div key={index} className={styles.componentSeparator}>
+                                <p><span className={styles.attributeName}>Name:</span> {disk.name}</p>
+                                <p><span className={styles.attributeName}>Type:</span> {disk.type}</p>
+                                <p><span className={styles.attributeName}>Size:</span> {disk.size}</p>
                             </div>
                         ))
                     }

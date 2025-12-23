@@ -1,9 +1,18 @@
 .sidebar{
-    background-color: var(--color-black);
-    width: 350px;
+    background-color: var(--color-light-green);
+    width: 400px;
     height: 100vh;
     padding: 1rem;
     position: relative;
     transition: transform 0.3s ease-in-out;
-    color: var(--color-white);
+}
+.sidebarTitle{
+    text-align: center;
+    font-size: 2.5rem;
+    color: var(--color-strong-yellow);
+    text-shadow: black 0 0 10px;
+}
+.componentName{
+    margin: 1rem 0 .5rem 0;
+    font-size: 1.8rem;
 }

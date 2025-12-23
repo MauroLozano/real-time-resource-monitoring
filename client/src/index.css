@@ -1,10 +1,13 @@
 :root{
     /* Colors */
     --color-black: #353535;
-    --color-dull-green: #3c6e71;
+    --color-light-yellow: #ffdbab;
+    --color-yellow: #ffbf69;
+    --color-strong-yellow: #ff9f1c;
     --color-white: #ffffff;
-    --color-grey: #d9d9d9;
-    --color-blue: #284b63;
+    --color-grey: #9b9b9b;
+    --color-light-blue: #cbf3f0;
+    --color-light-green: #6ac9bf;
 }
 @font-face {
     font-family: 'Archivo';

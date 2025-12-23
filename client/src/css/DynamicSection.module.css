@@ -1,5 +1,6 @@
 .dynamicSection{
-    background-color: var(--color-dull-green);
+    background-color: var(--color-light-blue);
+    background-image: url('../assets/backgrounds/handmade-paper.png');
     display: flex;
     align-items: center;
     justify-content: center;

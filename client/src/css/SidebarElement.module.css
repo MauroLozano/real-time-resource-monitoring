@@ -1,13 +1,18 @@
 .sidebarElement{
     width: 90%;
-    margin: .2rem 0;
-    color: var(--color-white);
-    background-color: transparent;
+    background-color: var(--color-light-blue);
     width: 100%;
     padding: 0.5rem;
-    font-size: 1rem;
+    font-size: 1.3rem;
+    margin: 0.5rem 0;
     border: 0;
+    transition: background-color .3s ease-in-out, box-shadow .3s ease-in-out;
+    border-radius: 1rem;
 }
-.active{
-    background-color: #9589ff;
+.sidebarElement:hover{
+    background-color: var(--color-light-yellow);
+}
+.active {
+    background-color: var(--color-yellow) !important;
+    box-shadow: 0 0 10px var(--color-black);
 }
