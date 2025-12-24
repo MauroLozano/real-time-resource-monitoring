@@ -38,17 +38,21 @@
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: repeat(6, 1fr);
+    gap: .5rem;
+    padding: .5rem;
 }
 .cpuCoresChart{
-    grid-area: 1 / 1 / 5 / 7;
+    grid-area: 1 / 1 / 5 / 4;
 }
 .memView{
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: repeat(6, 1fr);
+    gap: .5rem;
+    padding: .5rem;
 }
 .memPieChart{
-    grid-area: 5 / 1 / 6 / 3;
+    grid-area: 5 / 5 / 7 / 7;
 }
 .memAreaChart{
     grid-area: 1 / 1 / 5 / 7;
