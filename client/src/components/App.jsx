@@ -44,13 +44,13 @@ function App() {
     <div className={styles.wrapper}>
       <Sidebar setView={setActiveView} activeView={activeView}></Sidebar>
       <DynamicSection className={`${styles.dynamicSection} ${styles.viewContainer}`}>
-        <div className={`${styles.view} ${activeView === 'CPUGeneralView' ? styles.activeView : ''}`}>
+        <div className={`${styles.view} ${styles.cpuGeneralView} ${activeView === 'CPUGeneralView' ? styles.activeView : ''}`}>
           <CpuChart data={history} />
         </div>
-        <div className={`${styles.view} ${activeView === 'CPUCoresView' ? styles.activeView : ''}`}>
+        <div className={`${styles.view} ${styles.cpuCoresView} ${activeView === 'CPUCoresView' ? styles.activeView : ''}`}>
           {staticData && <CpuCoresChart data={history} amountCores={staticData.cpu.cores} />}
         </div>
-        <div className={`${styles.view} ${activeView === 'MEMAvailableView' ? styles.activeView : ''}`}>
+        <div className={`${styles.view} ${styles.memView} ${activeView === 'MEMAvailableView' ? styles.activeView : ''}`}>
           { staticData && <MemAvailableChart data={history} totalMem={staticData.memory.total} />}
         </div>
       </DynamicSection>

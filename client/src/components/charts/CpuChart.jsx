@@ -12,17 +12,11 @@ export default function CpuChart({data}) {
   }
   return (
     <LineChart
-      style={{ backgroundColor: '#f0f0f0', padding: '1rem', borderRadius: '1rem'}}
-      width={800}
-      height={500}
+      style={{ backgroundColor: '#f0f0f0', padding: '1rem 1rem 0 0', borderRadius: '1rem'}}
       responsive
       data={data}
-      margin={{
-        top: 5,
-        right: 0,
-        left: 0,
-        bottom: 5,
-      }}
+      width={'100%'}
+      height={'100%'}
     >
       <CartesianGrid strokeDasharray="3 3" vertical={false}/>
       <XAxis dataKey={'timestamp'} />

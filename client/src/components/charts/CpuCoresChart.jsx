@@ -1,4 +1,4 @@
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import React, { useMemo } from "react";
 const colors = [
     '#e6194bff', '#3cb44b', '#4363d8', '#f58231', 
@@ -19,8 +19,8 @@ export default function CpuCoresChart({data, amountCores}){
     return (
         <LineChart
             style={{ backgroundColor: '#f0f0f0', padding: '1rem', borderRadius: '1rem'}}
-            width={800}
-            height={500}
+            width={'100%'}
+            height={'100%'}
             responsive
             data={data}
             margin={{
