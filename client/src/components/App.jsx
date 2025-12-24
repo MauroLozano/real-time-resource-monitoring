@@ -4,7 +4,8 @@ const serverUrl = 'http://localhost:3000'
 import StaticSection from "./StaticSection";
 import CpuChart from "./charts/CpuChart";
 import CpuCoresChart from "./charts/CpuCoresChart";
-import MemAvailableChart from './charts/MemAvailableChart'
+import MemAreaChart from './charts/MemAreaChart'
+import MemPieChart from './charts/MemPieChart'
 import Sidebar from "./Sidebar";
 import DynamicSection from './DynamicSection'
 // Style
@@ -44,14 +45,26 @@ function App() {
     <div className={styles.wrapper}>
       <Sidebar setView={setActiveView} activeView={activeView}></Sidebar>
       <DynamicSection className={`${styles.dynamicSection} ${styles.viewContainer}`}>
-        <div className={`${styles.view} ${styles.cpuGeneralView} ${activeView === 'CPUGeneralView' ? styles.activeView : ''}`}>
-          <CpuChart data={history} />
+        {/* CPU */}
+        <div className={`${styles.cpuGeneralView} ${styles.view} ${activeView === 'CPUGeneralView' ? styles.activeView : ''}`}>
+          <div className={`${styles.cpuGeneralChart}`}>
+            <CpuChart data={history} />
+          </div>
         </div>
-        <div className={`${styles.view} ${styles.cpuCoresView} ${activeView === 'CPUCoresView' ? styles.activeView : ''}`}>
-          {staticData && <CpuCoresChart data={history} amountCores={staticData.cpu.cores} />}
+        {/* CPU Cores */}
+        <div className={`${styles.cpuCoresView} ${styles.view} ${activeView === 'CPUCoresView' ? styles.activeView : ''}`}>
+          <div className={`${styles.cpuCoresChart}`}>
+            {staticData && <CpuCoresChart data={history} amountCores={staticData.cpu.cores} />}
+          </div>
         </div>
-        <div className={`${styles.view} ${styles.memView} ${activeView === 'MEMAvailableView' ? styles.activeView : ''}`}>
-          { staticData && <MemAvailableChart data={history} totalMem={staticData.memory.total} />}
+        {/* Memory */}
+        <div className={`${styles.memView} ${styles.view} ${activeView === 'MEMAvailableView' ? styles.activeView : ''}`}>
+          <div className={`${styles.memAreaChart}`}>
+            {staticData && <MemAreaChart data={history} totalMem={staticData.memory.total} />}
+          </div>
+          <div className={`${styles.memPieChart}`}>
+            {staticData && <MemPieChart data={history} totalMem={staticData.memory.total} />}
+          </div>
         </div>
       </DynamicSection>
       <StaticSection staticData={staticData}></StaticSection>

@@ -21,11 +21,30 @@
 }
 
 .cpuGeneralView{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+}
+.cpuGeneralChart{
     grid-area: 1 / 1 / 5 / 7;
 }
+
 .cpuCoresView{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+}
+.cpuCoresChart{
     grid-area: 1 / 1 / 5 / 7;
 }
 .memView{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+}
+.memPieChart{
+    grid-area: 5 / 1 / 7 / 3;
+}
+.memAreaChart{
     grid-area: 1 / 1 / 5 / 7;
 }
