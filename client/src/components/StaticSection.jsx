@@ -24,7 +24,7 @@ function StaticSection({staticData}){
                     <div key={index} className={styles.componentSeparator}>
                         <p><span className={styles.attributeName}>Name:</span> {disk.name}</p>
                         <p><span className={styles.attributeName}>Type:</span> {disk.type}</p>
-                        <p><span className={styles.attributeName}>Size:</span> {disk.size}</p>
+                        <p><span className={styles.attributeName}>Size:</span> {disk.size} GB</p>
                     </div>
                 ))
             }

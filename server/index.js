@@ -35,7 +35,7 @@ app.get('/staticData', async (req, res) => {
             storage: rawStorageData.map(disk=>({
                 name: disk.name,
                 type: disk.type,
-                size: disk.size
+                size: parseFloat((disk.size / (1024 ** 3)).toFixed(2))
             }))
         }
         res.status(200).json(staticData)
