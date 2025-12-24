@@ -1,8 +1,6 @@
 import React from "react";
-import { Cell, Pie, PieChart, Area, AreaChart, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import { RechartsDevtools } from '@recharts/devtools';
+import { Cell, Pie, PieChart, Area, AreaChart, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import LoadingModal from '../LoadingModal'
-import styles from '../../css/MemAvailableChart.module.css'
 const colors = ['#3cb44b', '#e6194bff'];
 const RADIAN = Math.PI / 180;
 
@@ -25,7 +23,7 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 export default function MemAvailableChart({data, totalMem}){
     if(!data || data.length === 0) {
         return(
-            <div className={styles.chartWrapper}>
+            <div>
                 <LoadingModal color='#6ac9bf'></LoadingModal>
             </div>
         )
@@ -35,7 +33,7 @@ export default function MemAvailableChart({data, totalMem}){
         {name: 'Used Memory', value: data[data.length -1].memUsed}
     ]   
     return (
-        <div className={styles.chartWrapper}>
+        <>
             <div style={{ width: '100%', maxWidth: '1000px', height: '500px', marginBottom: '2rem', margin:'2rem auto'}}>
                 <ResponsiveContainer width="100%" height="100%">
                     <AreaChart
@@ -45,8 +43,9 @@ export default function MemAvailableChart({data, totalMem}){
                     >
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="timestamp" />
-                        <YAxis domain={[0, totalMem]} unit="Gb"/>
+                        <YAxis domain={[0, totalMem]} unit="GB"/>
                         <Tooltip />
+                        <Legend height={36}/>
                         <Area type="monotone" dataKey='memUsed' stackId="1" stroke="#e6194bff" fill="#e6194bff" isAnimationActive={false} />
                         <Area type="monotone" dataKey='memFree' stackId="1" stroke="#3cb44b" fill="#3cb44b" isAnimationActive={false} />
                     </AreaChart>
@@ -63,17 +62,18 @@ export default function MemAvailableChart({data, totalMem}){
                             isAnimationActive={false}
                             cx="50%"
                             cy="50%"
-                            outerRadius={200}
+                            outerRadius={'90%'}
                         >
                             {pieData.map((entry, index) => (
                                 <Cell key={`cell-${entry.name}`} fill={colors[index % colors.length]} />
                             ))}
                         </Pie>
                         <Tooltip />
+                        <Legend height={36}/>
                     </PieChart>
                 </ResponsiveContainer>
             </div>
-        </div>
+        </>
     );
 };
 

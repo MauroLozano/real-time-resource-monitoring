@@ -2,6 +2,7 @@
     background-color: var(--color-light-blue);
     background-image: url('../assets/backgrounds/handmade-paper.png');
     display: flex;
+    position: relative;
     align-items: center;
     justify-content: center;
     width: 100%;

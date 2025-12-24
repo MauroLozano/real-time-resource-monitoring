@@ -10,6 +10,8 @@
     font-size: 2.5rem;
     color: var(--color-strong-yellow);
     text-shadow: var(--color-black) 0 0 10px;;
+    padding-bottom: .5rem;
+    border-bottom: 2px solid #cbf3f0
 }
 .attributeName{
     font-size: 1rem;

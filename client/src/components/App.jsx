@@ -32,7 +32,7 @@ function App() {
       socket.on('dynamicData', (data)=>{
         setHistory((prevHistory)=>{
           let updatedHistory = [...prevHistory, data]
-          if (updatedHistory.length > 25) {
+          if (updatedHistory.length > 20) {
             updatedHistory = updatedHistory.slice(1)
           }
           return updatedHistory
@@ -43,10 +43,16 @@ function App() {
   return (
     <div className={styles.wrapper}>
       <Sidebar setView={setActiveView} activeView={activeView}></Sidebar>
-      <DynamicSection className={styles.dynamicSection}>
-        {activeView === 'CPUGeneralView' && <CpuChart data={history}></CpuChart>}
-        {activeView === 'CPUCoresView' && staticData && <CpuCoresChart data={history} amountCores={staticData.cpu.cores}></CpuCoresChart>}
-        {activeView === 'MEMAvailableView' && staticData && <MemAvailableChart data={history} totalMem={staticData.memory.total}></MemAvailableChart>}
+      <DynamicSection className={`${styles.dynamicSection} ${styles.viewContainer}`}>
+        <div className={`${styles.view} ${activeView === 'CPUGeneralView' ? styles.activeView : ''}`}>
+          <CpuChart data={history} />
+        </div>
+        <div className={`${styles.view} ${activeView === 'CPUCoresView' ? styles.activeView : ''}`}>
+          {staticData && <CpuCoresChart data={history} amountCores={staticData.cpu.cores} />}
+        </div>
+        <div className={`${styles.view} ${activeView === 'MEMAvailableView' ? styles.activeView : ''}`}>
+          { staticData && <MemAvailableChart data={history} totalMem={staticData.memory.total} />}
+        </div>
       </DynamicSection>
       <StaticSection staticData={staticData}></StaticSection>
     </div>

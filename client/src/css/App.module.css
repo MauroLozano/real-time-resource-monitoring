@@ -1,5 +1,19 @@
 .wrapper{
     display: flex;
     flex-direction: row;
-    
+}
+.view{
+    position: absolute;
+    width: 100%;
+    opacity: 0;
+    top: 0;
+    right: 0;
+    pointer-events: none;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.4s;
+}
+.activeView{
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
 }
