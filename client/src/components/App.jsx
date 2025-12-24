@@ -8,6 +8,7 @@ import MemAreaChart from './charts/MemAreaChart'
 import MemPieChart from './charts/MemPieChart'
 import Sidebar from "./Sidebar";
 import DynamicSection from './DynamicSection'
+import LoadingModal from './LoadingModal'
 // Style
 import styles from '../css/App.module.css'
 // sockets
@@ -29,7 +30,6 @@ function App() {
         setStaticData(data)
       })
       .catch(error => console.error(error))
-
       socket.on('dynamicData', (data)=>{
         setHistory((prevHistory)=>{
           let updatedHistory = [...prevHistory, data]
@@ -48,22 +48,22 @@ function App() {
         {/* CPU */}
         <div className={`${styles.cpuGeneralView} ${styles.view} ${activeView === 'CPUGeneralView' ? styles.activeView : ''}`}>
           <div className={`${styles.cpuGeneralChart}`}>
-            <CpuChart data={history} />
+            {staticData && history.length > 0 ? (<CpuChart data={history} />) : (<LoadingModal color='#6ac9bf' />)}
           </div>
         </div>
         {/* CPU Cores */}
         <div className={`${styles.cpuCoresView} ${styles.view} ${activeView === 'CPUCoresView' ? styles.activeView : ''}`}>
           <div className={`${styles.cpuCoresChart}`}>
-            {staticData && <CpuCoresChart data={history} amountCores={staticData.cpu.cores} />}
+            {staticData && history.length > 0 ? (<CpuCoresChart data={history} amountCores={staticData.cpu.cores} />) : (<LoadingModal color='#6ac9bf' />)}
           </div>
         </div>
         {/* Memory */}
         <div className={`${styles.memView} ${styles.view} ${activeView === 'MEMAvailableView' ? styles.activeView : ''}`}>
           <div className={`${styles.memAreaChart}`}>
-            {staticData && <MemAreaChart data={history} totalMem={staticData.memory.total} />}
+            {staticData && history.length > 0 ? (<MemAreaChart data={history} totalMem={staticData.memory.total} />) : (<LoadingModal color='#6ac9bf' />)}
           </div>
           <div className={`${styles.memPieChart}`}>
-            {staticData && <MemPieChart data={history} totalMem={staticData.memory.total} />}
+            {staticData && history.length > 0 ? (<MemPieChart data={history} totalMem={staticData.memory.total} />) : (<LoadingModal color='#6ac9bf' />)}
           </div>
         </div>
       </DynamicSection>
