@@ -9,6 +9,7 @@ import MemPieChart from './charts/MemPieChart'
 import Sidebar from "./Sidebar";
 import DynamicSection from './DynamicSection'
 import LoadingModal from './LoadingModal'
+import QuickStats from "./QuickStats";
 // Style
 import styles from '../css/App.module.css'
 // sockets
@@ -50,6 +51,8 @@ function App() {
           <div className={`${styles.cpuGeneralChart}`}>
             {staticData && history.length > 0 ? (<CpuChart data={history} />) : (<LoadingModal color='#6ac9bf' />)}
           </div>
+          {staticData && history.length > 0 ? (<div className={styles.quickStatsContainer}><QuickStats cpuSpeedAvg={history[history.length -1].cpuSpeed.avg}/></div>) : (<LoadingModal color='#6ac9bf' />)}
+          
         </div>
         {/* CPU Cores */}
         <div className={`${styles.cpuCoresView} ${styles.view} ${activeView === 'CPUCoresView' ? styles.activeView : ''}`}>

@@ -1,0 +1,14 @@
+.elementContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    gap: .5rem;
+}
+.title{
+    font-size: .8rem;
+}
+.data{
+    font-size: 2rem;
+}

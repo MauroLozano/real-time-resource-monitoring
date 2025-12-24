@@ -1,6 +1,5 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import React from "react";
-import LoadingModal from '../LoadingModal'
 
 export default function CpuChart({data}) {
   if(!data || data.length === 0) {
@@ -12,7 +11,7 @@ export default function CpuChart({data}) {
   }
   return (
     <LineChart
-      style={{ backgroundColor: '#f0f0f0', padding: '1rem 1rem 0 0', borderRadius: '1rem'}}
+      style={{ backgroundColor: '#ffffff', padding: '1rem 1rem 0 0', borderRadius: '1rem'}}
       responsive
       data={data}
       width={'100%'}

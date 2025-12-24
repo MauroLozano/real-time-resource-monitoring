@@ -20,15 +20,20 @@
     visibility: visible;
 }
 
+.quickStatsContainer{
+    grid-area: 1 / 5 / 5 / 7;
+}
+
 .cpuGeneralView{
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: repeat(6, 1fr);
+    gap: .5rem;
+    padding: .5rem;
 }
 .cpuGeneralChart{
-    grid-area: 1 / 1 / 5 / 7;
+    grid-area: 1 / 1 / 5 / 5;
 }
-
 .cpuCoresView{
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -43,7 +48,7 @@
     grid-template-rows: repeat(6, 1fr);
 }
 .memPieChart{
-    grid-area: 5 / 1 / 7 / 3;
+    grid-area: 5 / 1 / 6 / 3;
 }
 .memAreaChart{
     grid-area: 1 / 1 / 5 / 7;
