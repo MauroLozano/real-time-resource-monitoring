@@ -9,18 +9,34 @@ import MemPieChart from './charts/MemPieChart'
 import Sidebar from "./Sidebar";
 import DynamicSection from './DynamicSection'
 import LoadingModal from './LoadingModal'
-import QuickStats from "./QuickStats";
+import QuickStatsGeneral from "./QuickStatsGeneral";
 // Style
 import styles from '../css/App.module.css'
 // sockets
 import { io } from 'socket.io-client';
 const socket = io('http://localhost:3000')
 
+function getAvgLoad(history){
+  if(!history) return
+  let sum = 0
+  history.forEach(entry => {
+    sum += entry.cpuLoad
+  });
+  return (sum / history.length).toFixed(2);
+}
 
 function App() {
+  let [cpuMaxLoad, setCpuMaxLoad] = useState(null)
   const [activeView, setActiveView] = useState('CPUGeneralView')
   const [history, setHistory] = useState([])
   const [staticData, setStaticData] = useState(null) 
+  function updateMaxLoad(cpuLoad){
+    if(!cpuMaxLoad && cpuLoad) {
+      setCpuMaxLoad(parseFloat(cpuLoad.toFixed(2)))
+    }else if (cpuLoad > cpuMaxLoad) {
+      setCpuMaxLoad(parseFloat(cpuLoad.toFixed(2)))
+    }
+  }
   useEffect(()=>{
     fetch(`${serverUrl}/staticData`)
       .then((res)=>{
@@ -39,6 +55,7 @@ function App() {
           }
           return updatedHistory
         })
+        updateMaxLoad(data.cpuLoad)
       })
     return ()=> socket.off('dynamicData')
   },[])
@@ -51,8 +68,21 @@ function App() {
           <div className={`${styles.cpuGeneralChart}`}>
             {staticData && history.length > 0 ? (<CpuChart data={history} />) : (<LoadingModal color='#6ac9bf' />)}
           </div>
-          {staticData && history.length > 0 ? (<div className={styles.quickStatsContainer}><QuickStats cpuSpeedAvg={history[history.length -1].cpuSpeed.avg}/></div>) : (<LoadingModal color='#6ac9bf' />)}
-          
+          {
+            staticData && history.length > 0 ? 
+              (<div className={styles.quickStatsContainer}>
+                <QuickStatsGeneral 
+                  cpuSpeedAvg={history[history.length -1].cpuSpeed.avg} 
+                  cpuMaxSpeed={history[history.length -1].cpuSpeed.max}
+                  cpuTempAvg = {history[history.length -1].cpuTemp ? history[history.length -1].cpuTemp.avg : null}
+                  cpuTempMax = {history[history.length -1].cpuTemp ? history[history.length -1].cpuTemp.max : null}
+                  cpuAvgLoad = {getAvgLoad(history)}
+                  cpuMaxLoad = {cpuMaxLoad}
+                  uptime = {history[history.length -1].uptime}
+                  numberProcesses = {history[history.length -1].numberProcess}
+                /></div>) 
+              :(<LoadingModal color='#6ac9bf' />)
+          }
         </div>
         {/* CPU Cores */}
         <div className={`${styles.cpuCoresView} ${styles.view} ${activeView === 'CPUCoresView' ? styles.activeView : ''}`}>

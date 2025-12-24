@@ -1,9 +1,11 @@
 import express from 'express';
+import os from 'os'
 import { createServer } from 'http'
 import { Server } from 'socket.io';
 import cors from 'cors'
 import si from 'systeminformation';
 import { timeStamp } from 'console';
+import { uptime } from 'process';
 
 const app = express()
 const port = 3000
@@ -49,11 +51,12 @@ io.on('connection', (socket)=>{
     console.log(`Client connected: ${socket.id}`)
     try {
         const intervalId = setInterval(async ()=>{
-            const [rawCpuLoad, rawCpuSpeed, rawCpuTemp, rawMemoryData] = await Promise.all([
+            const [rawCpuLoad, rawCpuSpeed, rawCpuTemp, rawMemoryData, rawProcessesData] = await Promise.all([
                 si.currentLoad(),
                 si.cpuCurrentSpeed(),
                 si.cpuTemperature(),
-                si.mem()
+                si.mem(),
+                si.processes()
             ])
             const dynamicData = {
                 cpuLoad: rawCpuLoad.currentLoad,
@@ -64,9 +67,10 @@ io.on('connection', (socket)=>{
                 },
                 memFree: parseFloat((rawMemoryData.free / (1024 ** 3)).toFixed(2)),
                 memUsed: parseFloat((rawMemoryData.used / (1024 ** 3)).toFixed(2)),
-                timestamp: new Date().toLocaleTimeString("it-IT")
+                timestamp: new Date().toLocaleTimeString("it-IT"),
+                numberProcess: rawProcessesData.list.length,
+                uptime: os.uptime()
             }
-            console.log('Emit')
             socket.emit('dynamicData', dynamicData)
         },2000)
         socket.on('disconnect', ()=>{

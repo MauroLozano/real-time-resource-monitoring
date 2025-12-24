@@ -1,10 +1,10 @@
 import React from "react";
 import styles from '../css/QuickStatsElement.module.css'
-export default function QuickStatsElement({title, data}){
+export default function QuickStatsElement({title, data, unit}){
     return(
         <div className={styles.elementContainer}>
             <h1 className={styles.title}>{title}</h1>
-            <p className={styles.data}>{data}</p>
+            <p className={styles.data}>{`${data}`}<span className={styles.unit}>{`${unit && (data != 'Error') ? unit : ''}`}</span> </p>
         </div>
     )
 }
