@@ -31,11 +31,12 @@ function App() {
   const [history, setHistory] = useState([])
   const [staticData, setStaticData] = useState(null) 
   function updateMaxLoad(cpuLoad){
-    if(!cpuMaxLoad && cpuLoad) {
-      setCpuMaxLoad(parseFloat(cpuLoad.toFixed(2)))
-    }else if (cpuLoad > cpuMaxLoad) {
-      setCpuMaxLoad(parseFloat(cpuLoad.toFixed(2)))
-    }
+    if (!cpuLoad) return
+    const formattedLoad = parseFloat(cpuLoad.toFixed(2))
+    setCpuMaxLoad((prevLoad)=>{
+      if(!prevLoad || prevLoad < formattedLoad) return formattedLoad
+      return prevLoad
+    })
   }
   useEffect(()=>{
     fetch(`${serverUrl}/staticData`)
