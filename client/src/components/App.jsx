@@ -68,21 +68,19 @@ function App() {
           <div className={`${styles.cpuGeneralChart}`}>
             {staticData && history.length > 0 ? (<CpuChart data={history} />) : (<LoadingModal color='#6ac9bf' />)}
           </div>
-          {
-            staticData && history.length > 0 ? 
-              (<div className={styles.quickStatsContainer}>
-                <QuickStatsGeneral 
-                  cpuSpeedAvg={history[history.length -1].cpuSpeed.avg} 
-                  cpuMaxSpeed={history[history.length -1].cpuSpeed.max}
-                  cpuTempAvg = {history[history.length -1].cpuTemp ? history[history.length -1].cpuTemp.avg : null}
-                  cpuTempMax = {history[history.length -1].cpuTemp ? history[history.length -1].cpuTemp.max : null}
-                  cpuAvgLoad = {getAvgLoad(history)}
-                  cpuMaxLoad = {cpuMaxLoad}
-                  uptime = {history[history.length -1].uptime}
-                  numberProcesses = {history[history.length -1].numberProcess}
-                /></div>) 
-              :(<LoadingModal color='#6ac9bf' />)
-          }
+          <div className={styles.quickStatsContainer}>{
+            staticData && history.length > 0 ?
+            <QuickStatsGeneral 
+              cpuSpeedAvg={history[history.length -1].cpuSpeed.avg} 
+              cpuMaxSpeed={history[history.length -1].cpuSpeed.max}
+              cpuTempAvg = {history[history.length -1].cpuTemp ? history[history.length -1].cpuTemp.avg : null}
+              cpuTempMax = {history[history.length -1].cpuTemp ? history[history.length -1].cpuTemp.max : null}
+              cpuAvgLoad = {getAvgLoad(history)}
+              cpuMaxLoad = {cpuMaxLoad}
+              uptime = {history[history.length -1].uptime}
+              numberProcesses = {history[history.length -1].numberProcess}/>
+            : (<LoadingModal color='#6ac9bf' />)
+          }</div>
         </div>
         {/* CPU Cores */}
         <div className={`${styles.cpuCoresView} ${styles.view} ${activeView === 'CPUCoresView' ? styles.activeView : ''}`}>
