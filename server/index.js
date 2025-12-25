@@ -58,6 +58,11 @@ io.on('connection', (socket)=>{
                 si.mem(),
                 si.processes()
             ])
+            let topProcesses = rawProcessesData.list
+                .filter((p) => p.name !== 'System Idle Process' && p.name !== 'Idle' && p.cpu > 0)
+                .sort((a,b)=>{
+                    return (b.cpu - a.cpu)
+                }).slice(0, 10)
             const dynamicData = {
                 cpuLoad: rawCpuLoad.currentLoad,
                 cpuSpeed: rawCpuSpeed,
@@ -69,7 +74,8 @@ io.on('connection', (socket)=>{
                 memUsed: parseFloat((rawMemoryData.used / (1024 ** 3)).toFixed(2)),
                 timestamp: new Date().toLocaleTimeString("it-IT"),
                 numberProcess: rawProcessesData.list.length,
-                uptime: os.uptime()
+                uptime: os.uptime(),
+                topProcesses: topProcesses
             }
             socket.emit('dynamicData', dynamicData)
         },2000)
