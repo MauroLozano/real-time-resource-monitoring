@@ -10,6 +10,7 @@ import Sidebar from "./Sidebar";
 import DynamicSection from './DynamicSection'
 import LoadingModal from './LoadingModal'
 import QuickStatsGeneral from "./QuickStatsGeneral";
+import ProcessesDisplay from "./ProcessesDisplay";
 // Style
 import styles from '../css/App.module.css'
 // sockets
@@ -82,6 +83,10 @@ function App() {
               numberProcesses = {history[history.length -1].numberProcess}/>
             : (<LoadingModal color='#6ac9bf' />)
           }</div>
+          <div className={styles.processesContainer}>{
+            history.length > 0 ? (<ProcessesDisplay processesList={history[history.length -1].topProcesses} />) : (<LoadingModal color='#6ac9bf' />)
+          }</div>
+          
         </div>
         {/* CPU Cores */}
         <div className={`${styles.cpuCoresView} ${styles.view} ${activeView === 'CPUCoresView' ? styles.activeView : ''}`}>
