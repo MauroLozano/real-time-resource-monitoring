@@ -42,7 +42,7 @@
     padding: .5rem;
 }
 .cpuCoresChart{
-    grid-area: 1 / 1 / 5 / 4;
+    grid-area: 1 / 1 / 5 / 5;
 }
 .memView{
     display: grid;
@@ -59,4 +59,7 @@
 }
 .processesContainer{
     grid-area: 5 / 1 / 7 / 7;
+}
+.cpuHeatMapContainer{
+    grid-area: 5 / 1 / 7 / 3;
 }

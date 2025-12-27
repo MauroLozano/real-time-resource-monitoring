@@ -11,6 +11,7 @@ import DynamicSection from './DynamicSection'
 import LoadingModal from './LoadingModal'
 import QuickStatsGeneral from "./QuickStatsGeneral";
 import ProcessesDisplay from "./ProcessesDisplay";
+import CpuHeatMap from "./cpuHeatMap";
 // Style
 import styles from '../css/App.module.css'
 // sockets
@@ -86,12 +87,14 @@ function App() {
           <div className={styles.processesContainer}>{
             history.length > 0 ? (<ProcessesDisplay processesList={history[history.length -1].topProcesses} />) : (<LoadingModal color='#6ac9bf' />)
           }</div>
-          
         </div>
         {/* CPU Cores */}
         <div className={`${styles.cpuCoresView} ${styles.view} ${activeView === 'CPUCoresView' ? styles.activeView : ''}`}>
           <div className={`${styles.cpuCoresChart}`}>
             {staticData && history.length > 0 ? (<CpuCoresChart data={history} amountCores={staticData.cpu.cores} />) : (<LoadingModal color='#6ac9bf' />)}
+          </div>
+          <div className={styles.cpuHeatMapContainer}>
+            {staticData && history.length > 0 ? (<CpuHeatMap data={history[history.length -1].coresLoad}/>) : (<LoadingModal color='#6ac9bf' />)}
           </div>
         </div>
         {/* Memory */}

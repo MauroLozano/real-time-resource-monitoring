@@ -15,7 +15,7 @@ export default function ProcessesDisplay({processesList}){
             </div>
             {
                 processesList.map((process, index)=>(
-                    <ProcessEntry processData={process} index={index}/>
+                    <ProcessEntry key={index} processData={process} index={index}/>
                 ))
             }
         </div>

@@ -2,7 +2,6 @@ import React from "react";
 import styles from '../css/ProcessEntry.module.css'
 
 export default function ProcessEntry({processData, index}){
-    console.log(processData)
     return(
         <div className={styles.processEntry}>
             <p className={styles.processInfo}>{index+1}</p>

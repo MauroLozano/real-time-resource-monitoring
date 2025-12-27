@@ -66,6 +66,9 @@ io.on('connection', (socket)=>{
             const dynamicData = {
                 cpuLoad: rawCpuLoad.currentLoad,
                 cpuSpeed: rawCpuSpeed,
+                coresLoad: rawCpuLoad.cpus.map((coreData)=>{
+                    return parseFloat(coreData.load.toFixed(2))
+                }),
                 cpuTemp: rawCpuTemp.main == null ? null : {
                     avg: rawCpuTemp.main,
                     max: rawCpuTemp.max
