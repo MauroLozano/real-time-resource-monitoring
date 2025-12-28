@@ -68,8 +68,8 @@ function App() {
           <div className={styles.quickStatsContainer}>{
             isDataAvailable ?
             <QuickStatsCores
-              maxCoreTemp={maxValues.coreTemp? maxValues.coreTemp : null}
-              maxCoreSpeed={maxValues.coreSpeed? maxValues.coreSpeed :null}
+              coreTempMax={maxValues.coreTemp ? maxValues.coreTemp : null}
+              coreSpeedMax={maxValues.coreSpeed ? maxValues.coreSpeed : null}
             />
             : (<LoadingModal color='#6ac9bf' />)
           }</div>
