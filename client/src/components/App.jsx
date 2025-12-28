@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-const serverUrl = 'http://localhost:3000'
 // Components
+import useSystemData from "../hooks/useSystemData";
 import StaticSection from "./StaticSection";
 import CpuChart from "./charts/CpuChart";
 import CpuCoresChart from "./charts/CpuCoresChart";
@@ -10,135 +10,86 @@ import Sidebar from "./Sidebar";
 import DynamicSection from './DynamicSection'
 import LoadingModal from './LoadingModal'
 import QuickStatsGeneral from "./QuickStatsGeneral";
+import QuickStatsCores from "./QuickStatsCores";
 import ProcessesDisplay from "./ProcessesDisplay";
 import CpuHeatMap from "./cpuHeatMap";
 // Style
 import styles from '../css/App.module.css'
-// sockets
-import { io } from 'socket.io-client';
-import QuickStatsCores from "./QuickStatsCores";
-const socket = io('http://localhost:3000')
 
 function getAvgLoad(history){
-  if(!history) return
-  let sum = 0
-  history.forEach(entry => {
-    sum += entry.cpuLoad
-  });
-  return (sum / history.length).toFixed(2);
+    if(!history) return
+    let sum = 0
+    history.forEach(entry => {
+        sum += entry.cpuLoad
+    });
+    return (sum / history.length).toFixed(2);
 }
 
 function App() {
-  let [cpuMaxLoad, setCpuMaxLoad] = useState(null)
-  let [coreMaxTemp, setCoreMaxTemp] = useState(null)
-  let [coreMaxSpeed, setCoreMaxSpeed] = useState(null)
   const [activeView, setActiveView] = useState('CPUGeneralView')
-  const [history, setHistory] = useState([])
-  const [staticData, setStaticData] = useState(null) 
-  function updateMaxLoad(cpuLoad){
-    if (!cpuLoad) return
-    const formattedLoad = parseFloat(cpuLoad.toFixed(2))
-    setCpuMaxLoad((prevLoad)=>{
-      if(!prevLoad || prevLoad < formattedLoad) return formattedLoad
-      return prevLoad
-    })
-  }
-  function updateMaxCoreTemp(coresTemp){
-    if (!coresTemp || coresTemp.length == 0) return
-    coresTemp.forEach((temp, index)=>{
-      setCoreMaxTemp((prevTemp)=>{
-        if(!prevTemp || prevTemp[1] < temp) return [index, temp]
-        return prevTemp
-      })
-    })
-  }
-  function updateMaxCoreSpeed(coresSpeed){
-    if (!coresSpeed || coresSpeed.length == 0) return
-    coresSpeed.forEach((speed, index)=>{
-      setCoreMaxSpeed((prevSpeed)=>{
-        if(!prevSpeed || prevSpeed[1] < speed) return [index, speed]
-        return prevSpeed
-      })
-    })
-  }
-  useEffect(()=>{
-    fetch(`${serverUrl}/staticData`)
-      .then((res)=>{
-        if(!res.ok) console.error('Server error') 
-        return res.json()
-      })
-      .then(data =>{ 
-        setStaticData(data)
-      })
-      .catch(error => console.error(error))
-      socket.on('dynamicData', (data)=>{
-        setHistory((prevHistory)=>{
-          let updatedHistory = [...prevHistory, data]
-          if (updatedHistory.length > 20) {
-            updatedHistory = updatedHistory.slice(1)
-          }
-          return updatedHistory
-        })
-        updateMaxLoad(data.cpuLoad)
-        updateMaxCoreTemp(data.coresTemp)
-        updateMaxCoreSpeed(data.cpuSpeed.cores)
-      })
-    return ()=> socket.off('dynamicData')
-  },[])
+  const {history, staticData, maxValues} = useSystemData()
+
+  const currentData = history.length > 0 ? history.at(-1) : null;
+  const isDataAvailable = staticData && history.length > 0
+
   return (
     <div className={styles.wrapper}>
+
       <Sidebar setView={setActiveView} activeView={activeView}></Sidebar>
+
       <DynamicSection className={`${styles.dynamicSection} ${styles.viewContainer}`}>
-        {/* CPU */}
+        {/* === CPU GENERAL VIEW === */}
         <div className={`${styles.cpuGeneralView} ${styles.view} ${activeView === 'CPUGeneralView' ? styles.activeView : ''}`}>
           <div className={`${styles.cpuGeneralChart}`}>
-            {staticData && history.length > 0 ? (<CpuChart data={history} />) : (<LoadingModal color='#6ac9bf' />)}
-          </div>
+            {isDataAvailable ? (<CpuChart data={history} />) : (<LoadingModal color='#6ac9bf' />)}
+          </div>  
           <div className={styles.quickStatsContainer}>{
-            staticData && history.length > 0 ?
+            isDataAvailable ?
             <QuickStatsGeneral 
-              cpuSpeedAvg={history[history.length -1].cpuSpeed.avg} 
-              cpuMaxSpeed={history[history.length -1].cpuSpeed.max}
-              cpuTempAvg = {history[history.length -1].cpuTemp ? history[history.length -1].cpuTemp.avg : null}
-              cpuTempMax = {history[history.length -1].cpuTemp ? history[history.length -1].cpuTemp.max : null}
+              cpuSpeedAvg={currentData.cpuSpeed.avg} 
+              cpuMaxSpeed={currentData.cpuSpeed.max}
+              cpuTempAvg = {currentData.cpuTemp ? currentData.cpuTemp.avg : null}
+              cpuTempMax = {currentData.cpuTemp ? currentData.cpuTemp.max : null}
               cpuAvgLoad = {getAvgLoad(history)}
-              cpuMaxLoad = {cpuMaxLoad}
-              uptime = {history[history.length -1].uptime}
-              numberProcesses = {history[history.length -1].numberProcess}/>
+              cpuMaxLoad= {maxValues.cpuLoad}
+              uptime = {currentData.uptime}
+              numberProcesses = {currentData.numberProcess}/>
             : (<LoadingModal color='#6ac9bf' />)
           }</div>
           <div className={styles.processesContainer}>{
-            history.length > 0 ? (<ProcessesDisplay processesList={history[history.length -1].topProcesses} />) : (<LoadingModal color='#6ac9bf' />)
+            history.length > 0 ? (<ProcessesDisplay processesList={currentData.topProcesses} />) : (<LoadingModal color='#6ac9bf' />)
           }</div>
         </div>
-        {/* CPU Cores */}
+        {/* === CPU CORES VIEW === */}
         <div className={`${styles.cpuCoresView} ${styles.view} ${activeView === 'CPUCoresView' ? styles.activeView : ''}`}>
           <div className={`${styles.cpuCoresChart}`}>
-            {staticData && history.length > 0 ? (<CpuCoresChart data={history} amountCores={staticData.cpu.cores} />) : (<LoadingModal color='#6ac9bf' />)}
+            {isDataAvailable ? (<CpuCoresChart data={history} amountCores={staticData.cpu.cores} />) : (<LoadingModal color='#6ac9bf' />)}
           </div>
           <div className={styles.quickStatsContainer}>{
-            staticData && history.length > 0 ?
+            isDataAvailable ?
             <QuickStatsCores
-              coreMaxTemp={coreMaxTemp? coreMaxTemp : null}
-              coreMaxSpeed={coreMaxSpeed? coreMaxSpeed :null}
+              maxCoreTemp={maxValues.coreTemp? maxValues.coreTemp : null}
+              maxCoreSpeed={maxValues.coreSpeed? maxValues.coreSpeed :null}
             />
             : (<LoadingModal color='#6ac9bf' />)
           }</div>
           <div className={styles.cpuHeatMapContainer}>
-            {staticData && history.length > 0 ? (<CpuHeatMap data={history[history.length -1].coresLoad}  coresTemp={history[history.length -1].coresTemp ? history[history.length -1].coresTemp : null}/>) : (<LoadingModal color='#6ac9bf' />)}
+            {isDataAvailable ? (<CpuHeatMap data={currentData.coresLoad}  coresTemp={currentData.coresTemp}/>) : (<LoadingModal color='#6ac9bf' />)}
           </div>
         </div>
-        {/* Memory */}
+        {/* === MEMORY VIEW === */}
         <div className={`${styles.memView} ${styles.view} ${activeView === 'MEMAvailableView' ? styles.activeView : ''}`}>
           <div className={`${styles.memAreaChart}`}>
-            {staticData && history.length > 0 ? (<MemAreaChart data={history} totalMem={staticData.memory.total} />) : (<LoadingModal color='#6ac9bf' />)}
+            {isDataAvailable ? (<MemAreaChart data={history} totalMem={staticData.memory.total} />) : (<LoadingModal color='#6ac9bf' />)}
           </div>
           <div className={`${styles.memPieChart}`}>
-            {staticData && history.length > 0 ? (<MemPieChart data={history} totalMem={staticData.memory.total} />) : (<LoadingModal color='#6ac9bf' />)}
+            {isDataAvailable ? (<MemPieChart data={history} totalMem={staticData.memory.total} />) : (<LoadingModal color='#6ac9bf' />)}
           </div>
         </div>
       </DynamicSection>
+
       <StaticSection staticData={staticData}></StaticSection>
+
     </div>
   )
 }
