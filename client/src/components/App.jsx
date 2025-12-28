@@ -16,6 +16,7 @@ import CpuHeatMap from "./cpuHeatMap";
 import styles from '../css/App.module.css'
 // sockets
 import { io } from 'socket.io-client';
+import QuickStatsCores from "./QuickStatsCores";
 const socket = io('http://localhost:3000')
 
 function getAvgLoad(history){
@@ -29,6 +30,8 @@ function getAvgLoad(history){
 
 function App() {
   let [cpuMaxLoad, setCpuMaxLoad] = useState(null)
+  let [coreMaxTemp, setCoreMaxTemp] = useState(null)
+  let [coreMaxSpeed, setCoreMaxSpeed] = useState(null)
   const [activeView, setActiveView] = useState('CPUGeneralView')
   const [history, setHistory] = useState([])
   const [staticData, setStaticData] = useState(null) 
@@ -38,6 +41,24 @@ function App() {
     setCpuMaxLoad((prevLoad)=>{
       if(!prevLoad || prevLoad < formattedLoad) return formattedLoad
       return prevLoad
+    })
+  }
+  function updateMaxCoreTemp(coresTemp){
+    if (!coresTemp || coresTemp.length == 0) return
+    coresTemp.forEach((temp, index)=>{
+      setCoreMaxTemp((prevTemp)=>{
+        if(!prevTemp || prevTemp[1] < temp) return [index, temp]
+        return prevTemp
+      })
+    })
+  }
+  function updateMaxCoreSpeed(coresSpeed){
+    if (!coresSpeed || coresSpeed.length == 0) return
+    coresSpeed.forEach((speed, index)=>{
+      setCoreMaxSpeed((prevSpeed)=>{
+        if(!prevSpeed || prevSpeed[1] < speed) return [index, speed]
+        return prevSpeed
+      })
     })
   }
   useEffect(()=>{
@@ -59,6 +80,8 @@ function App() {
           return updatedHistory
         })
         updateMaxLoad(data.cpuLoad)
+        updateMaxCoreTemp(data.coresTemp)
+        updateMaxCoreSpeed(data.cpuSpeed.cores)
       })
     return ()=> socket.off('dynamicData')
   },[])
@@ -93,6 +116,14 @@ function App() {
           <div className={`${styles.cpuCoresChart}`}>
             {staticData && history.length > 0 ? (<CpuCoresChart data={history} amountCores={staticData.cpu.cores} />) : (<LoadingModal color='#6ac9bf' />)}
           </div>
+          <div className={styles.quickStatsContainer}>{
+            staticData && history.length > 0 ?
+            <QuickStatsCores
+              coreMaxTemp={coreMaxTemp? coreMaxTemp : null}
+              coreMaxSpeed={coreMaxSpeed? coreMaxSpeed :null}
+            />
+            : (<LoadingModal color='#6ac9bf' />)
+          }</div>
           <div className={styles.cpuHeatMapContainer}>
             {staticData && history.length > 0 ? (<CpuHeatMap data={history[history.length -1].coresLoad}  coresTemp={history[history.length -1].coresTemp ? history[history.length -1].coresTemp : null}/>) : (<LoadingModal color='#6ac9bf' />)}
           </div>

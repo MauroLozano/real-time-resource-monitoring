@@ -15,7 +15,7 @@
     }
 
     export default function CpuHeatMap({data, coresTemp}){
-        coresTempAvailable = coresTemp || coresTemp.length == 0 ? false : true
+        coresTempAvailable = !coresTemp || coresTemp.length == 0 ? false : true
         return(
             <div className={styles.cpuHeatMapGrid} style={{gridTemplateColumns:`repeat(${Math.ceil(Math.sqrt(data.length))},1fr)`, gridTemplateRows:`repeat(${Math.sqrt(data.length)},1fr)`}}>
                 {
