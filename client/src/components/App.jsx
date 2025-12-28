@@ -27,8 +27,7 @@ function getAvgLoad(history){
 
 function App() {
   const [activeView, setActiveView] = useState('CPUGeneralView')
-  const {history, staticData, maxValues} = useSystemData()
-
+  const {history, staticData, maxValues, coreOverload} = useSystemData()
   const currentData = history.length > 0 ? history.at(-1) : null;
   const isDataAvailable = staticData && history.length > 0
 
@@ -70,6 +69,7 @@ function App() {
             <QuickStatsCores
               coreTempMax={maxValues.coreTemp ? maxValues.coreTemp : null}
               coreSpeedMax={maxValues.coreSpeed ? maxValues.coreSpeed : null}
+              coreOverload={coreOverload}
             />
             : (<LoadingModal color='#6ac9bf' />)
           }</div>
