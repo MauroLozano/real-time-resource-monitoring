@@ -27,3 +27,11 @@
     left: 0;
     margin: .1rem .3rem;
 }
+.tempDisplay{
+    font-weight: 300;
+    font-size: .9rem;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: .1rem .1rem;
+}

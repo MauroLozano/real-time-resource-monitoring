@@ -94,7 +94,7 @@ function App() {
             {staticData && history.length > 0 ? (<CpuCoresChart data={history} amountCores={staticData.cpu.cores} />) : (<LoadingModal color='#6ac9bf' />)}
           </div>
           <div className={styles.cpuHeatMapContainer}>
-            {staticData && history.length > 0 ? (<CpuHeatMap data={history[history.length -1].coresLoad}/>) : (<LoadingModal color='#6ac9bf' />)}
+            {staticData && history.length > 0 ? (<CpuHeatMap data={history[history.length -1].coresLoad}  coresTemp={history[history.length -1].coresTemp ? history[history.length -1].coresTemp : null}/>) : (<LoadingModal color='#6ac9bf' />)}
           </div>
         </div>
         {/* Memory */}

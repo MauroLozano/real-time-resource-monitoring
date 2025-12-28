@@ -73,6 +73,7 @@ io.on('connection', (socket)=>{
                     avg: rawCpuTemp.main,
                     max: rawCpuTemp.max
                 },
+                coresTemp: rawCpuTemp.cores,
                 memFree: parseFloat((rawMemoryData.free / (1024 ** 3)).toFixed(2)),
                 memUsed: parseFloat((rawMemoryData.used / (1024 ** 3)).toFixed(2)),
                 timestamp: new Date().toLocaleTimeString("it-IT"),
