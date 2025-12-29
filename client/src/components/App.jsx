@@ -24,6 +24,14 @@ function getAvgLoad(history) {
   });
   return (sum / history.length).toFixed(2);
 }
+function getAvgCoresSpeed(coresLoad){
+  if (!coresLoad) return
+  let sum = 0
+  coresLoad.forEach(load => {
+    sum += load
+  });
+  return (sum / coresLoad.length).toFixed(2)
+}
 
 function App() {
   const [activeView, setActiveView] = useState("CPUGeneralView");
@@ -99,6 +107,7 @@ function App() {
             {isDataAvailable ? (
               <QuickStatsCores
                 coreTempMax={maxValues.coreTemp ? maxValues.coreTemp : null}
+                coreSpeedAvg={getAvgCoresSpeed(currentData.coresLoad)}
                 coreSpeedMax={maxValues.coreSpeed ? maxValues.coreSpeed : null}
                 coreOverload={coreOverload}
                 mostActiveCore={[currentData.coresLoad.indexOf(Math.max(...currentData.coresLoad)), Math.max(...currentData.coresLoad)]}
