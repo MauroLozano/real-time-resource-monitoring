@@ -101,6 +101,7 @@ function App() {
                 coreTempMax={maxValues.coreTemp ? maxValues.coreTemp : null}
                 coreSpeedMax={maxValues.coreSpeed ? maxValues.coreSpeed : null}
                 coreOverload={coreOverload}
+                mostActiveCore={[currentData.coresLoad.indexOf(Math.max(...currentData.coresLoad)), Math.max(...currentData.coresLoad)]}
               />
             ) : (
               <LoadingModal color="#6ac9bf" />
