@@ -24,14 +24,6 @@ function getAvgLoad(history) {
   });
   return (sum / history.length).toFixed(2);
 }
-function getAvgCoresSpeed(coresLoad){
-  if (!coresLoad) return
-  let sum = 0
-  coresLoad.forEach(load => {
-    sum += load
-  });
-  return (sum / coresLoad.length).toFixed(2)
-}
 function getParkedCores(coresLoad){
   if (!coresLoad) return
   let counter = 0
@@ -114,9 +106,9 @@ function App() {
           <div className={styles.quickStatsContainer}>
             {isDataAvailable ? (
               <QuickStatsCores
-                coreTempMax={maxValues.coreTemp ? maxValues.coreTemp : null}
+                coreTempMax={maxValues.coreTemp ? maxValues.coreTemp : null}  
                 thermalHeadroom={maxValues.coreTemp ? 100 - maxValues.coreTemp[1] : null}
-                coreSpeedAvg={getAvgCoresSpeed(currentData.cpuSpeed.cores)}
+                coreSpeedAvg={currentData.cpuSpeed.avg}
                 coreSpeedMax={maxValues.coreSpeed ? maxValues.coreSpeed : null}
                 coreOverload={coreOverload}
                 mostActiveCore={[currentData.coresLoad.indexOf(Math.max(...currentData.coresLoad)), Math.max(...currentData.coresLoad)]}
