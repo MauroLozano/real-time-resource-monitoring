@@ -4,13 +4,16 @@
     justify-content: center;
     flex-direction: column;
     text-align: center;
-    gap: .5rem;
 }
 .title{
-    font-size: .8rem;
+    font-size: 1rem;
+    margin-bottom: .4rem;
 }
 .data{
     font-size: 2rem;
+}
+.label{
+    font-size: 1rem;
 }
 .unit{
     font-size: 1.2rem;
