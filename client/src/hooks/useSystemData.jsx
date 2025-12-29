@@ -8,6 +8,7 @@ const socket = io('http://localhost:3000')
 
 export default function useSystemData(){
     const [history, setHistory] = useState([])
+    const [processesData, setProcessesData] = useState({})
     const [coreOverload, setCoreOverload] = useState(null)
     const [staticData, setStaticData] = useState(null)
     const [maxValues, setMaxValues] = useState({
@@ -56,7 +57,13 @@ export default function useSystemData(){
             }
             setCoreOverload(overload)
         })
-        return ()=> socket.off('dynamicData')
+        socket.on('processesData',(processesData)=>{
+            setProcessesData(processesData)
+        })
+        return ()=>{
+            socket.off('dynamicData')
+            socket.off('processesData')
+        } 
     },[])
-    return {history, staticData, maxValues, coreOverload}
+    return {history, staticData, maxValues, coreOverload, processesData}
 }

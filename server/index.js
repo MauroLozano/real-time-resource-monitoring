@@ -50,19 +50,28 @@ app.get('/staticData', async (req, res) => {
 io.on('connection', (socket)=>{
     console.log(`Client connected: ${socket.id}`)
     try {
-        const intervalId = setInterval(async ()=>{
-            const [rawCpuLoad, rawCpuSpeed, rawCpuTemp, rawMemoryData, rawProcessesData] = await Promise.all([
-                si.currentLoad(),
-                si.cpuCurrentSpeed(),
-                si.cpuTemperature(),
-                si.mem(),
-                si.processes()
-            ])
+        async function emitProcessesData(){
+            const rawProcessesData = await si.processes()
             let topProcesses = rawProcessesData.list
                 .filter((p) => p.name !== 'System Idle Process' && p.name !== 'Idle' && p.cpu > 0)
                 .sort((a,b)=>{
                     return (b.cpu - a.cpu)
                 }).slice(0, 10)
+            
+            const processesData ={
+                topProcesses: topProcesses,
+                total: rawProcessesData.list.length
+            }
+            socket.emit('processesData', processesData)
+        }
+        async function emitDynamicData(){
+            const [rawCpuLoad, rawCpuSpeed, rawCpuTemp, rawMemoryData] = await Promise.all([
+                si.currentLoad(),
+                si.cpuCurrentSpeed(),
+                si.cpuTemperature(),
+                si.mem(),
+            ])
+            
             const dynamicData = {
                 cpuLoad: rawCpuLoad.currentLoad,
                 cpuSpeed: rawCpuSpeed,
@@ -77,15 +86,18 @@ io.on('connection', (socket)=>{
                 memFree: parseFloat((rawMemoryData.free / (1024 ** 3)).toFixed(2)),
                 memUsed: parseFloat((rawMemoryData.used / (1024 ** 3)).toFixed(2)),
                 timestamp: new Date().toLocaleTimeString("it-IT"),
-                numberProcess: rawProcessesData.list.length,
                 uptime: os.uptime(),
-                topProcesses: topProcesses
             }
             socket.emit('dynamicData', dynamicData)
-        },2000)
+        }
+        emitDynamicData()
+        emitProcessesData()
+        const intervalIdDynamicData = setInterval(()=>{emitDynamicData()}, 2000)
+        const intervalIdProcessesData = setInterval(()=>{emitProcessesData()}, 5000)
         socket.on('disconnect', ()=>{
             console.log(`Client disconnected: ${socket.id}`)
-            clearInterval(intervalId)
+            clearInterval(intervalIdDynamicData)
+            clearInterval(intervalIdProcessesData)
         })
     } catch (error) {
         console.error(error)
