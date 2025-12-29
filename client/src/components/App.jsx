@@ -43,11 +43,10 @@ function getParkedCores(coresLoad){
 
 function App() {
   const [activeView, setActiveView] = useState("CPUGeneralView");
-  const { history, staticData, maxValues, coreOverload, processesData } = useSystemData();
+  const { history, staticData, maxValues, coreOverload, processesData, threadStats} = useSystemData();
   const currentData = history.length > 0 ? history.at(-1) : null;
-  const isDataAvailable = history.length > 0 && staticData;
+  const isDataAvailable = history.length > 0 && staticData && threadStats;
   const isProcessDataAvaiable = Object.keys(processesData).length > 0;
-
   return (
     <div className={styles.wrapper}>
       <Sidebar setView={setActiveView} activeView={activeView}></Sidebar>
@@ -116,11 +115,13 @@ function App() {
             {isDataAvailable ? (
               <QuickStatsCores
                 coreTempMax={maxValues.coreTemp ? maxValues.coreTemp : null}
+                thermalHeadroom={maxValues.coreTemp ? 100 - maxValues.coreTemp[1] : null}
                 coreSpeedAvg={getAvgCoresSpeed(currentData.cpuSpeed.cores)}
                 coreSpeedMax={maxValues.coreSpeed ? maxValues.coreSpeed : null}
                 coreOverload={coreOverload}
                 mostActiveCore={[currentData.coresLoad.indexOf(Math.max(...currentData.coresLoad)), Math.max(...currentData.coresLoad)]}
                 parkedCores={[getParkedCores(currentData.coresLoad), staticData.cpu.cores]}
+                threadStats={threadStats}
               />
             ) : (
               <LoadingModal color="#6ac9bf" />

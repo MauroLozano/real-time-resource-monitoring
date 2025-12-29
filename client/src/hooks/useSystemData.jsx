@@ -6,11 +6,21 @@ const serverUrl = 'http://localhost:3000'
 import { io } from 'socket.io-client';
 const socket = io('http://localhost:3000')
 
+function getActiveThreadsCount(coresLoad){
+    if (!coresLoad) return
+    let counter = 0
+    coresLoad.forEach(load => {
+        if (load > 5) counter ++
+    });
+    return counter
+}
+
 export default function useSystemData(){
     const [history, setHistory] = useState([])
     const [processesData, setProcessesData] = useState({})
     const [coreOverload, setCoreOverload] = useState(null)
     const [staticData, setStaticData] = useState(null)
+    const [threadStats, setThreadStats] = useState(null)
     const [maxValues, setMaxValues] = useState({
         cpuLoad: null,
         coreTemp: null,
@@ -56,6 +66,13 @@ export default function useSystemData(){
                 overload = (maxCoreLoad - data.cpuLoad).toFixed(2)
             }
             setCoreOverload(overload)
+            const totalThreads = data.coresLoad.length
+            const threadEfficiency = totalThreads > 0 ? (getActiveThreadsCount(data.coresLoad)/totalThreads) * 100 : 0
+            setThreadStats({
+                threadEfficiency: threadEfficiency,
+                activeThreads: getActiveThreadsCount(data.coresLoad),
+                totalThreads: totalThreads
+            })
         })
         socket.on('processesData',(processesData)=>{
             setProcessesData(processesData)
@@ -65,5 +82,5 @@ export default function useSystemData(){
             socket.off('processesData')
         } 
     },[])
-    return {history, staticData, maxValues, coreOverload, processesData}
+    return {history, staticData, maxValues, coreOverload, processesData, threadStats}
 }
