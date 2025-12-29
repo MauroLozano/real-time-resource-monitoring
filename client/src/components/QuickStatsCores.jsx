@@ -1,7 +1,7 @@
 import React from "react";
 import QuickStatsElement from "./QuickStatsElement";
 import styles from '../css/QuickStats.module.css'
-export default function QuickStatsCores({coreTempMax, coreSpeedAvg, coreSpeedMax, coreOverload, mostActiveCore}){
+export default function QuickStatsCores({coreTempMax, coreSpeedAvg, coreSpeedMax, coreOverload, mostActiveCore, parkedCores}){
     return (
         <aside className={styles.quickStats}>
             <QuickStatsElement title ='Core Max. Temp' label={`${coreTempMax ? `Core ${coreTempMax[0]}` : 'Core -'}`} data={coreTempMax ? coreTempMax[1] : 'Error'} unit='°C'/>
@@ -9,6 +9,7 @@ export default function QuickStatsCores({coreTempMax, coreSpeedAvg, coreSpeedMax
             <QuickStatsElement title ='Core Max. Speed' label={`${coreSpeedMax ? `Core ${coreSpeedMax[0]}` : 'Core -'}`} data={coreSpeedMax ? coreSpeedMax[1] : 'Error'} unit='GHz'/>
             <QuickStatsElement title ='Core Overload' data={coreOverload ? coreOverload : 'Error'} unit='%'/>
             <QuickStatsElement title ='Most Active Core' label={`${mostActiveCore ? `Core ${mostActiveCore[0]}` : 'Core -'}`} data={mostActiveCore ? mostActiveCore[1] : 'Error'} unit='%'/>
+            <QuickStatsElement title ='Parked Cores' data={parkedCores ? `${parkedCores[0]}/${parkedCores[1]}` : 'Error'}/>
         </aside>
     )
 }
