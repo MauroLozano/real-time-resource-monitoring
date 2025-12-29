@@ -66,11 +66,12 @@ export default function useSystemData(){
                 overload = (maxCoreLoad - data.cpuLoad).toFixed(2)
             }
             setCoreOverload(overload)
+            const activeThreadsCount = getActiveThreadsCount(data.coresLoad)
             const totalThreads = data.coresLoad.length
-            const threadEfficiency = totalThreads > 0 ? (getActiveThreadsCount(data.coresLoad)/totalThreads) * 100 : 0
+            const threadEfficiency = totalThreads > 0 ? (activeThreadsCount/totalThreads) * 100 : 0
             setThreadStats({
-                threadEfficiency: threadEfficiency,
-                activeThreads: getActiveThreadsCount(data.coresLoad),
+                threadEfficiency: threadEfficiency.toFixed(2),
+                activeThreads: activeThreadsCount,
                 totalThreads: totalThreads
             })
         })
