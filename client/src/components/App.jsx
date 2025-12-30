@@ -116,8 +116,7 @@ function App() {
           <div className={styles.cpuHeatMapContainer}>
             {isDataAvailable ? (
               <CpuHeatMap
-                data={currentData.coresLoad}
-                coresTemp={currentData.coresTemp}
+                data={currentData.coresTemp}
               />
             ) : (
               <LoadingModal color="#6ac9bf" />
