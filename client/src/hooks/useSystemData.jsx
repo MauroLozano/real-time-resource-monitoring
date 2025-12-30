@@ -87,7 +87,6 @@ export default function useSystemData(){
             if(data.coresTemp.length > 0){
                 setThermalHeadroom((100 - Math.max(...data.coresTemp)).toFixed(2))
             }else{setThermalHeadroom(null)}
-            console.log(Math.max(...data.coresLoad))
             setParkedCores({
                 parked: getParkedCores(data.coresLoad),
                 total: data.coresLoad.length

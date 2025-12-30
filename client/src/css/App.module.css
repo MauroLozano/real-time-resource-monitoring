@@ -63,3 +63,6 @@
 .cpuHeatMapContainer{
     grid-area: 5 / 1 / 7 / 3;
 }
+.coresLoadBarChartContainer{
+    grid-area: 5 / 4 / 7 / 7;
+}

@@ -13,6 +13,7 @@ import QuickStatsGeneral from "./QuickStatsGeneral";
 import QuickStatsCores from "./QuickStatsCores";
 import ProcessesDisplay from "./ProcessesDisplay";
 import CpuHeatMap from "./cpuHeatMap";
+import CoresLoadBarChart from './charts/CoresLoadBarChart'
 // Style
 import styles from "../css/App.module.css";
 
@@ -117,6 +118,15 @@ function App() {
               <CpuHeatMap
                 data={currentData.coresLoad}
                 coresTemp={currentData.coresTemp}
+              />
+            ) : (
+              <LoadingModal color="#6ac9bf" />
+            )}
+          </div>
+          <div className={styles.coresLoadBarChartContainer}>
+            {isDataAvailable ? (
+              <CoresLoadBarChart
+                data={currentData.coresLoad}
               />
             ) : (
               <LoadingModal color="#6ac9bf" />
