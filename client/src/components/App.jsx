@@ -24,18 +24,11 @@ function getAvgLoad(history) {
   });
   return (sum / history.length).toFixed(2);
 }
-function getParkedCores(coresLoad){
-  if (!coresLoad) return
-  let counter = 0
-  coresLoad.forEach(load => {
-    if (load == 0) counter ++
-  });
-  return counter
-}
+
 
 function App() {
   const [activeView, setActiveView] = useState("CPUGeneralView");
-  const { history, staticData, maxValues, coreOverload, processesData, threadStats} = useSystemData();
+  const { history, staticData, maxValues, coreOverload, processesData, thermalHeadroom, threadStats, mostActiveCore, parkedCores} = useSystemData();
   const currentData = history.length > 0 ? history.at(-1) : null;
   const isDataAvailable = history.length > 0 && staticData && threadStats;
   const isProcessDataAvaiable = Object.keys(processesData).length > 0;
@@ -107,12 +100,12 @@ function App() {
             {isDataAvailable ? (
               <QuickStatsCores
                 coreTempMax={maxValues.coreTemp ? maxValues.coreTemp : null}  
-                thermalHeadroom={maxValues.coreTemp ? 100 - maxValues.coreTemp[1] : null}
+                thermalHeadroom={thermalHeadroom}
                 coreSpeedAvg={currentData.cpuSpeed.avg}
                 coreSpeedMax={maxValues.coreSpeed ? maxValues.coreSpeed : null}
                 coreOverload={coreOverload}
-                mostActiveCore={[currentData.coresLoad.indexOf(Math.max(...currentData.coresLoad)), Math.max(...currentData.coresLoad)]}
-                parkedCores={[getParkedCores(currentData.coresLoad), staticData.cpu.cores]}
+                mostActiveCore={mostActiveCore}
+                parkedCores={parkedCores}
                 threadStats={threadStats}
               />
             ) : (
