@@ -12,7 +12,7 @@ import LoadingModal from "./LoadingModal";
 import QuickStatsGeneral from "./QuickStatsGeneral";
 import QuickStatsCores from "./QuickStatsCores";
 import ProcessesDisplay from "./ProcessesDisplay";
-import CpuHeatMap from "./cpuHeatMap";
+import CpuHeatMap from "./CpuHeatMap";
 import CoresLoadBarChart from './charts/CoresLoadBarChart'
 // Style
 import styles from "../css/App.module.css";
@@ -33,6 +33,7 @@ function App() {
   const currentData = history.length > 0 ? history.at(-1) : null;
   const isDataAvailable = history.length > 0 && staticData && threadStats;
   const isProcessDataAvaiable = Object.keys(processesData).length > 0;
+  
   return (
     <div className={styles.wrapper}>
       <Sidebar setView={setActiveView} activeView={activeView}></Sidebar>
@@ -58,12 +59,8 @@ function App() {
               <QuickStatsGeneral
                 cpuSpeedAvg={currentData.cpuSpeed.avg}
                 cpuMaxSpeed={currentData.cpuSpeed.max}
-                cpuTempAvg={
-                  currentData.cpuTemp ? currentData.cpuTemp.avg : null
-                }
-                cpuTempMax={
-                  currentData.cpuTemp ? currentData.cpuTemp.max : null
-                }
+                cpuAvgTemp={currentData.cpuTemp}
+                cpuMaxTemp={maxValues.cpuTemp}
                 cpuAvgLoad={getAvgLoad(history)}
                 cpuMaxLoad={maxValues.cpuLoad}
                 uptime={currentData.uptime}
@@ -116,7 +113,8 @@ function App() {
           <div className={styles.cpuHeatMapContainer}>
             {isDataAvailable ? (
               <CpuHeatMap
-                data={currentData.coresTemp}
+                coresTemp={currentData.coresTemp}
+                cpuTemp={currentData.cpuTemp}
               />
             ) : (
               <LoadingModal color="#6ac9bf" />
@@ -154,7 +152,6 @@ function App() {
           </div>
         </div>
       </DynamicSection>
-
       <StaticSection staticData={staticData}></StaticSection>
     </div>
   );
