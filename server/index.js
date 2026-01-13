@@ -8,6 +8,7 @@ import { error, timeStamp } from 'console';
 import { exitCode, uptime } from 'process';
 import { exec } from 'child_process';
 import util from 'util'
+import { clearTimeout } from 'timers';
 const execPromise = util.promisify(exec)
 const app = express()
 const port = 3000
@@ -19,7 +20,6 @@ const io = new Server(httpServer,{
         origin: "*",
     }
 })
-
 async function getWmiTemperature() {
     const fallback = {coresTemp: [], packageTemp: 0, gpuTemp: 0}
     try{
@@ -88,8 +88,12 @@ app.get('/staticData', async (req, res) => {
 
 io.on('connection', (socket)=>{
     console.log(`Client connected: ${socket.id}`)
-    try {
-        async function emitProcessesData(){
+    let isClientActive = true
+    let dynamicTimeoutId;
+    let processesTimeoutId;
+    async function loopProcessesData(){
+        if (!isClientActive) return
+        try{
             const rawProcessesData = await si.processes()
             let topProcesses = rawProcessesData.list
                 .filter((p) => p.name !== 'System Idle Process' && p.name !== 'Idle' && p.cpu > 0)
@@ -101,8 +105,17 @@ io.on('connection', (socket)=>{
                 total: rawProcessesData.list.length
             }
             socket.emit('processesData', processesData)
+        }catch(error){
+            console.error("Error in loopProcessesData:", error)
+        }finally{
+            if(isClientActive){
+                processesTimeoutId = setTimeout(loopProcessesData, 5000)
+            }
         }
-        async function emitDynamicData(){
+    }
+    async function loopDynamicData(){
+        if (!isClientActive) return
+        try{
             const [wmiData, rawCpuLoad, rawCpuSpeed, rawMemoryData] = await Promise.all([
                 getWmiTemperature(),
                 si.currentLoad(),
@@ -124,21 +137,22 @@ io.on('connection', (socket)=>{
                 gpuTemp: wmiData.gpuTemp
             }
             socket.emit('dynamicData', dynamicData)
-            console.log(dynamicData)
-        }   
-        emitDynamicData()
-        emitProcessesData()
-        const intervalIdDynamicData = setInterval(()=>{emitDynamicData()}, 2000)
-        const intervalIdProcessesData = setInterval(()=>{emitProcessesData()}, 5000)
-        socket.on('disconnect', ()=>{
-            console.log(`Client disconnected: ${socket.id}`)
-            clearInterval(intervalIdDynamicData)
-            clearInterval(intervalIdProcessesData)
-        })
-        
-    } catch (error) {
-        console.error(error)
-    }
+        }catch(error){
+            console.error("Error in loopDynamicData:", error)
+        }finally{
+            if(isClientActive){
+                dynamicTimeoutId = setTimeout(loopDynamicData, 2000)
+            }
+        }
+    }   
+    loopDynamicData()
+    loopProcessesData()
+    socket.on('disconnect', ()=>{
+        console.log(`Client disconnected: ${socket.id}`)
+        isClientActive = false
+        clearTimeout(processesTimeoutId)
+        clearTimeout(dynamicTimeoutId)
+    })
 })
 
 httpServer.listen(port, () => {
