@@ -18,7 +18,7 @@ export default function CpuCoresChart({data, amountCores}){
 
     return (
         <LineChart
-            style={{ backgroundColor: '#f0f0f0', padding: '1rem', borderRadius: '1rem'}}
+            style={{ backgroundColor: '#ffffff', padding: '1rem', borderRadius: '1rem'}}
             width={'100%'}
             height={'100%'}
             responsive
@@ -34,7 +34,9 @@ export default function CpuCoresChart({data, amountCores}){
             <XAxis dataKey={'timestamp'} />
             <YAxis domain={[0, 10]} unit='GHz'/>
             <Tooltip />
-            <Legend width={800}/>
+            <Legend 
+                iconType="circle"
+            /> 
             {
                 lines.map((line)=>(
                     <Line type='linear' key={line.key} dataKey={line.dataKey} stroke={line.stroke} dot={false} activeDot={false} isAnimationActive={false} name={line.name}/>

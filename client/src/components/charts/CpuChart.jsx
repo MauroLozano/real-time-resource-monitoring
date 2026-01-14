@@ -21,7 +21,7 @@ export default function CpuChart({data}) {
       <XAxis dataKey={'timestamp'} />
       <YAxis domain={[0, 100]} unit='%'/>
       <Tooltip />
-      <Legend />
+      <Legend iconType='circle'/>
       <Line type="monotone" dataKey="cpuLoad" stroke="#e95a5aff" strokeWidth={3} activeDot={{ r: 8 }} isAnimationActive={false}/>
     </LineChart>
   );
