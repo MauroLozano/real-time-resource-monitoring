@@ -1,7 +1,9 @@
 import React from "react";
 import styles from '../css/StaticSection.module.css'
 import LoadingModal from './LoadingModal'
-function StaticSection({staticData}){
+import eyeOpenSvg from '../assets/svg/eye.svg'
+import eyeClosedSvg from '../assets/svg/eye-closed.svg'
+function StaticSection({staticData, onToggle, isCollapsed}){
     if(!staticData){
         return (
             <section className={styles.staticSection}>
@@ -11,6 +13,9 @@ function StaticSection({staticData}){
     }
     return (
         <section className={styles.staticSection}>
+            <div className={`${styles.toggleOpenContainer}`} onClick={onToggle}>
+                <img src={isCollapsed ? eyeClosedSvg : eyeOpenSvg } className={styles.eyeSvg} alt="Toggle Views" />
+            </div>
             <h1 className={styles.sectionTitle}>System Components</h1>
             <h2 className={styles.componentName}>CPU</h2>
             <p><span className={styles.attributeName}>Brand:</span> {staticData.cpu.brand}</p>

@@ -22,10 +22,8 @@ function getAvgLoad(history) {
   let sum = 0;
   history.forEach((entry) => {
     sum += entry.cpuLoad;
-  });
-  return (sum / history.length).toFixed(2);
+  }); return (sum / history.length).toFixed(2);
 }
-
 
 function App() {
   const [activeView, setActiveView] = useState("CPUGeneralView");
@@ -33,11 +31,16 @@ function App() {
   const currentData = history.length > 0 ? history.at(-1) : null;
   const isDataAvailable = history.length > 0 && staticData && threadStats;
   const isProcessDataAvaiable = Object.keys(processesData).length > 0;
-  
-  return (
-    <div className={styles.wrapper}>
-      <Sidebar setView={setActiveView} activeView={activeView}></Sidebar>
 
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
+  const [isStaticSectionCollapsed, setIsStaticSectionCollapsed] = useState(false)
+  const toggleSidebar = () => setIsSidebarCollapsed(!isSidebarCollapsed)
+  const toggleStaticSection = () => setIsStaticSectionCollapsed(!isStaticSectionCollapsed)
+  let sidebarGridWidth = isSidebarCollapsed ? '0px' : '250px'
+  let staticSectionGridWidth = isStaticSectionCollapsed ? '0px' : '250px'
+  return (
+    <div className={styles.wrapper} style={{'--sidebar-grid-width': sidebarGridWidth, '--static-section-grid-width': staticSectionGridWidth}}>
+      <Sidebar setView={setActiveView} activeView={activeView} onToggle={toggleSidebar} isCollapsed={isSidebarCollapsed}></Sidebar>
       <DynamicSection
         className={`${styles.dynamicSection} ${styles.viewContainer}`}
       >
@@ -152,7 +155,7 @@ function App() {
           </div>
         </div>
       </DynamicSection>
-      <StaticSection staticData={staticData}></StaticSection>
+      <StaticSection staticData={staticData} onToggle={toggleStaticSection} isCollapsed={isStaticSectionCollapsed}></StaticSection>
     </div>
   );
 }

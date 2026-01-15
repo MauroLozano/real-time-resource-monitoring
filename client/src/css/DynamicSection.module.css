@@ -1,8 +1,10 @@
 .dynamicSection{
     background-color: var(--color-light-blue);
     background-image: url('../assets/backgrounds/handmade-paper.png');
+    grid-area: 1 / 2 / 2 / 3;
     position: relative;
     overflow: hidden;
     width: 100%;
     height: 100vh;
+    flex: 1;
 }
