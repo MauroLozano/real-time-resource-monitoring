@@ -1,8 +1,7 @@
 import React from "react";
 import styles from '../css/StaticSection.module.css'
 import LoadingModal from './LoadingModal'
-import eyeOpenSvg from '../assets/svg/eye.svg'
-import eyeClosedSvg from '../assets/svg/eye-closed.svg'
+import {EyeClosedIcon, EyeOpenIcon, BrainIcon, ProcessorIcon, SdCardIcon} from './Icons.jsx'
 function StaticSection({staticData, onToggle, isCollapsed}){
     if(!staticData){
         return (
@@ -14,16 +13,30 @@ function StaticSection({staticData, onToggle, isCollapsed}){
     return (
         <section className={styles.staticSection}>
             <div className={`${styles.toggleOpenContainer}`} onClick={onToggle}>
-                <img src={isCollapsed ? eyeClosedSvg : eyeOpenSvg } className={styles.eyeSvg} alt="Toggle Views" />
+                {
+                    isCollapsed?
+                        <EyeClosedIcon></EyeClosedIcon>
+                    :
+                        <EyeOpenIcon></EyeOpenIcon>
+                }
             </div>
             <h1 className={styles.sectionTitle}>System Components</h1>
-            <h2 className={styles.componentName}>CPU</h2>
+            <div className={styles.componentTitleContainer}>
+                <ProcessorIcon></ProcessorIcon>
+                <h2 className={styles.componentTitle}>CPU</h2>
+            </div>
             <p><span className={styles.attributeName}>Brand:</span> {staticData.cpu.brand}</p>
             <p><span className={styles.attributeName}>Manufacturer:</span> {staticData.cpu.manufacturer}</p>
             <p><span className={styles.attributeName}>Amount of cores:</span> {staticData.cpu.cores}</p>
-            <h2 className={styles.componentName}>Memory</h2>
+            <div className={styles.componentTitleContainer}>
+                <BrainIcon></BrainIcon>
+                <h2 className={styles.componentTitle}>Memory</h2>
+            </div>
             <p><span className={styles.attributeName}>Total:</span> {staticData.memory.total} GB</p>
-            <h2 className={styles.componentName}>Storage</h2>
+            <div className={styles.componentTitleContainer}>
+                <SdCardIcon></SdCardIcon>
+                <h2 className={styles.componentTitle}>Storage</h2>
+            </div>
             {
                 staticData.storage.map((disk, index) =>(
                     <div key={index} className={styles.componentSeparator}>

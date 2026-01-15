@@ -14,13 +14,18 @@
     padding-bottom: .5rem;
     border-bottom: 2px solid #cbf3f0
 }
+.componentTitle{
+    font-size: 1.8rem;
+}
+.componentTitleContainer{
+    display: flex;
+    align-items: center;
+    margin: 1rem 0 .5rem 0;
+    gap: .5rem;
+}
 .attributeName{
     font-size: 1rem;
     font-weight: 700;
-}
-.componentName{
-    margin: 1rem 0 .5rem 0;
-    font-size: 1.8rem;
 }
 .componentSeparator{
     margin: .5rem 0;
