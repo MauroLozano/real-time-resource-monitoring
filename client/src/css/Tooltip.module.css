@@ -1,0 +1,36 @@
+.tooltip{
+    position: absolute;
+    opacity: 0;
+    top: 100%;
+    left: 50%;
+    background-color: var(--color-light-blue);
+    border-radius: 1rem;
+    transform: translate(-50%, 0);
+    max-width: 200px;
+    min-width: 100px;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    padding: .5rem;
+    transition: opacity .3s ease-in-out,
+                transform .3s ease-in-out;
+}
+.tooltip::after{
+    content: "";
+    position: absolute;
+    display: block;
+    transform: translateX(-50%);
+    left: 50%;
+    bottom: 100%;
+    background-color: var(--color-light-blue);
+    width: 1.5rem;
+    height: .5rem;
+    clip-path: polygon(50% 0, 0 100%, 100% 100%);
+}
+.visible{
+    opacity: 1;
+    transform: translate(-50%, .5rem);
+}

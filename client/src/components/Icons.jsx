@@ -1,3 +1,6 @@
+import { Tooltip } from "./Tooltip"
+import { useState } from "react"
+import styles from '../css/Icons.module.css'
 const IconWrapper = ({children}) =>{
     return(
         <svg
@@ -40,3 +43,14 @@ export const SdCardIcon = () =>(
         <path d="M7 21h10a2 2 0 0 0 2 -2v-14a2 2 0 0 0 -2 -2h-6.172a2 2 0 0 0 -1.414 .586l-3.828 3.828a2 2 0 0 0 -.586 1.414v10.172a2 2 0 0 0 2 2" /><path d="M13 6v2" /><path d="M16 6v2" /><path d="M10 7v1" />
     </IconWrapper>
 )
+export const ErrorIcon = ({error}) =>{
+    const [isHovered, setIsHovered] = useState(false)
+    return (
+        <div className={styles.errorIcon} onMouseEnter={()=>setIsHovered(true)} onMouseLeave={()=>setIsHovered(false)}>
+            <IconWrapper>
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /><path d="M12 9v4" /><path d="M12 16v.01" />
+            </IconWrapper>
+            <Tooltip text={error} showTooltip={isHovered}></Tooltip>
+        </div>
+    )
+}

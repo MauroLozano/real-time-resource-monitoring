@@ -1,7 +1,7 @@
     import React from "react";
     import { useState, useEffect} from "react";
     import styles from '../css/CpuHeatMap.module.css'
-    import exclamationSvg from '../assets/svg/exclamation-circle.svg'
+    import { ErrorIcon } from "./Icons";
     const coreSquare = (temp, index, isOnlySingleSensor)=>{
         const hue = 120 - (temp * 1.2)
         const color = `hsl(${hue}, 100%, 66%)`
@@ -29,8 +29,6 @@
     export default function CpuHeatMap({coresTemp, cpuTemp}){
         const hasCoresData = coresTemp && coresTemp.length > 0
         const isOnlySingleSensor = coresTemp.length == 0 && cpuTemp && cpuTemp > 0
-        const hasError = !coresTemp && !cpuTemp || cpuTemp == 0
-
         const totalCores = coresTemp.length
         const columns = Math.ceil(Math.sqrt(totalCores))
         const rows = Math.ceil(totalCores / columns)
@@ -62,8 +60,8 @@
                                 coreSquare(coreTemp, index, isOnlySingleSensor)
                             ))
                         :
-                        <div className={styles.error}>
-                            <img src={exclamationSvg}></img>
+                        <div className={styles.error} >
+                            <ErrorIcon error='No sensors detected'></ErrorIcon>
                         </div>
                     }
                 </div>
