@@ -4,17 +4,21 @@
     justify-content: center;
     flex-direction: column;
     text-align: center;
+    container-type: inline-size;
 }
 .title{
-    font-size: 1rem;
+    font-size: clamp(1rem, 12cqw, 2rem);
     margin-bottom: .4rem;
+    text-overflow: ellipsis;
+    font-weight: 300;
 }
 .data{
-    font-size: 2rem;
+    font-size: clamp(.5rem, 25cqw, 2.5rem);
+    font-weight: 400;
 }
 .label{
     font-size: 1rem;
 }
 .unit{
-    font-size: 1.2rem;
+    font-size: clamp(1rem , 12cqw, 2rem);
 }
