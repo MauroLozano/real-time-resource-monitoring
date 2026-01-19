@@ -1,5 +1,5 @@
 import express from 'express';
-import os from 'os'
+import os, { platform } from 'os'
 import { createServer, validateHeaderName } from 'http'
 import { Server } from 'socket.io';
 import cors from 'cors'
@@ -57,6 +57,7 @@ async function getWmiTemperature() {
         return fallback
     }
 }
+
 app.get('/staticData', async (req, res) => {
     try {
         const [rawCpuData, rawMemoryData, rawStorageData] = await Promise.all([
@@ -65,6 +66,13 @@ app.get('/staticData', async (req, res) => {
             si.diskLayout()
         ])
         const staticData = {
+            os: {
+                platform: os.platform(),
+                hostname: os.hostname(),
+                architecture: os.arch(),
+                release: os.release(),
+                type: os.type()
+            },
             cpu:{
                 manufacturer: rawCpuData.manufacturer,
                 brand: rawCpuData.brand,
