@@ -46,6 +46,16 @@ function StaticSection({staticData, onToggle, isCollapsed}){
                     </div>
                 ))
             }
+            <div className={styles.componentTitleContainer}>
+                <SdCardIcon></SdCardIcon>
+                <h2 className={styles.componentTitle}>Operative System</h2>
+            </div>
+                <p><span className={styles.attributeName}>Platform:</span> {staticData.os.platform}</p>
+                <p><span className={styles.attributeName}>Hostname:</span> {staticData.os.hostname}</p>
+                <p><span className={styles.attributeName}>Architecture:</span> {staticData.os.architecture}</p>
+                <p><span className={styles.attributeName}>{staticData.os.platform == 'linux' ? 'Kernel V.' : staticData.os.platform == 'win32'? 'Build V.:' : 'Release:'}</span> {staticData.os.release}</p>
+                <p><span className={styles.attributeName}>Type:</span> {staticData.os.type}</p>
+
         </section>
     )
 }
