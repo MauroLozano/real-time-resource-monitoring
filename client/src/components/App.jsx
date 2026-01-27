@@ -27,7 +27,7 @@ function getAvgLoad(history) {
 
 function App() {
   const [activeView, setActiveView] = useState("CPUGeneralView");
-  const { history, staticData, maxValues, coreOverload, processesData, thermalHeadroom, threadStats, mostActiveCore, parkedCores} = useSystemData();
+  const { history, staticData, maxValues, coreOverload, processesData, thermalHeadroom, threadStats, mostActiveCore, parkedCores, tempData} = useSystemData();
   const currentData = history.length > 0 ? history.at(-1) : null;
   const isDataAvailable = history.length > 0 && staticData && threadStats;
   const isProcessDataAvaiable = Object.keys(processesData).length > 0;
@@ -62,7 +62,7 @@ function App() {
               <QuickStatsGeneral
                 cpuSpeedAvg={currentData.cpuSpeed.avg}
                 cpuMaxSpeed={currentData.cpuSpeed.max}
-                cpuAvgTemp={currentData.cpuTemp}
+                cpuAvgTemp={tempData.cpuTemp}
                 cpuMaxTemp={maxValues.cpuTemp}
                 cpuAvgLoad={getAvgLoad(history)}
                 cpuMaxLoad={maxValues.cpuLoad}
@@ -116,8 +116,8 @@ function App() {
           <div className={styles.cpuHeatMapContainer}>
             {isDataAvailable ? (
               <CpuHeatMap
-                coresTemp={currentData.coresTemp}
-                cpuTemp={currentData.cpuTemp}
+                coresTemp={tempData.coresTemp}
+                cpuTemp={tempData.cpuTemp}
               />
             ) : (
               <LoadingModal color="#6ac9bf" />

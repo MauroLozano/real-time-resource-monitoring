@@ -9,6 +9,7 @@ import { exitCode, uptime } from 'process';
 import { exec } from 'child_process';
 import util from 'util'
 import { clearTimeout } from 'timers';
+import { lookup, TIMEOUT } from 'dns';
 const execPromise = util.promisify(exec)
 const app = express()
 const port = 3000
@@ -24,7 +25,7 @@ async function getWmiTemperature() {
     const fallback = {coresTemp: [], packageTemp: 0, gpuTemp: 0}
     try{
         const cmd = `powershell "Get-CimInstance -Namespace 'root\\LibreHardwareMonitor' -ClassName Sensor -ErrorAction SilentlyContinue | Where-Object { $_.SensorType -eq 'Temperature' -and ($_.Name -like '*Core*' -or $_.Name -like 'Temperature #*' -or $_.Name -like '*GPU*') } | Select-Object Name, Value | ConvertTo-Json"`;
-        const { stdout } = await execPromise(cmd)
+        const { stdout } = await execPromise(cmd, {timeout: 4000})
         if (!stdout) return fallback
         let data
         try{
@@ -53,7 +54,7 @@ async function getWmiTemperature() {
         const gpuTemp = gpuSensor ? parseFloat(gpuSensor.Value.toFixed(1)) : 0
         return {coresTemp, packageTemp, gpuTemp}
     }catch(error){
-        console.error("WMI Error (LHM not detected):", error.message);
+        console.log("WMI Error (LHM not detected)");
         return fallback
     }
 }
@@ -99,6 +100,7 @@ io.on('connection', (socket)=>{
     let isClientActive = true
     let dynamicTimeoutId;
     let processesTimeoutId;
+    let tempTimoutId;
     async function loopProcessesData(){
         if (!isClientActive) return
         try{
@@ -124,8 +126,7 @@ io.on('connection', (socket)=>{
     async function loopDynamicData(){
         if (!isClientActive) return
         try{
-            const [wmiData, rawCpuLoad, rawCpuSpeed, rawMemoryData] = await Promise.all([
-                getWmiTemperature(),
+            const [rawCpuLoad, rawCpuSpeed, rawMemoryData] = await Promise.all([
                 si.currentLoad(),
                 si.cpuCurrentSpeed(),
                 si.mem(),
@@ -140,9 +141,6 @@ io.on('connection', (socket)=>{
                 memUsed: parseFloat((rawMemoryData.used / (1024 ** 3)).toFixed(2)),
                 timestamp: new Date().toLocaleTimeString("it-IT"),
                 uptime: os.uptime(),
-                cpuTemp: wmiData.packageTemp,
-                coresTemp: wmiData.coresTemp,
-                gpuTemp: wmiData.gpuTemp
             }
             socket.emit('dynamicData', dynamicData)
         }catch(error){
@@ -153,13 +151,35 @@ io.on('connection', (socket)=>{
             }
         }
     }   
+    async function loopTempData() {
+        if (!isClientActive) return
+        try{
+            const [wmiData] = await Promise.all([
+                getWmiTemperature()
+            ])
+            const tempData ={
+                cpuTemp: wmiData.packageTemp,
+                coresTemp: wmiData.coresTemp,
+                gpuTemp: wmiData.gpuTemp
+            }
+            socket.emit('tempData',tempData)            
+        }catch(error){
+            console.error("Error in loopTempData:", error)
+        }finally{
+            if(isClientActive){
+                tempTimoutId = setTimeout(loopTempData, 5000)
+            }
+        }
+    }
     loopDynamicData()
     loopProcessesData()
+    loopTempData()
     socket.on('disconnect', ()=>{
         console.log(`Client disconnected: ${socket.id}`)
         isClientActive = false
         clearTimeout(processesTimeoutId)
         clearTimeout(dynamicTimeoutId)
+        clearTimeout(tempTimoutId)
     })
 })
 

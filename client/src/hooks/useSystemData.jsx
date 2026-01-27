@@ -27,6 +27,7 @@ export default function useSystemData(){
     const [processesData, setProcessesData] = useState({})
     const [coreOverload, setCoreOverload] = useState(null)
     const [staticData, setStaticData] = useState(null)
+    const [tempData, setTempData] = useState(null)
     const [threadStats, setThreadStats] = useState(null)
     const [thermalHeadroom, setThermalHeadroom] = useState(null)
     const [mostActiveCore, setMostActiveCore] = useState(null)
@@ -86,9 +87,6 @@ export default function useSystemData(){
                 activeThreads: activeThreadsCount,
                 totalThreads: totalThreads
             })
-            if(data.coresTemp.length > 0){
-                setThermalHeadroom((100 - Math.max(...data.coresTemp)).toFixed(2))
-            }else{setThermalHeadroom(null)}
             setParkedCores({
                 parked: getParkedCores(data.coresLoad),
                 total: data.coresLoad.length
@@ -98,13 +96,20 @@ export default function useSystemData(){
                 value: Math.max(...data.coresLoad)
             })
         })
+        socket.on('tempData', (tempData) =>{
+            if(tempData.coresTemp.length > 0){
+                setThermalHeadroom((100 - Math.max(...data.coresTemp)).toFixed(2))
+            }else{setThermalHeadroom(null)}
+            setTempData(tempData)
+        })
         socket.on('processesData',(processesData)=>{
             setProcessesData(processesData)
         })
         return ()=>{
             socket.off('dynamicData')
             socket.off('processesData')
+            socket.off('tempData')
         } 
     },[])
-    return {history, staticData, maxValues, coreOverload, processesData, thermalHeadroom, threadStats , mostActiveCore, parkedCores}
+    return {history, staticData, maxValues, coreOverload, processesData, thermalHeadroom, threadStats , mostActiveCore, parkedCores, tempData}
 }
