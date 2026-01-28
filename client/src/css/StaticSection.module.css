@@ -6,6 +6,11 @@
     background-color: var(--color-light-green);
     grid-area: 1 / 3 / 2 / 4;
 }
+.staticSectionContentCollapsed{
+    opacity: 0;
+    pointer-events: none;
+    display: none;
+}
 .sectionTitle{
     text-align: center;
     font-size: 2rem;
