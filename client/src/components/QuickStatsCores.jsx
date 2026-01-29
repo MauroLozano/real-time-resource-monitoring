@@ -9,7 +9,7 @@ export default function QuickStatsCores({coreTempMax, thermalHeadroom,coreSpeedA
             <QuickStatsElement title ='Core Avg. Speed' data={coreSpeedAvg ?? 'Error'} unit='GHz'/>
             <QuickStatsElement title ='Core Max. Speed' label={`${coreSpeedMax ? `Core ${coreSpeedMax[0]}` : 'Core -'}`} data={coreSpeedMax ? coreSpeedMax[1] : 'Error'} unit='GHz'/>
             <QuickStatsElement title ='Core Overload' data={coreOverload ?? 'Error'} unit='%'/>
-            <QuickStatsElement title ='Most Active Core' label={`${mostActiveCore?.index ? `Core ${mostActiveCore.index}` : 'Core -'}`} data={mostActiveCore?.value ?? 'Error'} unit='%'/>
+            <QuickStatsElement title ='Most Active Core' label={`Core ${mostActiveCore?.index ?? '-'}`} data={mostActiveCore?.value ?? 'Error'} unit='%'/>
             <QuickStatsElement title ='Parked Cores' data={parkedCores ? `${parkedCores.parked}/${parkedCores.total}` : 'Error'}/>
             <QuickStatsElement title ='Thread Efficiency' label={`${threadStats ? `${threadStats.activeThreads}/${threadStats.totalThreads}` : '-'}`} data={threadStats ? `${threadStats.threadEfficiency}` : 'Error'} unit='%'/>
         </aside>
