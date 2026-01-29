@@ -4,12 +4,9 @@ import { createServer, validateHeaderName } from 'http'
 import { Server } from 'socket.io';
 import cors from 'cors'
 import si from 'systeminformation';
-import { error, timeStamp } from 'console';
-import { exitCode, uptime } from 'process';
 import { exec } from 'child_process';
 import util from 'util'
 import { clearTimeout } from 'timers';
-import { lookup, TIMEOUT } from 'dns';
 const execPromise = util.promisify(exec)
 const app = express()
 const port = 3000

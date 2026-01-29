@@ -1,5 +1,4 @@
 import React from "react";
-import { useState } from "react";
 import styles from '../css/Sidebar.module.css'
 import SidebarElement from './SidebarElement.jsx'
 import {EyeClosedIcon, EyeOpenIcon} from './Icons.jsx'

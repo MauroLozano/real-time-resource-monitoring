@@ -1,5 +1,4 @@
     import React from "react";
-    import { useState, useEffect} from "react";
     import styles from '../css/CpuHeatMap.module.css'
     import { ErrorIcon } from "./Icons";
     const coreSquare = (temp, index, isOnlySingleSensor)=>{
