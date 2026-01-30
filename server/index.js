@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { raw } from 'express';
 import os, { platform } from 'os'
 import { createServer, validateHeaderName } from 'http'
 import { Server } from 'socket.io';
@@ -18,6 +18,15 @@ const io = new Server(httpServer,{
         origin: "*",
     }
 })
+
+function getParkedCores(coresLoad){
+    if (!coresLoad) return
+    let counter = 0
+    coresLoad.forEach(load => {
+        if (load == 0) counter ++
+    });
+    return counter
+}
 async function getWmiTemperature() {
     const fallback = {coresTemp: [], packageTemp: 0, gpuTemp: 0}
     try{
@@ -81,7 +90,8 @@ app.get('/staticData', async (req, res) => {
             cpu:{
                 manufacturer: rawCpuData.manufacturer,
                 brand: rawCpuData.brand,
-                cores: rawCpuData.cores
+                physicalCores: rawCpuData.physicalCores,
+                logicalThreads: rawCpuData.cores
             },
             memory:{
                 total: parseFloat((rawMemoryData.total / (1024 ** 3)).toFixed(2))
@@ -143,11 +153,23 @@ io.on('connection', (socket)=>{
             const totalThreadsCount = coresLoadArray.length
             const activeThreadsCount = getActiveThreadsCount(coresLoadArray)
             const threadEfficiency = totalThreadsCount > 0 ? ((activeThreadsCount/totalThreadsCount) * 100).toFixed(2) : 0
+            let coreOverload = 0
+            if (coresLoadArray && coresLoadArray.length > 0) {
+                const maxCoreLoad = Math.max(...coresLoadArray)
+                coreOverload = (maxCoreLoad - rawCpuLoad.currentLoad).toFixed(2)
+            }
+            const mostActiveCore = {
+                index: coresLoadArray.indexOf(Math.max(...coresLoadArray)),
+                value: Math.max(...coresLoadArray)
+            }
             // Declaration of Data to send
             const dynamicData = {
                 cpuLoad: rawCpuLoad.currentLoad,
                 cpuSpeed: rawCpuSpeed,
                 coresLoad: coresLoadArray,
+                coreOverload: coreOverload,
+                mostActiveCore: mostActiveCore,
+                parkedCores: getParkedCores(coresLoadArray),
                 activeThreadsCount: activeThreadsCount,
                 threadEfficiency: threadEfficiency,
                 memFree: parseFloat((rawMemoryData.free / (1024 ** 3)).toFixed(2)),
@@ -170,10 +192,20 @@ io.on('connection', (socket)=>{
             const [wmiData] = await Promise.all([
                 getWmiTemperature()
             ])
+            const coresTemp = wmiData.coresTemp ?? []
+            let thermalHeadroom = 0
+            if(coresTemp.length > 0){
+                const coresTempValues = coresTemp.map(entry =>{
+                    return entry.value
+                })
+                thermalHeadroom = parseFloat((100 - Math.max(...coresTempValues)).toFixed(2))
+            }else {thermalHeadroom = 100}
+
             const tempData ={
-                cpuTemp: wmiData.packageTemp,
-                coresTemp: wmiData.coresTemp,
-                gpuTemp: wmiData.gpuTemp
+                cpuTemp: wmiData.packageTemp?? 0,
+                coresTemp: coresTemp,
+                thermalHeadroom: thermalHeadroom,
+                gpuTemp: wmiData.gpuTemp ?? 0
             }
             socket.emit('tempData',tempData)            
         }catch(error){

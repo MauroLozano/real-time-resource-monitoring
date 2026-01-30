@@ -27,11 +27,10 @@ function getAvgLoad(history) {
 
 function App() {
   const [activeView, setActiveView] = useState("CPUGeneralView");
-  const { history, staticData, maxValues, coreOverload, processesData, thermalHeadroom, mostActiveCore, parkedCores, tempData} = useSystemData();
+  const { history, staticData, maxValues, processesData, tempData} = useSystemData();
   const currentData = history.length > 0 ? history.at(-1) : null;
   const isDataAvailable = history.length > 0 && staticData;
   const isProcessDataAvaiable = Object.keys(processesData).length > 0;
-
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
   const [isStaticSectionCollapsed, setIsStaticSectionCollapsed] = useState(false)
   const toggleSidebar = () => setIsSidebarCollapsed(!isSidebarCollapsed)
@@ -91,7 +90,7 @@ function App() {
             {isDataAvailable ? (
               <CpuCoresChart
                 data={history}
-                amountCores={staticData.cpu.cores}
+                amountCores={staticData.cpu.logicalThreads}
               />
             ) : (
               <LoadingModal color="#6ac9bf" />
@@ -101,14 +100,15 @@ function App() {
             {isDataAvailable ? (
               <QuickStatsCores
                 coreTempMax={maxValues.coreTemp ? maxValues.coreTemp : null}  
-                thermalHeadroom={thermalHeadroom}
+                thermalHeadroom={tempData.thermalHeadroom}
                 coreSpeedAvg={currentData.cpuSpeed.avg}
                 coreSpeedMax={maxValues.coreSpeed ? maxValues.coreSpeed : null}
-                coreOverload={coreOverload}
-                mostActiveCore={mostActiveCore}
-                parkedCores={parkedCores}
+                coreOverload={currentData.coreOverload}
+                mostActiveCore={currentData.mostActiveCore}
+                parkedCores={currentData.parkedCores}
                 threadEfficiency={currentData.threadEfficiency}
                 activeThreadsCount={currentData.activeThreadsCount}
+                totalThreads={staticData.cpu.logicalThreads}
               />
             ) : (
               <LoadingModal color="#6ac9bf" />

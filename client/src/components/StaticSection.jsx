@@ -28,7 +28,7 @@ function StaticSection({staticData, onToggle, isCollapsed}){
                 </div>
                 <p><span className={styles.attributeName}>Brand:</span> {staticData.cpu.brand}</p>
                 <p><span className={styles.attributeName}>Manufacturer:</span> {staticData.cpu.manufacturer}</p>
-                <p><span className={styles.attributeName}>Amount of cores:</span> {staticData.cpu.cores}</p>
+                <p><span className={styles.attributeName}>Amount of cores:</span> {staticData.cpu.physicalCores}</p>
                 <div className={styles.componentTitleContainer}>
                     <BrainIcon></BrainIcon>
                     <h2 className={styles.componentTitle}>Memory</h2>
