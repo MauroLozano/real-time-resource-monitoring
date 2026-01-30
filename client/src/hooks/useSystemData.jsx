@@ -6,14 +6,7 @@ const serverUrl = 'http://localhost:3000'
 import { io } from 'socket.io-client';
 const socket = io('http://localhost:3000')
 
-function getActiveThreadsCount(coresLoad){
-    if (!coresLoad) return
-    let counter = 0
-    coresLoad.forEach(load => {
-        if (load > 5) counter ++
-    });
-    return counter
-}
+
 function getParkedCores(coresLoad){
     if (!coresLoad) return
     let counter = 0
@@ -79,14 +72,6 @@ export default function useSystemData(){
                 overload = (maxCoreLoad - data.cpuLoad).toFixed(2)
             }
             setCoreOverload(overload)
-            const activeThreadsCount = getActiveThreadsCount(data.coresLoad)
-            const totalThreads = data.coresLoad.length
-            const threadEfficiency = totalThreads > 0 ? ((activeThreadsCount/totalThreads) * 100).toFixed(2) : 0
-            setThreadStats({
-                threadEfficiency: threadEfficiency,
-                activeThreads: activeThreadsCount,
-                totalThreads: totalThreads
-            })
             setParkedCores({
                 parked: getParkedCores(data.coresLoad),
                 total: data.coresLoad.length
@@ -111,5 +96,5 @@ export default function useSystemData(){
             socket.off('tempData')
         } 
     },[])
-    return {history, staticData, maxValues, coreOverload, processesData, thermalHeadroom, threadStats , mostActiveCore, parkedCores, tempData}
+    return {history, staticData, maxValues, coreOverload, processesData, thermalHeadroom, mostActiveCore, parkedCores, tempData}
 }

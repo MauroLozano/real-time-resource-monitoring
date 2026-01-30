@@ -27,9 +27,9 @@ function getAvgLoad(history) {
 
 function App() {
   const [activeView, setActiveView] = useState("CPUGeneralView");
-  const { history, staticData, maxValues, coreOverload, processesData, thermalHeadroom, threadStats, mostActiveCore, parkedCores, tempData} = useSystemData();
+  const { history, staticData, maxValues, coreOverload, processesData, thermalHeadroom, mostActiveCore, parkedCores, tempData} = useSystemData();
   const currentData = history.length > 0 ? history.at(-1) : null;
-  const isDataAvailable = history.length > 0 && staticData && threadStats;
+  const isDataAvailable = history.length > 0 && staticData;
   const isProcessDataAvaiable = Object.keys(processesData).length > 0;
 
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
@@ -107,7 +107,8 @@ function App() {
                 coreOverload={coreOverload}
                 mostActiveCore={mostActiveCore}
                 parkedCores={parkedCores}
-                threadStats={threadStats}
+                threadEfficiency={currentData.threadEfficiency}
+                activeThreadsCount={currentData.activeThreadsCount}
               />
             ) : (
               <LoadingModal color="#6ac9bf" />

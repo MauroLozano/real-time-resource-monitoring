@@ -55,7 +55,14 @@ async function getWmiTemperature() {
         return fallback
     }
 }
-
+function getActiveThreadsCount(coresLoad){
+    if (!coresLoad) return
+    let counter = 0
+    coresLoad.forEach(load => {
+        if (load > 5) counter ++
+    });
+    return counter
+}
 app.get('/staticData', async (req, res) => {
     try {
         const [rawCpuData, rawMemoryData, rawStorageData] = await Promise.all([
@@ -123,17 +130,26 @@ io.on('connection', (socket)=>{
     async function loopDynamicData(){
         if (!isClientActive) return
         try{
+            // Getting raw data from SystemInformation library
             const [rawCpuLoad, rawCpuSpeed, rawMemoryData] = await Promise.all([
                 si.currentLoad(),
                 si.cpuCurrentSpeed(),
                 si.mem(),
             ])
+            // Data calculations
+            const coresLoadArray = rawCpuLoad.cpus.map((coreData)=>{
+                return parseFloat(coreData.load.toFixed(2))
+            })
+            const totalThreadsCount = coresLoadArray.length
+            const activeThreadsCount = getActiveThreadsCount(coresLoadArray)
+            const threadEfficiency = totalThreadsCount > 0 ? ((activeThreadsCount/totalThreadsCount) * 100).toFixed(2) : 0
+            // Declaration of Data to send
             const dynamicData = {
                 cpuLoad: rawCpuLoad.currentLoad,
                 cpuSpeed: rawCpuSpeed,
-                coresLoad: rawCpuLoad.cpus.map((coreData)=>{
-                    return parseFloat(coreData.load.toFixed(2))
-                }),
+                coresLoad: coresLoadArray,
+                activeThreadsCount: activeThreadsCount,
+                threadEfficiency: threadEfficiency,
                 memFree: parseFloat((rawMemoryData.free / (1024 ** 3)).toFixed(2)),
                 memUsed: parseFloat((rawMemoryData.used / (1024 ** 3)).toFixed(2)),
                 timestamp: new Date().toLocaleTimeString("it-IT"),
