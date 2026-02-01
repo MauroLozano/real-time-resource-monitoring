@@ -1,5 +1,6 @@
 import React from "react";
 import { Cell, Pie, PieChart, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { useMetrics } from "../../context/MetricsProvider";
 import LoadingModal from '../LoadingModal'
 const colors = ['#3cb44b', '#e6194bff'];
 const RADIAN = Math.PI / 180;
@@ -20,7 +21,8 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
         </text>
     );
 };
-export default function MemPieChart({data, totalMem}){
+export default function MemPieChart(){
+    const { history: data } = useMetrics()
     if(!data || data.length === 0) {
         return(
             <div>

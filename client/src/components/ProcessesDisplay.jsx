@@ -1,7 +1,9 @@
 import React from "react";
 import styles from '../css/ProcessesDisplay.module.css'
 import ProcessEntry from "./ProcessEntry";
-export default function ProcessesDisplay({processesList}){
+import { useMetrics } from "../context/MetricsProvider";
+export default function ProcessesDisplay(){
+    const {processesData: {topProcesses: processesList}} = useMetrics()
     return(
         <div className={styles.processesDisplay}>
             <div className={styles.header}>

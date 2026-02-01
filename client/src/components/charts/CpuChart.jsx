@@ -1,7 +1,8 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import React from "react";
-
-export default function CpuChart({data}) {
+import { useMetrics } from '../../context/MetricsProvider';
+export default function CpuChart() {
+  const {history: data} = useMetrics()
   if(!data || data.length === 0) {
     return(
       <div>

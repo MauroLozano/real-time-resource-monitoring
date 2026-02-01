@@ -159,7 +159,7 @@ io.on('connection', (socket)=>{
                 coreOverload = (maxCoreLoad - rawCpuLoad.currentLoad).toFixed(2)
             }
             const mostActiveCore = {
-                index: coresLoadArray.indexOf(Math.max(...coresLoadArray)),
+                coreNumber: coresLoadArray.indexOf(Math.max(...coresLoadArray)),
                 value: Math.max(...coresLoadArray)
             }
             // Declaration of Data to send

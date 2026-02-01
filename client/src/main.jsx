@@ -1,10 +1,16 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
+import  { StaticDataProvider } from './context/StaticDataProvider'
+import { MetricsProvider } from './context/MetricsProvider'
 import App from './components/App'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <StaticDataProvider>
+      <MetricsProvider>
+        <App />
+      </MetricsProvider>
+    </StaticDataProvider>
   </StrictMode>,
 )

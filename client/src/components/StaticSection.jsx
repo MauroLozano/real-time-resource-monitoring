@@ -1,9 +1,11 @@
 import React from "react";
 import styles from '../css/StaticSection.module.css'
 import LoadingModal from './LoadingModal'
+import { useStaticData } from "../context/StaticDataProvider.jsx";
 import {EyeClosedIcon, EyeOpenIcon, BrainIcon, ProcessorIcon, SdCardIcon} from './Icons.jsx'
-function StaticSection({staticData, onToggle, isCollapsed}){
-    if(!staticData){
+function StaticSection({ onToggle, isCollapsed}){
+    const { staticData, loading } = useStaticData()
+    if(!staticData && loading){
         return (
             <section className={styles.staticSection}>
                 <LoadingModal color='#cbf3f0'></LoadingModal>

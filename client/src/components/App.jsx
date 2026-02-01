@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 // Components
-import useSystemData from "../hooks/useSystemData";
 import StaticSection from "./StaticSection";
 import CpuChart from "./charts/CpuChart";
 import CpuCoresChart from "./charts/CpuCoresChart";
@@ -16,20 +15,15 @@ import CpuHeatMap from "./CpuHeatMap";
 import CoresLoadBarChart from './charts/CoresLoadBarChart'
 // Style
 import styles from "../css/App.module.css";
-
-function getAvgLoad(history) {
-  if (!history) return;
-  let sum = 0;
-  history.forEach((entry) => {
-    sum += entry.cpuLoad;
-  }); return (sum / history.length).toFixed(2);
-}
+// Context
+import { useStaticData } from '../context/StaticDataProvider'
+import { useMetrics } from "../context/MetricsProvider";
 
 function App() {
   const [activeView, setActiveView] = useState("CPUGeneralView");
-  const { history, staticData, maxValues, processesData, tempData} = useSystemData();
-  const currentData = history.length > 0 ? history.at(-1) : null;
-  const isDataAvailable = history.length > 0 && staticData;
+  const { history, processesData} = useMetrics();
+  const { loading: isStaticLoading } = useStaticData()
+  const isDataAvailable = history.length > 0 && !isStaticLoading;
   const isProcessDataAvaiable = Object.keys(processesData).length > 0;
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
   const [isStaticSectionCollapsed, setIsStaticSectionCollapsed] = useState(false)
@@ -51,30 +45,21 @@ function App() {
         >
           <div className={`${styles.cpuGeneralChart}`}>
             {isDataAvailable ? (
-              <CpuChart data={history} />
+              <CpuChart />
             ) : (
               <LoadingModal color="#6ac9bf" />
             )}
           </div>
           <div className={styles.quickStatsContainer}>
             {isDataAvailable && isProcessDataAvaiable ? (
-              <QuickStatsGeneral
-                cpuSpeedAvg={currentData.cpuSpeed.avg}
-                cpuMaxSpeed={currentData.cpuSpeed.max}
-                cpuAvgTemp={tempData.cpuTemp}
-                cpuMaxTemp={maxValues.cpuTemp}
-                cpuAvgLoad={getAvgLoad(history)}
-                cpuMaxLoad={maxValues.cpuLoad}
-                uptime={currentData.uptime}
-                numberProcesses={processesData.total}
-              />
+              <QuickStatsGeneral />
             ) : (
               <LoadingModal color="#6ac9bf" />
             )}
           </div>
           <div className={styles.processesContainer}>
             {isProcessDataAvaiable ? (
-              <ProcessesDisplay processesList={processesData.topProcesses} />
+              <ProcessesDisplay />
             ) : (
               <LoadingModal color="#6ac9bf" />
             )}
@@ -88,47 +73,28 @@ function App() {
         >
           <div className={`${styles.cpuCoresChart}`}>
             {isDataAvailable ? (
-              <CpuCoresChart
-                data={history}
-                amountCores={staticData.cpu.logicalThreads}
-              />
+              <CpuCoresChart />
             ) : (
               <LoadingModal color="#6ac9bf" />
             )}
           </div>
           <div className={styles.quickStatsContainer}>
             {isDataAvailable ? (
-              <QuickStatsCores
-                coreTempMax={maxValues.coreTemp ? maxValues.coreTemp : null}  
-                thermalHeadroom={tempData.thermalHeadroom}
-                coreSpeedAvg={currentData.cpuSpeed.avg}
-                coreSpeedMax={maxValues.coreSpeed ? maxValues.coreSpeed : null}
-                coreOverload={currentData.coreOverload}
-                mostActiveCore={currentData.mostActiveCore}
-                parkedCores={currentData.parkedCores}
-                threadEfficiency={currentData.threadEfficiency}
-                activeThreadsCount={currentData.activeThreadsCount}
-                totalThreads={staticData.cpu.logicalThreads}
-              />
+              <QuickStatsCores />
             ) : (
               <LoadingModal color="#6ac9bf" />
             )}
           </div>
           <div className={styles.cpuHeatMapContainer}>
             {isDataAvailable ? (
-              <CpuHeatMap
-                coresTemp={tempData.coresTemp}
-                cpuTemp={tempData.cpuTemp}
-              />
+              <CpuHeatMap />
             ) : (
               <LoadingModal color="#6ac9bf" />
             )}
           </div>
           <div className={styles.coresLoadBarChartContainer}>
             {isDataAvailable ? (
-              <CoresLoadBarChart
-                data={currentData.coresLoad}
-              />
+              <CoresLoadBarChart/>
             ) : (
               <LoadingModal color="#6ac9bf" />
             )}
@@ -142,21 +108,21 @@ function App() {
         >
           <div className={`${styles.memAreaChart}`}>
             {isDataAvailable ? (
-              <MemAreaChart data={history} totalMem={staticData.memory.total} />
+              <MemAreaChart />
             ) : (
               <LoadingModal color="#6ac9bf" />
             )}
           </div>
           <div className={`${styles.memPieChart}`}>
             {isDataAvailable ? (
-              <MemPieChart data={history} totalMem={staticData.memory.total} />
+              <MemPieChart />
             ) : (
               <LoadingModal color="#6ac9bf" />
             )}
           </div>
         </div>
       </DynamicSection>
-      <StaticSection staticData={staticData} onToggle={toggleStaticSection} isCollapsed={isStaticSectionCollapsed}></StaticSection>
+      <StaticSection onToggle={toggleStaticSection} isCollapsed={isStaticSectionCollapsed}></StaticSection>
     </div>
   );
 }
