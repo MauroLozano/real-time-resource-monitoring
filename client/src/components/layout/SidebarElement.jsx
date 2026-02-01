@@ -1,5 +1,5 @@
 import React from "react";
-import styles from '../css/SidebarElement.module.css'
+import styles from './SidebarElement.module.css'
 export default function SidebarElement({text, viewName, activeView, onClick}){
     const sideBarStyle = activeView == viewName ?  styles.active : ''
     return(

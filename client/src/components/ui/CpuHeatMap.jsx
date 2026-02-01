@@ -1,7 +1,7 @@
 import React from "react";
-import styles from '../css/CpuHeatMap.module.css'
+import styles from './CpuHeatMap.module.css'
 import { ErrorIcon } from "./Icons";
-import { useMetrics } from "../context/MetricsProvider";
+import { useMetrics } from "../../context/MetricsProvider";
 const coreSquare = (temp, index, isOnlySingleSensor)=>{
     const hue = 120 - (temp * 1.2)
     const color = `hsl(${hue}, 100%, 66%)`

@@ -1,8 +1,8 @@
 import React from "react";
 import QuickStatsElement from "./QuickStatsElement";
-import { useStaticData } from '../context/StaticDataProvider';
-import { useMetrics } from "../context/MetricsProvider";
-import styles from '../css/QuickStats.module.css'
+import { useStaticData } from '../../context/StaticDataProvider';
+import { useMetrics } from "../../context/MetricsProvider";
+import styles from './QuickStats.module.css'
 export default function QuickStatsCores(){
     const {currentData, tempData, computedStats, maxValues } = useMetrics()
     const {cpuSpeed: {avg: coreSpeedAvg}, coreOverload, mostActiveCore, parkedCores, threadEfficiency, activeThreadsCount} = currentData

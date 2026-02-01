@@ -1,5 +1,5 @@
 import React from "react";
-import styles from '../css/ProcessEntry.module.css'
+import styles from './ProcessEntry.module.css'
 
 export default function ProcessEntry({processData, index}){
     return(

@@ -1,20 +1,20 @@
 import { useState, useEffect } from "react";
 // Components
-import StaticSection from "./StaticSection";
+import StaticSection from "./layout/StaticSection";
 import CpuChart from "./charts/CpuChart";
 import CpuCoresChart from "./charts/CpuCoresChart";
 import MemAreaChart from "./charts/MemAreaChart";
 import MemPieChart from "./charts/MemPieChart";
-import Sidebar from "./Sidebar";
-import DynamicSection from "./DynamicSection";
-import LoadingModal from "./LoadingModal";
-import QuickStatsGeneral from "./QuickStatsGeneral";
-import QuickStatsCores from "./QuickStatsCores";
-import ProcessesDisplay from "./ProcessesDisplay";
-import CpuHeatMap from "./CpuHeatMap";
+import Sidebar from "./layout/Sidebar";
+import DynamicSection from "./layout/DynamicSection";
+import LoadingModal from "./layout/LoadingModal";
+import QuickStatsGeneral from "./stats/QuickStatsGeneral";
+import QuickStatsCores from "./stats/QuickStatsCores";
+import ProcessesDisplay from "./ui/ProcessesDisplay";
+import CpuHeatMap from "./ui/CpuHeatMap";
 import CoresLoadBarChart from './charts/CoresLoadBarChart'
 // Style
-import styles from "../css/App.module.css";
+import styles from "./App.module.css";
 // Context
 import { useStaticData } from '../context/StaticDataProvider'
 import { useMetrics } from "../context/MetricsProvider";

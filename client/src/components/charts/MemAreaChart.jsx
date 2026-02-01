@@ -1,6 +1,6 @@
 import React from "react";
 import { Area, AreaChart, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
-import LoadingModal from '../LoadingModal'
+import LoadingModal from '../layout/LoadingModal'
 import { useStaticData } from "../../context/StaticDataProvider";
 import { useMetrics } from "../../context/MetricsProvider";
 export default function MemAvailableChart(){

@@ -1,7 +1,7 @@
 import React from "react";
 import { Cell, Pie, PieChart, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { useMetrics } from "../../context/MetricsProvider";
-import LoadingModal from '../LoadingModal'
+import LoadingModal from '../layout/LoadingModal'
 const colors = ['#3cb44b', '#e6194bff'];
 const RADIAN = Math.PI / 180;
 

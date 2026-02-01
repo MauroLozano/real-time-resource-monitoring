@@ -1,8 +1,8 @@
 import React from "react";
-import styles from '../css/StaticSection.module.css'
+import styles from './StaticSection.module.css'
 import LoadingModal from './LoadingModal'
-import { useStaticData } from "../context/StaticDataProvider.jsx";
-import {EyeClosedIcon, EyeOpenIcon, BrainIcon, ProcessorIcon, SdCardIcon} from './Icons.jsx'
+import { useStaticData } from "../../context/StaticDataProvider.jsx";
+import {EyeClosedIcon, EyeOpenIcon, BrainIcon, ProcessorIcon, SdCardIcon} from '../ui/Icons.jsx'
 function StaticSection({ onToggle, isCollapsed}){
     const { staticData, loading } = useStaticData()
     if(!staticData && loading){

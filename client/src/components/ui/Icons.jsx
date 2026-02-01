@@ -1,6 +1,6 @@
 import { Tooltip } from "./Tooltip"
 import { useState } from "react"
-import styles from '../css/Icons.module.css'
+import styles from './Icons.module.css'
 const IconWrapper = ({children}) =>{
     return(
         <svg

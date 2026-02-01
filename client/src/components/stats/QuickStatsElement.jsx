@@ -1,5 +1,5 @@
 import React from "react";
-import styles from '../css/QuickStatsElement.module.css'
+import styles from './QuickStatsElement.module.css'
 export default function QuickStatsElement({title, data, unit, label}){
     return(
         <div className={styles.elementContainer}>

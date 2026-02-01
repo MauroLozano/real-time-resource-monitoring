@@ -1,7 +1,7 @@
 import React from "react";
-import styles from '../css/QuickStats.module.css'
+import styles from './QuickStats.module.css'
 import QuickStatsElement from "./QuickStatsElement";
-import { useMetrics } from "../context/MetricsProvider";
+import { useMetrics } from "../../context/MetricsProvider";
 export default function QuickStatsGeneral() {
     const { currentData, tempData, maxValues, processesData, computedStats} = useMetrics()
     const {cpuSpeed: {avg:cpuSpeedAvg}, uptime} = currentData || {}
