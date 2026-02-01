@@ -1,10 +1,11 @@
 import React from "react";
-import { BarLoader } from 'react-spinners';
+import { ScaleLoader } from 'react-spinners';
+import styles from './LoadingModal.module.css'
 
-export default function LoadingModal({color}){
+export default function LoadingModal(){
     return(
-        <div style={{width: "100%", height: "100%", display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: "rgba(0, 0, 0, 0.10)", borderRadius: '1rem'}}>
-            <BarLoader color={color} width={'80%'}></BarLoader>
+        <div className={styles.loaderContainer}>
+            <ScaleLoader color={'#ffbf69'} height={'100px'} margin={'.5rem'} width={'20px'} radius={'.5rem'}></ScaleLoader>
         </div>
     )
 }

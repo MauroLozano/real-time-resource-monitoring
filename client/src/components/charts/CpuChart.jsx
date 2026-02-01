@@ -3,13 +3,7 @@ import React from "react";
 import { useMetrics } from '../../context/MetricsProvider';
 export default function CpuChart() {
   const {history: data} = useMetrics()
-  if(!data || data.length === 0) {
-    return(
-      <div>
-        <LoadingModal color='#6ac9bf'></LoadingModal>
-      </div>
-    )
-  }
+
   return (
     <LineChart
       style={{ backgroundColor: '#ffffff', padding: '1rem 1rem 0 0', borderRadius: '1rem'}}

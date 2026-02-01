@@ -1,19 +1,12 @@
 import React from "react";
 import { Area, AreaChart, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
-import LoadingModal from '../layout/LoadingModal'
 import { useStaticData } from "../../context/StaticDataProvider";
 import { useMetrics } from "../../context/MetricsProvider";
 export default function MemAvailableChart(){
     const { staticData } = useStaticData()
     const { history: data } = useMetrics()
     const totalMem = staticData?.memory?.total || 0
-    if(!data || data.length === 0) {
-        return(
-            <div>
-                <LoadingModal color='#6ac9bf'></LoadingModal>
-            </div>
-        )
-    }  
+
     return (
         <ResponsiveContainer width="100%" height="100%">
             <AreaChart
