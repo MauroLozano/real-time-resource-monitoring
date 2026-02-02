@@ -1,8 +1,10 @@
 import React from "react";
 import styles from './StaticSection.module.css'
 import LoadingModal from './LoadingModal'
+import ComponentAttribute from "./ComponentAttribute.jsx";
+import ComponentCard from "./componentCard.jsx";
 import { useStaticData } from "../../context/StaticDataProvider.jsx";
-import {EyeClosedIcon, EyeOpenIcon, BrainIcon, ProcessorIcon, SdCardIcon} from '../ui/Icons.jsx'
+import {EyeClosedIcon, EyeOpenIcon, BrainIcon, ProcessorIcon, SdCardIcon, MachineIcon} from '../ui/Icons.jsx'
 function StaticSection({ onToggle, isCollapsed}){
     const { staticData, loading } = useStaticData()
     if(!staticData && loading){
@@ -11,6 +13,11 @@ function StaticSection({ onToggle, isCollapsed}){
                 <LoadingModal color='#cbf3f0'></LoadingModal>
             </section>
         )
+    }
+    const getOsVersionLabel = (platform)=>{
+        if (platform === 'linux') return 'Kernel V.'
+        if (platform === 'win32') return 'Build V.' 
+        return 'Release'
     }
     return (
         <section className={`${styles.staticSection} `}>
@@ -22,46 +29,39 @@ function StaticSection({ onToggle, isCollapsed}){
                         <EyeOpenIcon></EyeOpenIcon>
                 }
             </div>
-            <div className={`${isCollapsed? styles.staticSectionContentCollapsed : ''}`}>
-                <h1 className={styles.sectionTitle}>System Components</h1>
-                <div className={styles.componentTitleContainer}>
-                    <ProcessorIcon></ProcessorIcon>
-                    <h2 className={styles.componentTitle}>CPU</h2>
+            <div className={styles.scrollableContainer}>
+                <div className={`${isCollapsed? styles.staticSectionContentCollapsed : ''}`}>
+                    <h1 className={styles.sectionTitle}>System Components</h1>
+                    <ComponentCard icon={<ProcessorIcon />} title={'CPU'}>
+                        <ComponentAttribute label='Brand' value={staticData.cpu.brand}></ComponentAttribute>
+                        <ComponentAttribute label='Manufacturer' value={staticData.cpu.manufacturer}></ComponentAttribute>
+                        <ComponentAttribute label='Physical Cores' value={staticData.cpu.physicalCores}></ComponentAttribute>
+                    </ComponentCard>
+                    <ComponentCard icon={<BrainIcon />} title={'Memory'}>
+                        <ComponentAttribute label='Total' value={staticData.memory.total} ></ComponentAttribute>
+                    </ComponentCard>
+                    {
+                        staticData.storage.map((disk, index) =>(
+                            <ComponentCard key={index} icon={<SdCardIcon/>} title={'Storage'}>
+                                <div className={styles.componentSeparator}>
+                                    <ComponentAttribute label='Name' value={disk.name}></ComponentAttribute>
+                                    <ComponentAttribute label='Type' value={disk.type}></ComponentAttribute>
+                                    <ComponentAttribute label='Size' value={disk.size}></ComponentAttribute>
+                                </div>
+                            </ComponentCard>
+                        ))
+                    }
+                    <ComponentCard icon={<MachineIcon/>} title={'OS'}>
+                        <ComponentAttribute label='Hostname' value={staticData.os.hostname}></ComponentAttribute>
+                        <ComponentAttribute label='Platform' value={staticData.os.platform}></ComponentAttribute>
+                        <ComponentAttribute label='Architecture' value={staticData.os.architecture}></ComponentAttribute>
+                        <ComponentAttribute 
+                            label={getOsVersionLabel(staticData.os.platform)} 
+                            value={staticData.os.release}>
+                        </ComponentAttribute>
+                        <ComponentAttribute label='Type' value={staticData.os.type}></ComponentAttribute>
+                    </ComponentCard>
                 </div>
-                <p className={styles.attributeContainer}><span className={styles.attributeName}>Brand:</span> {staticData.cpu.brand}</p>
-                <p className={styles.attributeContainer}><span className={styles.attributeName}>Manufacturer:</span> {staticData.cpu.manufacturer}</p>
-                <p className={styles.attributeContainer}><span className={styles.attributeName}>Amount of cores:</span> {staticData.cpu.physicalCores}</p>
-                <div className={styles.componentTitleContainer}>
-                    <BrainIcon></BrainIcon>
-                    <h2 className={styles.componentTitle}>Memory</h2>
-                </div>
-                <p className={styles.attributeContainer}><span className={styles.attributeName}>Total:</span> {staticData.memory.total} GB</p>
-                <div className={styles.componentTitleContainer}>
-                    <SdCardIcon></SdCardIcon>
-                    <h2 className={styles.componentTitle}>Storage</h2>
-                </div>
-                {
-                    staticData.storage.map((disk, index) =>(
-                        <div key={index} className={styles.componentSeparator}>
-                            <p className={styles.attributeContainer}><span className={styles.attributeName}>Name:</span> {disk.name}</p>
-                            <p className={styles.attributeContainer}><span className={styles.attributeName}>Type:</span> {disk.type}</p>
-                            <p className={styles.attributeContainer}><span className={styles.attributeName}>Size:</span> {disk.size} GB</p>
-                        </div>
-                    ))
-                }
-                <div className={styles.componentTitleContainer}>
-                    <SdCardIcon></SdCardIcon>
-                    <h2 className={styles.componentTitle}>Operative System</h2>
-                </div>
-                <p className={styles.attributeContainer}><span className={styles.attributeName}>Hostname:</span> {staticData.os.hostname}</p>
-                <p className={styles.attributeContainer}><span className={styles.attributeName}>Platform:</span> {staticData.os.platform}</p>
-                <p className={styles.attributeContainer}><span className={styles.attributeName}>Architecture:</span> {staticData.os.architecture}</p>
-                <p className={styles.attributeContainer}>
-                    <span className={styles.attributeName}>
-                        {staticData.os.platform === 'linux' ? 'Kernel V.:' : staticData.os.platform === 'win32' ? 'Build V.:' : 'Release:'}
-                    </span> {staticData.os.release}
-                </p>
-                <p className={styles.attributeContainer}><span className={styles.attributeName}>Type:</span> {staticData.os.type}</p>
             </div>
         </section>
     )

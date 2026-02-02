@@ -2,14 +2,21 @@
     top: 0;
     right: 0;
     position: relative;
-    padding: 1rem;
     background-color: var(--color-bg-dark);
     grid-area: 1 / 3 / 2 / 4;
+    max-height: 100vh;
 }
 .staticSectionContentCollapsed{
     opacity: 0;
     pointer-events: none;
     display: none;
+}
+.scrollableContainer{
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    padding: 1rem;
+    scrollbar-color: var(--color-yellow) var(--color-bg-dark);
 }
 .sectionTitle{
     text-align: center;
@@ -18,16 +25,7 @@
     padding-bottom: .5rem;
     border-bottom: 2px solid var(--color-yellow)
 }
-.componentTitle{
-    color: var(--color-text-main);
-    font-size: 1.8rem;
-}
-.componentTitleContainer{
-    display: flex;
-    align-items: center;
-    margin: 1rem 0 .5rem 0;
-    gap: .5rem;
-}
+
 .attributeContainer{
     margin: .5rem 0;
     color: var(--color-text-main);

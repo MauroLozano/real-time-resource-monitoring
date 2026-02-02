@@ -1,11 +1,12 @@
 import { Tooltip } from "./Tooltip"
 import { useState } from "react"
 import styles from './Icons.module.css'
-const IconWrapper = ({children}) =>{
+const IconWrapper = ({children, size = 24, ...props}) =>{
     return(
         <svg
             xmlns="http://www.w3.org/2000/svg" 
-            width="24" height="24" 
+            width={size} 
+            height={size} 
             viewBox="0 0 24 24" 
             fill="none" 
             stroke="currentColor" 
@@ -13,6 +14,7 @@ const IconWrapper = ({children}) =>{
             strokeLinecap="round"
             strokeLinejoin="round"
             color="white"
+            {...props}
         >
             {children}
         </svg>
@@ -42,6 +44,16 @@ export const ProcessorIcon = () =>(
 export const SdCardIcon = () =>(
     <IconWrapper>
         <path d="M7 21h10a2 2 0 0 0 2 -2v-14a2 2 0 0 0 -2 -2h-6.172a2 2 0 0 0 -1.414 .586l-3.828 3.828a2 2 0 0 0 -.586 1.414v10.172a2 2 0 0 0 2 2" /><path d="M13 6v2" /><path d="M16 6v2" /><path d="M10 7v1" />
+    </IconWrapper>
+)
+export const ArrowIcon = ({...props}) =>(
+    <IconWrapper {...props} size={"30"}>
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 13v-6l-5 4l-5 -4v6l5 4l5 -4" />
+    </IconWrapper>
+)
+export const MachineIcon = ()=>(
+    <IconWrapper >
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17h-8a1 1 0 0 1 -1 -1v-12a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v8" /><path d="M3 13h13" /><path d="M8 21h4" /><path d="M10 17l-.5 4" /><path d="M17.001 19a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" /><path d="M19.001 15.5v1.5" /><path d="M19.001 21v1.5" /><path d="M22.032 17.25l-1.299 .75" /><path d="M17.27 20l-1.3 .75" /><path d="M15.97 17.25l1.3 .75" /><path d="M20.733 20l1.3 .75" />
     </IconWrapper>
 )
 export const ErrorIcon = ({error}) =>{

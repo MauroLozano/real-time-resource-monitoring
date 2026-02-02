@@ -203,7 +203,7 @@ io.on('connection', (socket)=>{
 
             const tempData ={
                 cpuTemp: wmiData.packageTemp?? 0,
-                coresTemp: coresTemp,
+                coresTemp: coresTemp?? [],
                 thermalHeadroom: thermalHeadroom,
                 gpuTemp: wmiData.gpuTemp ?? 0
             }

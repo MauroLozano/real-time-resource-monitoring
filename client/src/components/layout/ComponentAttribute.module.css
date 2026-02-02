@@ -1,0 +1,20 @@
+.attributeContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin: .5rem;
+    gap: .5rem;
+    padding-bottom: .5rem;
+    border-bottom: 2px solid var(--color-text-main);
+}
+.label{
+    color: var(--color-text-main);
+    font-weight: 600;
+}
+.value{
+    color: var(--color-text-main);
+    word-break: normal;
+}
+.attributeContainer:last-child{
+    border-bottom: none;
+}
