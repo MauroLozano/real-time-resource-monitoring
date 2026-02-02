@@ -1,7 +1,7 @@
 import React, { use } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Cell} from 'recharts';
 import { RechartsDevtools } from '@recharts/devtools';
-import styles from './CoresLoadBarChart.module.css'
+import styles from './chartsStyle.module.css'
 import { useMetrics } from '../../context/MetricsProvider';
 const colors = [
     '#e6194bff', '#3cb44b', '#4363d8', '#f58231', 
@@ -18,9 +18,10 @@ export default function SimpleBarChart(){
     }))
     return (
         <BarChart
-        className={styles.coresLoadBarChart}
+        className={styles.chart}
         responsive
         data={chartData}
+        style={{backgroundColor: '#292929', color: '#e0e0e0'}}
         margin={{
             top: 5,
             right: 0,
@@ -29,9 +30,9 @@ export default function SimpleBarChart(){
         }}
         >
         <CartesianGrid strokeDasharray="3 3" vertical={false}/>
-        <XAxis dataKey="name" />
-        <YAxis width="load" domain={[0, 100]} unit='%'/>
-        <Tooltip />
+        <XAxis dataKey="name" stroke='#e0e0e0'/>
+        <YAxis width="load" domain={[0, 100]} unit='%' stroke='#e0e0e0'/>
+        <Tooltip wrapperClassName={styles.tooltip}/>
         <Bar dataKey="load" radius={[2, 2, 0, 0]}>
             {
                 chartData.map((entry, index) => (

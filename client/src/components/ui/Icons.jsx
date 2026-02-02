@@ -12,6 +12,7 @@ const IconWrapper = ({children}) =>{
             strokeWidth="2" 
             strokeLinecap="round"
             strokeLinejoin="round"
+            color="white"
         >
             {children}
         </svg>

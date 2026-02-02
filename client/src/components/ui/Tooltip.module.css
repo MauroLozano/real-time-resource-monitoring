@@ -3,7 +3,8 @@
     opacity: 0;
     top: 100%;
     left: 50%;
-    background-color: var(--color-light-blue);
+    background-color: var(--color-bg-gray);
+    color: var(--color-yellow);
     border-radius: 1rem;
     transform: translate(-50%, 0);
     max-width: 200px;
@@ -23,8 +24,8 @@
     display: block;
     transform: translateX(-50%);
     left: 50%;
-    bottom: 100%;
-    background-color: var(--color-light-blue);
+    bottom: 99%;
+    background-color: var(--color-bg-gray);
     width: 1.5rem;
     height: .5rem;
     clip-path: polygon(50% 0, 0 100%, 100% 100%);

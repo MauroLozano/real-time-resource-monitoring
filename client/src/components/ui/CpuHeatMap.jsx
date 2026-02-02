@@ -38,12 +38,12 @@ export default function CpuHeatMap(){
         <div className={styles.cpuHeatMapContent}>
             {
                 hasCoresData ?
-                    <h2>Cores Temperature</h2>
+                    <h2 className={styles.title}>Cores Temperature</h2>
                 : isOnlySingleSensor?
-                    <h2>CPU Temperature</h2>
+                    <h2 className={styles.title}>CPU Temperature</h2>
                 :
                 <div className={styles.error}>
-                    <h2>No sensors detected</h2>
+                    <h2 className={styles.title}>No sensors detected</h2>
                 </div>
             }
             <div className={styles.cpuHeatMapGrid} 

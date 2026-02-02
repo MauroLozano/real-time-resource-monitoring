@@ -1,18 +1,22 @@
 .sidebarElement{
     width: 90%;
-    background-color: var(--color-light-blue);
+    background-color: var(--color-bg-btn);
+    color: var(--color-text-main);
     width: 100%;
     padding: 0.5rem;
     font-size: 1.3rem;
     margin: 0.5rem 0;
     border: 0;
     transition: background-color .3s ease-in-out, box-shadow .3s ease-in-out;
-    border-radius: 1rem;
+    border-radius: .5rem;
 }
 .sidebarElement:hover{
-    background-color: var(--color-light-yellow);
+    background-color: var(--color-border);
 }
 .active {
-    background-color: var(--color-yellow) !important;
+    pointer-events: none;
+    font-weight: 600;
+    background-color: var(--color-yellow);
+    color: var(--color-text-dark);
     box-shadow: 0 0 10px var(--color-black);
 }

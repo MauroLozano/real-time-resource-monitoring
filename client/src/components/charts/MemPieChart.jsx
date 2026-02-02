@@ -2,7 +2,7 @@ import React from "react";
 import { Cell, Pie, PieChart, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { useMetrics } from "../../context/MetricsProvider";
 import LoadingModal from '../layout/LoadingModal'
-const colors = ['#3cb44b', '#e6194bff'];
+const colors = ['#2ec4b6', '#e6194bff'];
 const RADIAN = Math.PI / 180;
 
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
@@ -52,7 +52,7 @@ export default function MemPieChart(){
                     ))}
                 </Pie>
                 <Tooltip />
-                <Legend height={36}/>
+                <Legend height={36} iconType="circle"/>
             </PieChart>
         </ResponsiveContainer>
     );

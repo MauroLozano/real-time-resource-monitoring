@@ -1,5 +1,5 @@
 .processesDisplay{
-    background-color: var(--color-white);
+    background-color: var(--color-bg-dark);
     border-radius: 1rem;
     overflow-y: scroll;
     width: 100%;
@@ -10,6 +10,9 @@
     display: none;
 }
 .header{
+    color: var(--color-text-dark);
+    font-weight: 600;
+    font-size: 1.2rem;
     position: sticky;
     display: grid;
     top: 0;
@@ -19,7 +22,7 @@
     align-items: center; 
     width: 100%;
     padding: 0 1rem;
-    background-color: var(--color-white);
+    background-color: var(--color-yellow);
     box-shadow: var(--color-black) 0 0 10px;
     border-radius: 1rem 0 1rem 1rem;
 }

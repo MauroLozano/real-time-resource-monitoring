@@ -2,6 +2,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import React, { useMemo } from "react";
 import { useStaticData } from '../../context/StaticDataProvider';
 import { useMetrics } from '../../context/MetricsProvider';
+import styles from './chartsStyle.module.css'
 const colors = [
     '#e6194bff', '#3cb44b', '#4363d8', '#f58231', 
     '#911eb4', '#469990', '#f032e6', '#808000', 
@@ -24,7 +25,7 @@ export default function CpuCoresChart(){
 
     return (
         <LineChart
-            style={{ backgroundColor: '#ffffff', padding: '1rem', borderRadius: '1rem'}}
+            className={styles.chart}
             width={'100%'}
             height={'100%'}
             responsive
@@ -37,15 +38,13 @@ export default function CpuCoresChart(){
             }}
         >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey={'timestamp'} />
-            <YAxis domain={[0, 10]} unit='GHz'/>
-            <Tooltip />
-            <Legend 
-                iconType="circle"
-            /> 
+            <XAxis dataKey={'timestamp'} stroke='#e0e0e0'/>
+            <YAxis domain={[0, 10]} unit='GHz' stroke='#e0e0e0'/>
+            <Tooltip wrapperClassName={styles.tooltip}/>
+            <Legend iconType="circle" /> 
             {
                 lines.map((line)=>(
-                    <Line type='linear' key={line.key} dataKey={line.dataKey} stroke={line.stroke} dot={false} activeDot={false} isAnimationActive={false} name={line.name}/>
+                    <Line strokeWidth={'3px'} type='linear' key={line.key} dataKey={line.dataKey} stroke={line.stroke} dot={false} activeDot={false} isAnimationActive={false} name={line.name}/>
                 ))
             }
             

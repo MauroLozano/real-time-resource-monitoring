@@ -28,14 +28,14 @@ function StaticSection({ onToggle, isCollapsed}){
                     <ProcessorIcon></ProcessorIcon>
                     <h2 className={styles.componentTitle}>CPU</h2>
                 </div>
-                <p><span className={styles.attributeName}>Brand:</span> {staticData.cpu.brand}</p>
-                <p><span className={styles.attributeName}>Manufacturer:</span> {staticData.cpu.manufacturer}</p>
-                <p><span className={styles.attributeName}>Amount of cores:</span> {staticData.cpu.physicalCores}</p>
+                <p className={styles.attributeContainer}><span className={styles.attributeName}>Brand:</span> {staticData.cpu.brand}</p>
+                <p className={styles.attributeContainer}><span className={styles.attributeName}>Manufacturer:</span> {staticData.cpu.manufacturer}</p>
+                <p className={styles.attributeContainer}><span className={styles.attributeName}>Amount of cores:</span> {staticData.cpu.physicalCores}</p>
                 <div className={styles.componentTitleContainer}>
                     <BrainIcon></BrainIcon>
                     <h2 className={styles.componentTitle}>Memory</h2>
                 </div>
-                <p><span className={styles.attributeName}>Total:</span> {staticData.memory.total} GB</p>
+                <p className={styles.attributeContainer}><span className={styles.attributeName}>Total:</span> {staticData.memory.total} GB</p>
                 <div className={styles.componentTitleContainer}>
                     <SdCardIcon></SdCardIcon>
                     <h2 className={styles.componentTitle}>Storage</h2>
@@ -43,9 +43,9 @@ function StaticSection({ onToggle, isCollapsed}){
                 {
                     staticData.storage.map((disk, index) =>(
                         <div key={index} className={styles.componentSeparator}>
-                            <p><span className={styles.attributeName}>Name:</span> {disk.name}</p>
-                            <p><span className={styles.attributeName}>Type:</span> {disk.type}</p>
-                            <p><span className={styles.attributeName}>Size:</span> {disk.size} GB</p>
+                            <p className={styles.attributeContainer}><span className={styles.attributeName}>Name:</span> {disk.name}</p>
+                            <p className={styles.attributeContainer}><span className={styles.attributeName}>Type:</span> {disk.type}</p>
+                            <p className={styles.attributeContainer}><span className={styles.attributeName}>Size:</span> {disk.size} GB</p>
                         </div>
                     ))
                 }
@@ -53,15 +53,15 @@ function StaticSection({ onToggle, isCollapsed}){
                     <SdCardIcon></SdCardIcon>
                     <h2 className={styles.componentTitle}>Operative System</h2>
                 </div>
-                <p><span className={styles.attributeName}>Platform:</span> {staticData.os.platform}</p>
-                <p><span className={styles.attributeName}>Hostname:</span> {staticData.os.hostname}</p>
-                <p><span className={styles.attributeName}>Architecture:</span> {staticData.os.architecture}</p>
-                <p>
+                <p className={styles.attributeContainer}><span className={styles.attributeName}>Hostname:</span> {staticData.os.hostname}</p>
+                <p className={styles.attributeContainer}><span className={styles.attributeName}>Platform:</span> {staticData.os.platform}</p>
+                <p className={styles.attributeContainer}><span className={styles.attributeName}>Architecture:</span> {staticData.os.architecture}</p>
+                <p className={styles.attributeContainer}>
                     <span className={styles.attributeName}>
                         {staticData.os.platform === 'linux' ? 'Kernel V.:' : staticData.os.platform === 'win32' ? 'Build V.:' : 'Release:'}
                     </span> {staticData.os.release}
                 </p>
-                <p><span className={styles.attributeName}>Type:</span> {staticData.os.type}</p>
+                <p className={styles.attributeContainer}><span className={styles.attributeName}>Type:</span> {staticData.os.type}</p>
             </div>
         </section>
     )

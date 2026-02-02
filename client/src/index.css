@@ -1,13 +1,18 @@
 :root{
     /* Colors */
-    --color-black: #353535;
     --color-light-yellow: #ffdbab;
     --color-yellow: #ffbf69;
-    --color-strong-yellow: #ff9f1c;
-    --color-white: #ffffff;
-    --color-grey: #c2c2c2;
-    --color-light-blue: #cbf3f0;
-    --color-light-green: #6ac9bf;
+    --color-dark-yellow: #b6884b;
+    --color-black: #111111;
+    --color-bg-gray: #4e4e4e;
+    --color-bg-dark: #292929; 
+    --color-bg-btn-hover: #868686;
+
+    --color-text-main: #ebebeb;
+    --color-text-dark: #1a1a1a;
+
+    --color-green: #2ec4b6; 
+    --color-red: #e71d36;
 }
 @font-face {
     font-family: 'Archivo';

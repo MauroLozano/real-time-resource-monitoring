@@ -1,5 +1,5 @@
 .dynamicSection{
-    background-color: var(--color-light-blue);
+    background-color: var(--color-bg-gray);
     background-image: url('../assets/backgrounds/handmade-paper.png');
     grid-area: 1 / 2 / 2 / 3;
     position: relative;
