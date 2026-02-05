@@ -15,6 +15,9 @@
     color: var(--color-text-main);
     word-break: normal;
 }
+.unknown{
+    color: var(--color-text-dim);
+}
 .attributeContainer:last-child{
     border-bottom: none;
 }
