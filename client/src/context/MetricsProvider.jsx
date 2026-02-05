@@ -65,14 +65,19 @@ export const MetricsProvider = ({children})=>{
     
     useEffect(()=>{
         socket.on('dynamicData', (data)=>{
-            setHistory((prevHistory)=>{
-                let updatedHistory = [...prevHistory, data]
-                if (updatedHistory.length > 20) {
-                    updatedHistory = updatedHistory.slice(1)
-                }
-                return updatedHistory
-            })
-            updateMaxValues({cpuLoad: data.cpuLoad, coresSpeed: data.cpuSpeed.cores || []})
+            const hasError = !data || Object.keys(data).length === 0 || typeof data !== 'object'
+            if (!hasError){
+                setHistory((prevHistory)=>{
+                    let updatedHistory = [...prevHistory, data]
+                    if (updatedHistory.length > 20) {
+                        updatedHistory = updatedHistory.slice(1)
+                    }
+                    return updatedHistory
+                })
+                updateMaxValues({cpuLoad: data.cpuLoad, coresSpeed: data.cpuSpeed?.cores || []})
+            }else{
+                console.warn('Dynamic Data recieved is not valid:', data)
+            }
         })
         socket.on('tempData', (tempData) =>{
             updateMaxValues({cpuTemp: tempData.cpuTemp})

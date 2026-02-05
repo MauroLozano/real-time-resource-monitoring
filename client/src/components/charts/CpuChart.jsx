@@ -4,7 +4,6 @@ import { useMetrics } from '../../context/MetricsProvider';
 import styles from './chartsStyle.module.css'
 export default function CpuChart() {
   const {history: data} = useMetrics()
-
   return (
     <LineChart
       className={styles.chart}
