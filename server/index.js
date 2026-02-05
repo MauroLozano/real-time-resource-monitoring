@@ -192,20 +192,20 @@ io.on('connection', (socket)=>{
             const [wmiData] = await Promise.all([
                 getWmiTemperature()
             ])
-            const coresTemp = wmiData.coresTemp ?? []
+            const coresTemp = wmiData.coresTemp
             let thermalHeadroom = 0
             if(coresTemp.length > 0){
                 const coresTempValues = coresTemp.map(entry =>{
                     return entry.value
                 })
                 thermalHeadroom = parseFloat((100 - Math.max(...coresTempValues)).toFixed(2))
-            }else {thermalHeadroom = 100}
+            }else {thermalHeadroom = null}
 
             const tempData ={
-                cpuTemp: wmiData.packageTemp?? 0,
-                coresTemp: coresTemp?? [],
+                cpuTemp: wmiData.packageTemp || null,
+                coresTemp: coresTemp?.length > 0 ? coresTemp : null,
                 thermalHeadroom: thermalHeadroom,
-                gpuTemp: wmiData.gpuTemp ?? 0
+                gpuTemp: wmiData.gpuTemp || null 
             }
             socket.emit('tempData',tempData)            
         }catch(error){

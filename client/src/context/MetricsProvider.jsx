@@ -51,7 +51,7 @@ export const MetricsProvider = ({children})=>{
     }, [history])
 
     const coreMaxTemp = useMemo(()=>{
-        if (!tempData?.coresTemp || tempData.coresTemp.length === 0) return {coreNumber: null, value: 0}
+        if (!tempData?.coresTemp || tempData.coresTemp.length === 0) return {coreNumber: null, value: null}
         return tempData.coresTemp.reduce((max, current, i) =>{
             return current > max.value? {coreNumber: i, value: current} : max 
         }, {coreNumber: 0, value: tempData.coresTemp[0]})

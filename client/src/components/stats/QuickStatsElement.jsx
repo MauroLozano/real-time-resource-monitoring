@@ -1,11 +1,27 @@
 import React from "react";
 import styles from './QuickStatsElement.module.css'
-export default function QuickStatsElement({title, data, unit, label}){
+import {useStaticData} from '../../context/StaticDataProvider'
+import { ErrorIcon } from '../ui/Icons'
+import getErrorMsg from '../../utils/errorHandler'
+export default function QuickStatsElement({title, data, unit, label, id}){
+    const hasError = data === null || data === undefined 
+    const {staticData} = useStaticData()
+    const platform = staticData?.os?.platform || 'unknown'
+    const errorMsg = hasError ? getErrorMsg(id, platform) : null
+
     return(
         <div className={styles.elementContainer}>
             <h1 className={styles.title}>{title}</h1>
-            {label?(<p className={styles.label}>{label}</p>) : ''}
-            <p className={styles.data}>  {`${data}`}<span className={styles.unit}>{`${unit && (data != 'Error') ? unit : ''}`}</span> </p>
+            {label && (<p className={styles.label}>{label}</p>)}
+            {
+                hasError? 
+                    <ErrorIcon error={errorMsg}></ErrorIcon>
+                    :
+                    <p className={styles.data}>
+                        {data}
+                        {unit && <span className={styles.unit}>{unit}</span>}
+                    </p>
+            }
         </div>
     )
 }

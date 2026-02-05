@@ -30,8 +30,8 @@ export default function CpuHeatMap(){
     const { tempData } = useMetrics()
     const { coresTemp, cpuTemp } = tempData
     const hasCoresData = coresTemp && coresTemp.length > 0
-    const isOnlySingleSensor = coresTemp.length == 0 && cpuTemp && cpuTemp > 0
-    const totalCores = coresTemp.length
+    const isOnlySingleSensor = !coresTemp && cpuTemp && cpuTemp > 0
+    const totalCores = coresTemp?.length || 0
     const columns = Math.ceil(Math.sqrt(totalCores))
     const rows = Math.ceil(totalCores / columns)
     return(
