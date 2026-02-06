@@ -109,6 +109,7 @@ app.get('/staticData', async (req, res) => {
     }
 })
 
+
 io.on('connection', (socket)=>{
     console.log(`Client connected: ${socket.id}`)
     let isClientActive = true
