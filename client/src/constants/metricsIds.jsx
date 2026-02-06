@@ -16,5 +16,7 @@ export const metricsIds = {
     CORE_OVERLOAD: 'core_overload',
     MOST_ACTIVE_CORE: 'most_active_core',
     PARKED_CORES: 'parked_cores',
-    THREAD_EFFICIENCY: 'thread_efficiency'
+    THREAD_EFFICIENCY: 'thread_efficiency',
+    //cpuHeatMap
+    CORES_TEMP: 'cores_temp',
 }

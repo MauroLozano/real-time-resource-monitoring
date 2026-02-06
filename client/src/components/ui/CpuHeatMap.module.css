@@ -8,6 +8,7 @@
     width: 100%;
 }
 .cpuHeatMapGrid {
+    position: relative;
     background-color: var(--color-bg-dark); 
     display: grid;
     padding: 1rem;
@@ -33,6 +34,26 @@
     object-fit: contain;
     width: 100%;
     height: 100%;
+}
+.squareInactive{
+    background-color: var(--color-bg-gray);
+    animation: inactiveCore 2s ease infinite alternate;
+}
+@keyframes inactiveCore{
+    from{background-color: var(--color-bg-gray);} to{background-color: var(--color-bg-dark);}
+}
+.blurErrorIcon{
+    width: 250px;
+    height: 250px;
+    position: absolute;
+    z-index: 11;
+    display: flex;
+    background: radial-gradient(circle, 
+        rgba(0, 0, 0, 1) 0%,   
+        rgba(0, 0, 0, 0) 60%
+    );
+    align-items: center;
+    justify-content: center;
 }
 .multipleSensors{
     font-size: 1.2rem;

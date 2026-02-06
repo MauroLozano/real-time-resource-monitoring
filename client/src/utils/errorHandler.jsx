@@ -28,6 +28,7 @@ export default function getErrorMsg(id, platform){
         [metricsIds.MOST_ACTIVE_CORE]: noCpuLoadMsg,
         [metricsIds.PARKED_CORES]: noCpuLoadMsg,
         [metricsIds.THREAD_EFFICIENCY]: noCpuLoadMsg,
+        [metricsIds.CORES_TEMP]: noCpuSensorsMsg
     }
     return errors[id] || <span>Unknown Error :(</span>
 }
