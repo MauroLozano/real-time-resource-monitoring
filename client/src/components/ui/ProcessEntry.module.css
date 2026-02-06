@@ -13,6 +13,14 @@
     align-items: center; 
     border-bottom: 2px solid var(--color-dark-yellow);
 }
+.emptyProcess{
+    background-color: var(--color-bg-gray);
+    animation: emptyProcess 2s ease infinite alternate;
+    border: none;
+}
+@keyframes emptyProcess{
+    from{background-color: var(--color-bg-gray);} to{background-color: var(--color-bg-dark);}
+}
 .processInfo{
     text-align: center;
     height: fit-content;
