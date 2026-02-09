@@ -4,7 +4,7 @@ import { ArrowIcon } from "../ui/Icons";
 export default function ComponentCard({children, icon, title}){
     const [isOpen, setIsOpen] = useState(false)
     return(
-        <div className={`${styles.card} ${isOpen? '' : styles.closed}`} >
+        <div className={`${styles.card} ${isOpen? '' : styles.closed}`} role="button">
             <div className={styles.componentHeader} onClick={()=>{setIsOpen(!isOpen)}}>
                 {icon}
                 <h2 className={styles.componentTitle}>{title}</h2>

@@ -3,8 +3,10 @@ import styles from './StaticSection.module.css'
 import LoadingModal from './LoadingModal'
 import ComponentAttribute from "./ComponentAttribute.jsx";
 import ComponentCard from "./componentCard.jsx";
+import ComponentList from "./ComponentList.jsx";
 import { useStaticData } from "../../context/StaticDataProvider.jsx";
-import {EyeClosedIcon, EyeOpenIcon, BrainIcon, ProcessorIcon, SdCardIcon, MachineIcon} from '../ui/Icons.jsx'
+import {EyeClosedIcon, EyeOpenIcon, BrainIcon, ProcessorIcon, SdCardIcon, MachineIcon, HashIcon} from '../ui/Icons.jsx'
+import { HashLoader } from "react-spinners";
 function StaticSection({ onToggle, isCollapsed}){
     const { staticData, loading } = useStaticData()
     if(!staticData && loading){
@@ -37,9 +39,18 @@ function StaticSection({ onToggle, isCollapsed}){
                         <ComponentAttribute label='Manufacturer' value={staticData.cpu.manufacturer}></ComponentAttribute>
                         <ComponentAttribute label='Physical Cores' value={staticData.cpu.physicalCores}></ComponentAttribute>
                     </ComponentCard>
-                    <ComponentCard icon={<BrainIcon />} title={'Memory'}>
-                        <ComponentAttribute label='Total' value={staticData.memory.total} ></ComponentAttribute>
-                    </ComponentCard>
+                    <ComponentList icon={<BrainIcon />} title={'Memory'}>
+                        {
+                            staticData.memory.map((slot, index)=>(
+                                <ComponentCard key={index} title={`Slot ${index}`} icon={<HashIcon />}>
+                                    <ComponentAttribute label='Size' value={slot.size}></ComponentAttribute>
+                                    <ComponentAttribute label='Manufacturer' value={slot.manufacturer} ></ComponentAttribute>
+                                    <ComponentAttribute label='Type' value={slot.type}></ComponentAttribute>
+                                    <ComponentAttribute label='ClockSpeed' value={slot.clockSpeed} ></ComponentAttribute>
+                                </ComponentCard>
+                            ))
+                        }
+                    </ComponentList>
                     {
                         staticData.storage.map((disk, index) =>(
                             <ComponentCard key={index} icon={<SdCardIcon/>} title={'Storage'}>

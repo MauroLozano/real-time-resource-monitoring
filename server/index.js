@@ -1,5 +1,5 @@
 import express, { raw } from 'express';
-import os, { platform } from 'os'
+import os, { platform, type } from 'os'
 import { createServer, validateHeaderName } from 'http'
 import { Server } from 'socket.io';
 import cors from 'cors'
@@ -74,9 +74,10 @@ function getActiveThreadsCount(coresLoad){
 }
 app.get('/staticData', async (req, res) => {
     try {
-        const [rawCpuData, rawMemoryData, rawStorageData] = await Promise.all([
+        const [rawCpuData, rawMemoryData, rawMemoryLayoutData, rawStorageData] = await Promise.all([
             si.cpu(),
             si.mem(),
+            si.memLayout(),
             si.diskLayout()
         ])
         const staticData = {
@@ -93,9 +94,13 @@ app.get('/staticData', async (req, res) => {
                 physicalCores: rawCpuData.physicalCores,
                 logicalThreads: rawCpuData.cores
             },
-            memory:{
-                total: parseFloat((rawMemoryData.total / (1024 ** 3)).toFixed(2))
-            },
+            memory: rawMemoryLayoutData.map((slot)=>({
+                total: parseFloat((rawMemoryData.total / (1024 ** 3)).toFixed(2)),
+                size: slot.size,
+                manufacturer: slot.manufacturer,
+                type: slot.type,
+                clockSpeed: slot.clockSpeed
+            })),
             storage: rawStorageData.map(disk=>({
                 name: disk.name,
                 type: disk.type,
