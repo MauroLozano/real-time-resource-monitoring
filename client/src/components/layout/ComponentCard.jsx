@@ -5,11 +5,11 @@ export default function ComponentCard({children, icon, title}){
     const [isOpen, setIsOpen] = useState(false)
     return(
         <div className={`${styles.card} ${isOpen? '' : styles.closed}`} role="button">
-            <div className={styles.componentHeader} onClick={()=>{setIsOpen(!isOpen)}}>
+            <button className={styles.componentHeader} onClick={()=>{setIsOpen(!isOpen)}}>
                 {icon}
                 <p className={styles.componentTitle}>{title}</p>
                 <ArrowIcon className={`${styles.arrow} ${isOpen ? '' : styles.arrowClosed}`}/>
-            </div>
+            </button>
             <div className={`${styles.content} `}>
                 {children}
             </div>

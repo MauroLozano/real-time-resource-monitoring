@@ -30,6 +30,7 @@
     transform: rotate(-180deg);
 }
 .componentHeader{
+    background-color: var(--color-bg-gray);
     width: 100%;
     height: 100%;
     padding: .5rem;
@@ -41,6 +42,10 @@
     border-radius: .5rem;
     border: solid 2px transparent;
     transition: border .3s ease;
+}
+.componentHeader:focus-visible {
+    outline: 2px solid var(--color-yellow);
+    outline-offset: -2px;
 }
 .componentHeader:hover{
     border: solid 2px var(--color-yellow);
