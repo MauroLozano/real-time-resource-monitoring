@@ -8,7 +8,7 @@ export default function ComponentList({children, title, icon}){
         <div className={`${styles.listContainer} ${isOpen? '' : styles.closed}`} role='button' tabIndex={0}>
             <div className={styles.listHeader} onClick={()=>{setIsOpen(!isOpen)}}>
                 {icon}
-                <h3 className={styles.listTitle}>{title}</h3>
+                <p className={styles.listTitle}>{title}</p>
                 <div className={styles.headerIcon}>
                     {!isOpen? <ListIcon /> : <CloseIcon />}
                 </div>

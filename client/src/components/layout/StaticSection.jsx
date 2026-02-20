@@ -51,17 +51,19 @@ function StaticSection({ onToggle, isCollapsed}){
                             ))
                         }
                     </ComponentList>
-                    {
-                        staticData.storage.map((disk, index) =>(
-                            <ComponentCard key={index} icon={<SdCardIcon/>} title={'Storage'}>
-                                <div className={styles.componentSeparator}>
-                                    <ComponentAttribute label='Name' value={disk.name}></ComponentAttribute>
-                                    <ComponentAttribute label='Type' value={disk.type}></ComponentAttribute>
-                                    <ComponentAttribute label='Size' value={disk.size}></ComponentAttribute>
-                                </div>
-                            </ComponentCard>
-                        ))
-                    }
+                    <ComponentList icon={<SdCardIcon/>} title={'Storage'}>
+                        {
+                            staticData.storage.map((disk, index) =>(
+                                <ComponentCard key={index} icon={<HashIcon/>} title={`Disk ${index}`}>
+                                    <div className={styles.componentSeparator}>
+                                        <ComponentAttribute label='Name' value={disk.name}></ComponentAttribute>
+                                        <ComponentAttribute label='Type' value={disk.type}></ComponentAttribute>
+                                        <ComponentAttribute label='Size' value={`${disk.size}GB`}></ComponentAttribute>
+                                    </div>
+                                </ComponentCard>
+                            ))
+                        }
+                    </ComponentList>
                     <ComponentCard icon={<MachineIcon/>} title={'OS'}>
                         <ComponentAttribute label='Hostname' value={staticData.os.hostname}></ComponentAttribute>
                         <ComponentAttribute label='Platform' value={staticData.os.platform}></ComponentAttribute>

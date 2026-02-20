@@ -7,6 +7,7 @@
     display: grid;
     align-items: center;
     grid-template-rows: 2.5rem 1fr;
+    will-change: grid-template-rows;
     transition: grid-template-rows .4s ease;
     overflow: hidden;
 }
