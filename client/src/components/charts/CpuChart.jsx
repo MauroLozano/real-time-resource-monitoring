@@ -1,7 +1,7 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import React from "react";
 import { useMetrics } from '../../context/MetricsProvider';
-import styles from './chartsStyle.module.css'
+import styles from './ChartsStyle.module.css'
 export default function CpuChart() {
   const {history: data} = useMetrics()
   return (

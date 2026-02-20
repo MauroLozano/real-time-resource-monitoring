@@ -2,7 +2,7 @@ import React from "react";
 import { Area, AreaChart, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { useStaticData } from "../../context/StaticDataProvider";
 import { useMetrics } from "../../context/MetricsProvider";
-import styles from './chartsStyle.module.css'
+import styles from './ChartsStyle.module.css'
 export default function MemAvailableChart(){
     const { staticData } = useStaticData()
     const { history: data } = useMetrics()
