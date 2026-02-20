@@ -59,8 +59,8 @@ export default function CpuHeatMap(){
             >
                 {
                     hasCoresData ?
-                    coresTemp.map((entry)=>(
-                        coreSquare(entry.value, entry.coreNumber, isOnlySingleSensor)
+                    coresTemp.map((entry, index)=>(
+                        coreSquare(entry, index, isOnlySingleSensor)
                     ))
                     : isOnlySingleSensor?
                     Array.of(cpuTemp).map((coreTemp, index)=>(

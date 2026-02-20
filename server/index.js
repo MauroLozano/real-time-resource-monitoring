@@ -195,17 +195,19 @@ io.on('connection', (socket)=>{
     async function loopTempData() {
         if (!isClientActive) return
         try{
-            const [wmiData] = await Promise.all([
+            let [wmiData] = await Promise.all([
                 getWmiTemperature()
             ])
             const coresTemp = wmiData.coresTemp
             let thermalHeadroom = 0
             if(coresTemp.length > 0){
                 const coresTempValues = coresTemp.map(entry =>{
-                    return entry.value
+                    return entry
                 })
                 thermalHeadroom = parseFloat((100 - Math.max(...coresTempValues)).toFixed(2))
-            }else {thermalHeadroom = null}
+            }else if(wmiData.packageTemp){
+                thermalHeadroom = parseFloat((100 - wmiData.packageTemp).toFixed(2))
+            }else{thermalHeadroom = null}
 
             const tempData ={
                 cpuTemp: wmiData.packageTemp || null,
@@ -213,7 +215,6 @@ io.on('connection', (socket)=>{
                 thermalHeadroom: thermalHeadroom,
                 gpuTemp: wmiData.gpuTemp || null 
             }
-            console.log(tempData)
             socket.emit('tempData',tempData)            
         }catch(error){
             console.error("Error in loopTempData:", error)
