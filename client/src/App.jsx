@@ -1,23 +1,23 @@
 import { useState, useEffect } from "react";
 // Components
-import StaticSection from "./layout/StaticSection";
-import CpuChart from "./charts/CpuChart";
-import CpuCoresChart from "./charts/CpuCoresChart";
-import MemAreaChart from "./charts/MemAreaChart";
-import MemPieChart from "./charts/MemPieChart";
-import Sidebar from "./layout/Sidebar";
-import DynamicSection from "./layout/DynamicSection";
-import LoadingModal from "./layout/LoadingModal";
-import QuickStatsGeneral from "./stats/QuickStatsGeneral";
-import QuickStatsCores from "./stats/QuickStatsCores";
-import ProcessesDisplay from "./ui/ProcessesDisplay";
-import CpuHeatMap from "./ui/CpuHeatMap";
-import CoresLoadBarChart from './charts/CoresLoadBarChart'
+import StaticSection from "./components/layout/StaticSection";
+import CpuChart from "./components/charts/CpuChart";
+import CpuCoresChart from "./components/charts/CpuCoresChart";
+import MemAreaChart from "./components/charts/MemAreaChart";
+import MemPieChart from "./components/charts/MemPieChart";
+import Sidebar from "./components/layout/Sidebar";
+import DynamicSection from "./components/layout/DynamicSection";
+import LoadingModal from "./components/layout/LoadingModal";
+import QuickStatsGeneral from "./components/stats/QuickStatsGeneral";
+import QuickStatsCores from "./components/stats/QuickStatsCores";
+import ProcessesDisplay from "./components/modules/ProcessesDisplay";
+import CpuHeatMap from "./components/modules/CpuHeatMap";
+import CoresLoadBarChart from './components/charts/CoresLoadBarChart'
 // Style
 import styles from "./App.module.css";
 // Context
-import { useStaticData } from '../context/StaticDataProvider'
-import { useMetrics } from "../context/MetricsProvider";
+import { useStaticData } from './context/StaticDataProvider'
+import { useMetrics } from "./context/MetricsProvider";
 
 function App() {
   const [activeView, setActiveView] = useState("CPUGeneralView");

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './ComponentList.module.css'
-import { ListIcon, CloseIcon } from "../ui/Icons";
+import { ListIcon, CloseIcon } from "../ui/icons/Icons";
 
 export default function ComponentList({children, title, icon}){
     const [isOpen, setIsOpen] = useState(false)

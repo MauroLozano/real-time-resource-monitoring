@@ -1,7 +1,7 @@
 import React from "react";
 import styles from './Sidebar.module.css'
 import SidebarElement from './SidebarElement.jsx'
-import {EyeClosedIcon, EyeOpenIcon} from '../ui/Icons.jsx'
+import {EyeClosedIcon, EyeOpenIcon} from '../ui/icons/Icons.jsx'
 export default function Sidebar({setView, activeView, onToggle, isCollapsed}){
     return(
         <>

@@ -5,7 +5,7 @@ import ComponentAttribute from "./ComponentAttribute.jsx";
 import ComponentCard from "./componentCard.jsx";
 import ComponentList from "./ComponentList.jsx";
 import { useStaticData } from "../../context/StaticDataProvider.jsx";
-import {EyeClosedIcon, EyeOpenIcon, BrainIcon, ProcessorIcon, SdCardIcon, MachineIcon, HashIcon} from '../ui/Icons.jsx'
+import {EyeClosedIcon, EyeOpenIcon, BrainIcon, ProcessorIcon, SdCardIcon, MachineIcon, HashIcon} from '../ui/icons/Icons.jsx'
 import { HashLoader } from "react-spinners";
 function StaticSection({ onToggle, isCollapsed}){
     const { staticData, loading } = useStaticData()

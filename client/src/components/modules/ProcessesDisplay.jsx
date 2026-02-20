@@ -2,7 +2,7 @@ import React, { use } from "react";
 import styles from './ProcessesDisplay.module.css'
 import ProcessEntry from "./ProcessEntry";
 import { useMetrics } from "../../context/MetricsProvider";
-import { ErrorIcon } from './Icons'
+import { ErrorIcon } from '../ui/icons/Icons'
 import getErrorMsg from "../../utils/errorHandler";
 import { metricsIds } from "../../constants/metricsIds";
 import { useStaticData}  from '../../context/StaticDataProvider'

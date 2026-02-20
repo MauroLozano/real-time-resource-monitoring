@@ -1,6 +1,6 @@
 import React from "react";
 import styles from './CpuHeatMap.module.css'
-import { ErrorIcon } from "./Icons";
+import { ErrorIcon } from "../ui/icons/Icons";
 import { useMetrics } from "../../context/MetricsProvider";
 import { useStaticData } from "../../context/StaticDataProvider";
 import getErrorMsg from "../../utils/errorHandler";

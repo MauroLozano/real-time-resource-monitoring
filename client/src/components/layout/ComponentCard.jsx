@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import styles from './ComponentCard.module.css'
-import { ArrowIcon } from "../ui/Icons";
+import { ArrowIcon } from "../ui/icons/Icons";
 export default function ComponentCard({children, icon, title}){
     const [isOpen, setIsOpen] = useState(false)
     return(

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from './QuickStatsElement.module.css'
 import {useStaticData} from '../../context/StaticDataProvider'
-import { ErrorIcon } from '../ui/Icons'
+import { ErrorIcon } from '../ui/icons/Icons'
 import getErrorMsg from '../../utils/errorHandler'
 export default function QuickStatsElement({title, data, unit, label, id}){
     const hasError = data === null || data === undefined 

@@ -1,4 +1,4 @@
-import { Tooltip } from "./Tooltip"
+import { Tooltip } from "../Tooltip"
 import { useState } from "react"
 import styles from './Icons.module.css'
 const IconWrapper = ({children, size = 24, ...props}) =>{
