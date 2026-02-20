@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useContext, createContext, useMemo } from "react";
-// Sockets
-import { io } from 'socket.io-client';
-const socket = io('http://localhost:3000')
-
 const MetricsContext = createContext(null)
+import { socket } from "../services/sockets";
 
 export const MetricsProvider = ({children})=>{
     const [history, setHistory] = useState([])
