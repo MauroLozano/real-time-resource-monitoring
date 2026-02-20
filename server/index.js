@@ -213,6 +213,7 @@ io.on('connection', (socket)=>{
                 thermalHeadroom: thermalHeadroom,
                 gpuTemp: wmiData.gpuTemp || null 
             }
+            console.log(tempData)
             socket.emit('tempData',tempData)            
         }catch(error){
             console.error("Error in loopTempData:", error)
