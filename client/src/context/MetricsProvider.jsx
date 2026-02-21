@@ -60,14 +60,27 @@ export const MetricsProvider = ({children})=>{
         } 
     },[])
 
+    const sensorsHealth = useMemo(()=>{
+        return {
+            cpu: {
+                temp: {
+                    hasTemp: !!tempData?.cpuTemp,
+                    hasCoresTemp: !!tempData?.coresTemp,
+                    reason: !tempData?.cpuTemp ? 'NO_TEMP_SENSOR_DETECTED' : ( tempData?.coresTemp?.length === 0 || !tempData?.coresTemp ? 'NO_CORES_TEMP_SENSOR' : null ) 
+                }
+            }
+        }
+    })
+
     const contextData = useMemo(()=>({
         currentData,
         computedStats: { cpuAvgLoad, coreMaxTemp},
         history,
         processesData,
         tempData,
-        maxValues
-    }), [currentData, cpuAvgLoad, coreMaxTemp, history, processesData, tempData, maxValues])
+        maxValues,
+        sensorsHealth
+    }), [currentData, cpuAvgLoad, coreMaxTemp, history, processesData, tempData, maxValues, sensorsHealth])
 
     return(
         <MetricsContext.Provider value={contextData}>

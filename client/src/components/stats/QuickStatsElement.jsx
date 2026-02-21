@@ -3,12 +3,11 @@ import styles from './QuickStatsElement.module.css'
 import {useStaticData} from '../../context/StaticDataProvider'
 import { ErrorIcon } from '../ui/icons/Icons'
 import getErrorMsg from '../../utils/errorHandler'
-export default function QuickStatsElement({title, data, unit, label, id}){
-    const hasError = data === null || data === undefined 
+export default function QuickStatsElement({title, data, unit, label, id, reason}){
+    const hasError = data === null || data === undefined || reason
     const {staticData} = useStaticData()
     const platform = staticData?.os?.platform || 'unknown'
-    const errorMsg = hasError ? getErrorMsg(id, platform) : null
-
+    const errorMsg = hasError ? getErrorMsg(id, platform, reason) : null
     return(
         <div className={styles.elementContainer}>
             <h1 className={styles.title}>{title}</h1>
