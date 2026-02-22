@@ -1,20 +1,8 @@
 import si from 'systeminformation';
 import type { CpuData } from '../types/metrics.js';
+import { getParkedCores, getActiveThreadsCount } from '../utils/cpuServiceUtils.js';
+import { formattedFloat } from '../utils/formatter.js';
 
-function getParkedCores(coresLoad: number[]){
-    let counter = 0
-    coresLoad.forEach(load => {
-        if (load == 0) counter ++
-    });
-    return counter
-}
-function getActiveThreadsCount(coresLoad: number[]){
-    let counter = 0
-    coresLoad.forEach(load => {
-        if (load > 5) counter ++
-    });
-    return counter
-}
 export const getCpuData = async (): Promise<CpuData> => {
     // Getting raw data from SystemInformation library
     const [rawCpuLoad, rawCpuSpeed] = await Promise.all([
@@ -23,15 +11,15 @@ export const getCpuData = async (): Promise<CpuData> => {
     ])
     // Data calculations
     const coresLoadArray = rawCpuLoad.cpus.map((coreData)=>{
-        return parseFloat(coreData.load.toFixed(2))
+        return formattedFloat(coreData.load)
     })
     const totalThreadsCount = coresLoadArray.length
     const activeThreadsCount = getActiveThreadsCount(coresLoadArray)
-    const threadEfficiency = totalThreadsCount > 0 ? parseFloat(((activeThreadsCount/totalThreadsCount) * 100).toFixed(2)) : 0
+    const threadEfficiency = totalThreadsCount > 0 ? formattedFloat((activeThreadsCount/totalThreadsCount) * 100) : 0
     let coreOverload:number = 0
     const maxCoreLoad:number = totalThreadsCount > 0 ? Math.max(...coresLoadArray) : 0
     if (coresLoadArray && coresLoadArray.length > 0) {
-        coreOverload = parseFloat((maxCoreLoad - rawCpuLoad.currentLoad).toFixed(2))
+        coreOverload = formattedFloat((maxCoreLoad - rawCpuLoad.currentLoad))
     }
     const mostActiveCore = {
         coreNumber: coresLoadArray.indexOf(maxCoreLoad),
