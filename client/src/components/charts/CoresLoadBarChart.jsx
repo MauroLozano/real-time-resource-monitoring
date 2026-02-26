@@ -1,7 +1,7 @@
 import React, { use } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Cell} from 'recharts';
 import { RechartsDevtools } from '@recharts/devtools';
-import styles from './ChartsStyle.module.css'
+import styles from './chartsStyle.module.css'
 import { useMetrics } from '../../context/MetricsProvider';
 const colors = [
     '#e6194bff', '#3cb44b', '#4363d8', '#f58231', 

@@ -2,7 +2,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import React, { useMemo } from "react";
 import { useStaticData } from '../../context/StaticDataProvider';
 import { useMetrics } from '../../context/MetricsProvider';
-import styles from './ChartsStyle.module.css'
+import styles from './chartsStyle.module.css'
 const colors = [
     '#e6194bff', '#3cb44b', '#4363d8', '#f58231', 
     '#911eb4', '#469990', '#f032e6', '#808000', 

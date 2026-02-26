@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, createContext, useMemo } from "react";
 const MetricsContext = createContext(null)
 import { socket } from "../services/sockets";
-import { getMaxValues } from "../utils/MetricsHelper";
+import { getMaxValues } from "../utils/metricsHelper";
 import { getArrayAvg , findMaxWithIndex } from "../utils/math";
 
 export const MetricsProvider = ({children})=>{

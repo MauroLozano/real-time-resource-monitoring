@@ -2,7 +2,7 @@ import React from "react";
 import styles from './StaticSection.module.css'
 import LoadingModal from './LoadingModal'
 import ComponentAttribute from "./ComponentAttribute.jsx";
-import ComponentCard from "./componentCard.jsx";
+import ComponentCard from "./ComponentCard.jsx";
 import ComponentList from "./ComponentList.jsx";
 import { useStaticData } from "../../context/StaticDataProvider.jsx";
 import {EyeClosedIcon, EyeOpenIcon, BrainIcon, ProcessorIcon, SdCardIcon, MachineIcon, HashIcon} from '../ui/icons/Icons.jsx'
