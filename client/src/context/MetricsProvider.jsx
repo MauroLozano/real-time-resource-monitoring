@@ -13,7 +13,7 @@ import { getArrayAvg, findMaxWithIndex } from '../utils/math';
 export const MetricsProvider = ({ children }) => {
   const [history, setHistory] = useState([]);
   const [processesData, setProcessesData] = useState({});
-  const [tempData, setTempData] = useState(null);
+  const [cpuTempData, setCpuTempData] = useState(null);
   const [maxValues, setMaxValues] = useState({
     cpuLoad: null,
     cpuTemp: null,
@@ -26,10 +26,10 @@ export const MetricsProvider = ({ children }) => {
   }, [history]);
 
   const coreMaxTemp = useMemo(() => {
-    if (!tempData?.coresTemp || tempData.coresTemp.length === 0)
+    if (!cpuTempData?.coresTemp || cpuTempData.coresTemp.length === 0)
       return { index: null, value: null };
-    return findMaxWithIndex(tempData.coresTemp);
-  }, [tempData]);
+    return findMaxWithIndex(cpuTempData.coresTemp);
+  }, [cpuTempData]);
 
   const currentData = useMemo(
     () => (history.length > 0 ? history.at(-1) : null),
@@ -50,19 +50,19 @@ export const MetricsProvider = ({ children }) => {
         });
         setMaxValues((prev) => {
           return getMaxValues(prev, {
-            cpuLoad: data.cpuLoad,
-            coresSpeed: data.cpuSpeed?.cores || [],
+            cpuLoad: data.cpu.load,
+            coresSpeed: data.cpu?.coresSpeed || [],
           });
         });
       } else {
         console.warn('Dynamic Data recieved is not valid:', data);
       }
     });
-    socket.on('tempData', (tempData) => {
+    socket.on('cpuTempData', (cpuTempData) => {
       setMaxValues((prev) => {
-        return getMaxValues(prev, { cpuTemp: tempData.cpuTemp });
+        return getMaxValues(prev, { cpuTemp: cpuTempData.cpuTemp });
       });
-      setTempData(tempData);
+      setCpuTempData(cpuTempData);
     });
     socket.on('processesData', (processesData) => {
       setProcessesData(processesData);
@@ -70,7 +70,7 @@ export const MetricsProvider = ({ children }) => {
     return () => {
       socket.off('dynamicData');
       socket.off('processesData');
-      socket.off('tempData');
+      socket.off('cpuTempData');
     };
   }, []);
 
@@ -78,11 +78,11 @@ export const MetricsProvider = ({ children }) => {
     return {
       cpu: {
         temp: {
-          hasTemp: !!tempData?.cpuTemp,
-          hasCoresTemp: !!tempData?.coresTemp,
-          reason: !tempData?.cpuTemp
+          hasTemp: !!cpuTempData?.cpuTemp,
+          hasCoresTemp: !!cpuTempData?.coresTemp,
+          reason: !cpuTempData?.cpuTemp
             ? 'NO_TEMP_SENSOR_DETECTED'
-            : tempData?.coresTemp?.length === 0 || !tempData?.coresTemp
+            : cpuTempData?.coresTemp?.length === 0 || !cpuTempData?.coresTemp
               ? 'NO_CORES_TEMP_SENSOR'
               : null,
         },
@@ -96,7 +96,7 @@ export const MetricsProvider = ({ children }) => {
       computedStats: { cpuAvgLoad, coreMaxTemp },
       history,
       processesData,
-      tempData,
+      cpuTempData,
       maxValues,
       sensorsHealth,
     }),
@@ -106,7 +106,7 @@ export const MetricsProvider = ({ children }) => {
       coreMaxTemp,
       history,
       processesData,
-      tempData,
+      cpuTempData,
       maxValues,
       sensorsHealth,
     ]

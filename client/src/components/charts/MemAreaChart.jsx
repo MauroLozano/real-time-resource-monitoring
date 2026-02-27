@@ -16,7 +16,6 @@ export default function MemAvailableChart() {
   const { staticData } = useStaticData();
   const { history: data } = useMetrics();
   const totalMem = staticData?.memory?.total || 0;
-
   return (
     <ResponsiveContainer width="100%" height="100%">
       <AreaChart
@@ -31,7 +30,7 @@ export default function MemAvailableChart() {
         <Legend height={36} />
         <Area
           type="monotone"
-          dataKey="memUsed"
+          dataKey="memory.used"
           stackId="1"
           stroke="#e6194bff"
           fill="#e6194bff"
@@ -39,7 +38,7 @@ export default function MemAvailableChart() {
         />
         <Area
           type="monotone"
-          dataKey="memFree"
+          dataKey="memory.free"
           stackId="1"
           stroke="#2ec4b6"
           fill="#2ec4b6"

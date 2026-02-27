@@ -8,8 +8,8 @@ export default function QuickStatsGeneral() {
   const { currentData, tempData, maxValues, processesData, computedStats } =
     useMetrics();
   const {
-    cpuSpeed: { avg: cpuSpeedAvg },
-    uptime,
+    cpu,
+    os,
   } = currentData || {};
   const { total: numberProcesses } = processesData || {};
   const {
@@ -18,12 +18,11 @@ export default function QuickStatsGeneral() {
     cpuTemp: cpuMaxTemp,
   } = maxValues || {};
   const { cpuTemp: cpuAvgTemp } = tempData || {};
-  const { cpuAvgLoad } = computedStats;
   return (
     <aside className={styles.quickStats}>
       <QuickStatsElement
         title="CPU Avg. Speed"
-        data={cpuSpeedAvg}
+        data={cpu.speed}
         id={metricsIds.CPU_AVG_SPEED}
         unit="GHz"
       />
@@ -47,7 +46,7 @@ export default function QuickStatsGeneral() {
       />
       <QuickStatsElement
         title="CPU Avg. Load"
-        data={cpuAvgLoad}
+        data={cpu.load}
         id={metricsIds.CPU_AVG_LOAD}
         unit="%"
       />
@@ -59,7 +58,7 @@ export default function QuickStatsGeneral() {
       />
       <QuickStatsElement
         title="Uptime"
-        data={(uptime / 3600).toFixed(2)}
+        data={(os.uptime / 3600).toFixed(2)}
         id={metricsIds.UPTIME}
         unit="h"
       />

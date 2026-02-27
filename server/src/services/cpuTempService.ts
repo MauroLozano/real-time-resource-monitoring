@@ -1,6 +1,7 @@
 import type { CoreTemp, CpuTempServiceResponse } from '../types/temperature.js';
 import { formattedFloat } from '../utils/formatter.js';
 import { getWmiTemperature } from '../utils/cpuTempService.js';
+import { cpu } from 'systeminformation';
 
 export const getCpuTempData = async (): Promise<CpuTempServiceResponse> => {
   let wmiData = await getWmiTemperature();

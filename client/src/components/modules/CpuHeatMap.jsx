@@ -33,8 +33,8 @@ const coreSquare = (temp, index, isOnlySingleSensor) => {
 
 export default function CpuHeatMap() {
   const { staticData } = useStaticData();
-  const { tempData } = useMetrics();
-  const { coresTemp, cpuTemp } = tempData;
+  const { cpuTempData } = useMetrics();
+  const { coresTemp, cpuTemp } = cpuTempData;
 
   const hasCoresData = coresTemp && coresTemp.length > 0;
   const isOnlySingleSensor = !coresTemp && cpuTemp > 0;

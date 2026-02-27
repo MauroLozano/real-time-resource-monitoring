@@ -9,10 +9,10 @@ export const getMaxValues = (prevValues, newValues) => {
   if (newValues.coresSpeed !== undefined) {
     newValues.coresSpeed.forEach((coreSpeed, i) => {
       if (
-        newMax.coreSpeed.coreNumber === null ||
+        newMax.coreSpeed.index === null ||
         coreSpeed > newMax.coreSpeed.value
       ) {
-        newMax.coreSpeed = { coreNumber: i, value: coreSpeed };
+        newMax.coreSpeed = { index: i, value: coreSpeed };
       }
     });
   }

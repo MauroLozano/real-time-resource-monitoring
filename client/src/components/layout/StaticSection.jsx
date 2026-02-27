@@ -58,7 +58,7 @@ function StaticSection({ onToggle, isCollapsed }) {
             ></ComponentAttribute>
           </ComponentCard>
           <ComponentList icon={<BrainIcon />} title={'Memory'}>
-            {staticData.memory.map((slot, index) => (
+            {staticData.memory.memorySlots.map((slot, index) => (
               <ComponentCard
                 key={index}
                 title={`Slot ${index}`}

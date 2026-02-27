@@ -8,13 +8,8 @@ export default function QuickStatsCores() {
   const { currentData, tempData, computedStats, maxValues, sensorsHealth } =
     useMetrics();
   const {
-    cpuSpeed: { avg: coreSpeedAvg },
-    coreOverload,
-    mostActiveCore,
-    parkedCores,
-    threadEfficiency,
-    activeThreadsCount,
-  } = currentData;
+    cpu: { speed: coreSpeedAvg, mostActiveCore, coreOverload, parkedCores, threadEfficiency, activeThreadsCount },
+  } = currentData
   const { thermalHeadroom } = tempData || {};
   const { coreSpeed: coreMaxSpeed } = maxValues;
   const { coreMaxTemp } = computedStats;

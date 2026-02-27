@@ -27,7 +27,7 @@ export default function CpuChart() {
       <Legend iconType="circle" />
       <Line
         type="monotone"
-        dataKey="cpuLoad"
+        dataKey="cpu.load"
         stroke="#e71d36"
         strokeWidth={3}
         activeDot={{ r: 8 }}

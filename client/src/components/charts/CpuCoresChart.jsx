@@ -38,7 +38,7 @@ export default function CpuCoresChart() {
     if (amountCores.length === 0) return [];
     return Array.from({ length: amountCores }).map((_, i) => ({
       key: i,
-      dataKey: `cpuSpeed.cores[${i}]`,
+      dataKey: `cpu.coresSpeed[${i}]`,
       stroke: colors[i % colors.length],
       name: `Core ${i.toString().padStart(2, '0')}`,
     }));

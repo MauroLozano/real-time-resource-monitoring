@@ -32,7 +32,7 @@ const colors = [
 ];
 export default function SimpleBarChart() {
   const { currentData } = useMetrics();
-  const data = currentData.coresLoad;
+  const data = currentData.cpu.coresLoad;
   const chartData = data.map((load, index) => ({
     name: `Core ${index}`,
     load: load,
