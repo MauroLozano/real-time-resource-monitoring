@@ -1,54 +1,54 @@
-.staticSection{
-    top: 0;
-    right: 0;
-    position: relative;
-    background-color: var(--color-bg-dark);
-    grid-area: 1 / 3 / 2 / 4;
-    max-height: 100vh;
+.staticSection {
+  top: 0;
+  right: 0;
+  position: relative;
+  background-color: var(--color-bg-dark);
+  grid-area: 1 / 3 / 2 / 4;
+  max-height: 100vh;
 }
-.staticSectionContentCollapsed{
-    opacity: 0;
-    pointer-events: none;
-    display: none;
+.staticSectionContentCollapsed {
+  opacity: 0;
+  pointer-events: none;
+  display: none;
 }
-.scrollableContainer{
-    width: 100%;
-    height: 100%;
-    overflow-y: scroll;
-    padding: 1rem;
-    scrollbar-color: var(--color-yellow) var(--color-bg-dark);
+.scrollableContainer {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  padding: 1rem;
+  scrollbar-color: var(--color-yellow) var(--color-bg-dark);
 }
-.sectionTitle{
-    text-align: center;
-    font-size: 2rem;
-    color: var(--color-yellow);
-    padding-bottom: .5rem;
-    border-bottom: 2px solid var(--color-yellow)
+.sectionTitle {
+  text-align: center;
+  font-size: 2rem;
+  color: var(--color-yellow);
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--color-yellow);
 }
 
-.attributeContainer{
-    margin: .5rem 0;
-    color: var(--color-text-main);
+.attributeContainer {
+  margin: 0.5rem 0;
+  color: var(--color-text-main);
 }
-.attributeName{
-    color: var(--color-text-dim);
-    font-size: 1rem;
-    font-weight: 700;
+.attributeName {
+  color: var(--color-text-dim);
+  font-size: 1rem;
+  font-weight: 700;
 }
-.componentSeparator{
-    margin: .5rem 0;
+.componentSeparator {
+  margin: 0.5rem 0;
 }
 .toggleOpenContainer {
-    width: 2rem;
-    height: 5rem;
-    position: absolute;
-    left: -2rem;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(--color-bg-dark);
-    cursor: pointer;
-    border-radius: 8px 0 0 8px;
+  width: 2rem;
+  height: 5rem;
+  position: absolute;
+  left: -2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg-dark);
+  cursor: pointer;
+  border-radius: 8px 0 0 8px;
 }

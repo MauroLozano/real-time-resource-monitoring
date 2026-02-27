@@ -1,95 +1,98 @@
-.wrapper{
-    display: grid;
-    overflow: hidden;
-    grid-template-columns: var(--sidebar-grid-width, 250px) 1fr var(--static-section-grid-width);
-    width: 100%;
+.wrapper {
+  display: grid;
+  overflow: hidden;
+  grid-template-columns: var(--sidebar-grid-width, 250px) 1fr var(
+      --static-section-grid-width
+    );
+  width: 100%;
 }
-.hidden{
-    visibility: hidden;
+.hidden {
+  visibility: hidden;
 }
-.fullScreenLoaderContainer{
-    z-index: 100;
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: var(--color-bg-dark);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 1;
-    display: block;
-    pointer-events: all;
-    transition: 
-        opacity .3s ease-in-out,
-        visibility .3s linear
-    ;
+.fullScreenLoaderContainer {
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-bg-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  display: block;
+  pointer-events: all;
+  transition:
+    opacity 0.3s ease-in-out,
+    visibility 0.3s linear;
 }
-.fullScreenLoaderContainerHidden{
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
+.fullScreenLoaderContainerHidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
-.view{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    overflow: hidden;
-    pointer-events: none;
-    visibility: hidden;
-    transition: opacity 0.3s ease-in-out, visibility 0.4s;
-    padding:  .5rem 2.5rem .5rem 2.5rem;
+.view {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  visibility: hidden;
+  transition:
+    opacity 0.3s ease-in-out,
+    visibility 0.4s;
+  padding: 0.5rem 2.5rem 0.5rem 2.5rem;
 }
-.activeView{
-    opacity: 1;
-    pointer-events: auto;
-    visibility: visible;
+.activeView {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
 }
 
-.quickStatsContainer{
-    grid-area: 1 / 5 / 5 / 7;
+.quickStatsContainer {
+  grid-area: 1 / 5 / 5 / 7;
 }
 
-.cpuGeneralView{
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(6, 1fr);
-    gap: .5rem;
+.cpuGeneralView {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  gap: 0.5rem;
 }
-.cpuGeneralChart{
-    grid-area: 1 / 1 / 5 / 5;
+.cpuGeneralChart {
+  grid-area: 1 / 1 / 5 / 5;
 }
-.cpuCoresView{
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(6, 1fr);
-    gap: .5rem;
+.cpuCoresView {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  gap: 0.5rem;
 }
-.cpuCoresChart{
-    grid-area: 1 / 1 / 5 / 5;
+.cpuCoresChart {
+  grid-area: 1 / 1 / 5 / 5;
 }
-.memView{
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(6, 1fr);
-    gap: .5rem;
+.memView {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  gap: 0.5rem;
 }
-.memPieChart{
-    grid-area: 5 / 5 / 7 / 7;
+.memPieChart {
+  grid-area: 5 / 5 / 7 / 7;
 }
-.memAreaChart{
-    grid-area: 1 / 1 / 5 / 7;
+.memAreaChart {
+  grid-area: 1 / 1 / 5 / 7;
 }
-.processesContainer{
-    grid-area: 5 / 1 / 7 / 7;
+.processesContainer {
+  grid-area: 5 / 1 / 7 / 7;
 }
-.cpuHeatMapContainer{
-    grid-area: 5 / 1 / 7 / 3;
+.cpuHeatMapContainer {
+  grid-area: 5 / 1 / 7 / 3;
 }
-.coresLoadBarChartContainer{
-    grid-area: 5 / 3 / 7 / 7;
+.coresLoadBarChartContainer {
+  grid-area: 5 / 3 / 7 / 7;
 }

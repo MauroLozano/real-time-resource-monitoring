@@ -1,24 +1,24 @@
-.elementContainer{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-    container-type: inline-size;
+.elementContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  container-type: inline-size;
 }
-.title{
-    font-size: clamp(1rem, 12cqw, 2rem);
-    margin-bottom: .4rem;
-    text-overflow: ellipsis;
-    font-weight: 300;
+.title {
+  font-size: clamp(1rem, 12cqw, 2rem);
+  margin-bottom: 0.4rem;
+  text-overflow: ellipsis;
+  font-weight: 300;
 }
-.data{
-    font-size: clamp(.5rem, 25cqw, 2.5rem);
-    font-weight: 400;
+.data {
+  font-size: clamp(0.5rem, 25cqw, 2.5rem);
+  font-weight: 400;
 }
-.label{
-    font-size: 1rem;
+.label {
+  font-size: 1rem;
 }
-.unit{
-    font-size: clamp(1rem , 12cqw, 2rem);
+.unit {
+  font-size: clamp(1rem, 12cqw, 2rem);
 }

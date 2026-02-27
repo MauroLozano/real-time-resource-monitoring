@@ -1,57 +1,59 @@
-.listContainer{
-    background-color: var(--color-bg-gray);
-    width: 100%;
-    height: fit-content;
-    border-radius: .5rem;
-    margin: 1rem 0 .5rem 0;
-    display: grid;
-    align-items: center;
-    grid-template-rows: 2.5rem 1fr;
-    will-change: grid-template-rows;
-    transition: grid-template-rows .4s ease;
-    overflow: hidden;
+.listContainer {
+  background-color: var(--color-bg-gray);
+  width: 100%;
+  height: fit-content;
+  border-radius: 0.5rem;
+  margin: 1rem 0 0.5rem 0;
+  display: grid;
+  align-items: center;
+  grid-template-rows: 2.5rem 1fr;
+  will-change: grid-template-rows;
+  transition: grid-template-rows 0.4s ease;
+  overflow: hidden;
 }
-.listHeader{
-    background-color: (var(--color-bg-gray));
-    width: 100%;
-    height: 100%;
-    padding: .5rem;
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-    grid-row: 1 / 2;
-    cursor: pointer;
-    border-radius: .5rem;
-    border: solid 2px transparent;
-    transition: border .3s ease;
+.listHeader {
+  background-color: (var(--color-bg-gray));
+  width: 100%;
+  height: 100%;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  grid-row: 1 / 2;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  border: solid 2px transparent;
+  transition: border 0.3s ease;
 }
 .listHeader:focus-visible {
-    outline: 2px solid var(--color-yellow);
-    outline-offset: -2px;
+  outline: 2px solid var(--color-yellow);
+  outline-offset: -2px;
 }
-.content{
-    min-height: 0;
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.3s ease, visibility 0.3s;
-    align-self: self-start;
-    width: 90%;
-    margin: auto;
+.content {
+  min-height: 0;
+  visibility: hidden;
+  opacity: 0;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s;
+  align-self: self-start;
+  width: 90%;
+  margin: auto;
 }
 .listContainer:not(.closed) .content {
-    visibility: visible;
-    opacity: 1;
+  visibility: visible;
+  opacity: 1;
 }
-.closed{
-    grid-template-rows: 2.5rem 0fr;
+.closed {
+  grid-template-rows: 2.5rem 0fr;
 }
-.headerIcon{
-    margin-left: auto;
+.headerIcon {
+  margin-left: auto;
 }
-.listHeader:hover{
-    border: solid 2px var(--color-yellow);
+.listHeader:hover {
+  border: solid 2px var(--color-yellow);
 }
-.listTitle{
-    color: var(--color-text-main);
-    font-size: 1.8rem;
+.listTitle {
+  color: var(--color-text-main);
+  font-size: 1.8rem;
 }

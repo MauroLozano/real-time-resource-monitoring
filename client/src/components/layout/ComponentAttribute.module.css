@@ -1,25 +1,25 @@
-.attributeContainer{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    justify-content: space-between;
-    padding: .5rem;
-    border-bottom: 2px solid var(--color-text-main);
+.attributeContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem;
+  border-bottom: 2px solid var(--color-text-main);
 }
-.label{
-    color: var(--color-text-main);
-    font-weight: 600;
-    font-size: .8rem;
-    text-overflow: ellipsis;
+.label {
+  color: var(--color-text-main);
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-overflow: ellipsis;
 }
-.value{
-    color: var(--color-text-main);
-    word-break: normal;
-    margin-left: .5rem;
+.value {
+  color: var(--color-text-main);
+  word-break: normal;
+  margin-left: 0.5rem;
 }
-.unknown{
-    color: var(--color-text-dim);
+.unknown {
+  color: var(--color-text-dim);
 }
-.attributeContainer:last-child{
-    border-bottom: none;
+.attributeContainer:last-child {
+  border-bottom: none;
 }

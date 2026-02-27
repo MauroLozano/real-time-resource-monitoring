@@ -1,52 +1,68 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 // Components
-import StaticSection from "./components/layout/StaticSection";
-import CpuChart from "./components/charts/CpuChart";
-import CpuCoresChart from "./components/charts/CpuCoresChart";
-import MemAreaChart from "./components/charts/MemAreaChart";
-import MemPieChart from "./components/charts/MemPieChart";
-import Sidebar from "./components/layout/Sidebar";
-import DynamicSection from "./components/layout/DynamicSection";
-import LoadingModal from "./components/layout/LoadingModal";
-import QuickStatsGeneral from "./components/stats/QuickStatsGeneral";
-import QuickStatsCores from "./components/stats/QuickStatsCores";
-import ProcessesDisplay from "./components/modules/ProcessesDisplay";
-import CpuHeatMap from "./components/modules/CpuHeatMap";
-import CoresLoadBarChart from './components/charts/CoresLoadBarChart'
+import StaticSection from './components/layout/StaticSection';
+import CpuChart from './components/charts/CpuChart';
+import CpuCoresChart from './components/charts/CpuCoresChart';
+import MemAreaChart from './components/charts/MemAreaChart';
+import MemPieChart from './components/charts/MemPieChart';
+import Sidebar from './components/layout/Sidebar';
+import DynamicSection from './components/layout/DynamicSection';
+import LoadingModal from './components/layout/LoadingModal';
+import QuickStatsGeneral from './components/stats/QuickStatsGeneral';
+import QuickStatsCores from './components/stats/QuickStatsCores';
+import ProcessesDisplay from './components/modules/ProcessesDisplay';
+import CpuHeatMap from './components/modules/CpuHeatMap';
+import CoresLoadBarChart from './components/charts/CoresLoadBarChart';
 // Style
-import styles from "./App.module.css";
+import styles from './App.module.css';
 // Context
-import { useStaticData } from './context/StaticDataProvider'
-import { useMetrics } from "./context/MetricsProvider";
+import { useStaticData } from './context/StaticDataProvider';
+import { useMetrics } from './context/MetricsProvider';
 
 function App() {
-  const [activeView, setActiveView] = useState("CPUGeneralView");
-  const { history, processesData} = useMetrics();
-  const { loading: isStaticLoading } = useStaticData()
-  const isDataAvailable = history.length > 0 
+  const [activeView, setActiveView] = useState('CPUGeneralView');
+  const { history, processesData } = useMetrics();
+  const { loading: isStaticLoading } = useStaticData();
+  const isDataAvailable = history.length > 0;
   const isProcessDataAvaiable = Object.keys(processesData).length > 0;
-  const isAppReady = isDataAvailable && !isStaticLoading && isProcessDataAvaiable
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false)
-  const [isStaticSectionCollapsed, setIsStaticSectionCollapsed] = useState(false)
-  const toggleSidebar = () => setIsSidebarCollapsed(!isSidebarCollapsed)
-  const toggleStaticSection = () => setIsStaticSectionCollapsed(!isStaticSectionCollapsed)
-  let sidebarGridWidth = isSidebarCollapsed ? '0px' : '250px'
-  let staticSectionGridWidth = isStaticSectionCollapsed ? '0px' : '250px'
+  const isAppReady =
+    isDataAvailable && !isStaticLoading && isProcessDataAvaiable;
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [isStaticSectionCollapsed, setIsStaticSectionCollapsed] =
+    useState(false);
+  const toggleSidebar = () => setIsSidebarCollapsed(!isSidebarCollapsed);
+  const toggleStaticSection = () =>
+    setIsStaticSectionCollapsed(!isStaticSectionCollapsed);
+  let sidebarGridWidth = isSidebarCollapsed ? '0px' : '250px';
+  let staticSectionGridWidth = isStaticSectionCollapsed ? '0px' : '250px';
   return (
     <>
-      <div className={`${styles.fullScreenLoaderContainer} ${isAppReady? styles.fullScreenLoaderContainerHidden : ''}`}>
+      <div
+        className={`${styles.fullScreenLoaderContainer} ${isAppReady ? styles.fullScreenLoaderContainerHidden : ''}`}
+      >
         <LoadingModal></LoadingModal>
       </div>
       {isAppReady && (
-        <div className={`${styles.wrapper} ${!isAppReady? styles.hidden: ''}`} style={{'--sidebar-grid-width': sidebarGridWidth, '--static-section-grid-width': staticSectionGridWidth}}>
-          <Sidebar setView={setActiveView} activeView={activeView} onToggle={toggleSidebar} isCollapsed={isSidebarCollapsed}></Sidebar>
+        <div
+          className={`${styles.wrapper} ${!isAppReady ? styles.hidden : ''}`}
+          style={{
+            '--sidebar-grid-width': sidebarGridWidth,
+            '--static-section-grid-width': staticSectionGridWidth,
+          }}
+        >
+          <Sidebar
+            setView={setActiveView}
+            activeView={activeView}
+            onToggle={toggleSidebar}
+            isCollapsed={isSidebarCollapsed}
+          ></Sidebar>
           <DynamicSection
             className={`${styles.dynamicSection} ${styles.viewContainer}`}
           >
             {/* === CPU GENERAL VIEW === */}
             <div
               className={`${styles.cpuGeneralView} ${styles.view} ${
-                activeView === "CPUGeneralView" ? styles.activeView : ""
+                activeView === 'CPUGeneralView' ? styles.activeView : ''
               }`}
             >
               <div className={`${styles.cpuGeneralChart}`}>
@@ -62,7 +78,7 @@ function App() {
             {/* === CPU CORES VIEW === */}
             <div
               className={`${styles.cpuCoresView} ${styles.view} ${
-                activeView === "CPUCoresView" ? styles.activeView : ""
+                activeView === 'CPUCoresView' ? styles.activeView : ''
               }`}
             >
               <div className={`${styles.cpuCoresChart}`}>
@@ -75,13 +91,13 @@ function App() {
                 <CpuHeatMap />
               </div>
               <div className={styles.coresLoadBarChartContainer}>
-                <CoresLoadBarChart/>
+                <CoresLoadBarChart />
               </div>
             </div>
             {/* === MEMORY VIEW === */}
             <div
               className={`${styles.memView} ${styles.view} ${
-                activeView === "MEMAvailableView" ? styles.activeView : ""
+                activeView === 'MEMAvailableView' ? styles.activeView : ''
               }`}
             >
               <div className={`${styles.memAreaChart}`}>
@@ -92,7 +108,10 @@ function App() {
               </div>
             </div>
           </DynamicSection>
-          <StaticSection onToggle={toggleStaticSection} isCollapsed={isStaticSectionCollapsed}></StaticSection>
+          <StaticSection
+            onToggle={toggleStaticSection}
+            isCollapsed={isStaticSectionCollapsed}
+          ></StaticSection>
         </div>
       )}
     </>
