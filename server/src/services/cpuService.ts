@@ -34,7 +34,7 @@ export const getCpuData = async (): Promise<CpuData> => {
   };
   // Declaration of Data to send
   const cpuData: CpuData = {
-    load: rawCpuLoad.currentLoad,
+    load: formattedFloat(rawCpuLoad.currentLoad),
     speed: rawCpuSpeed.avg,
     coresLoad: coresLoadArray,
     coresSpeed: rawCpuSpeed.cores,
