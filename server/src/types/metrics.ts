@@ -1,16 +1,16 @@
 export interface CpuData {
-  load: number;
-  speed: number;
-  coresLoad: number[];
-  coresSpeed: number[];
-  coreOverload: number;
+  load: number | null;
+  speed: number | null;
+  coresLoad: number[] | null;
+  coresSpeed: number[] | null;
+  coreOverload: number | null;
   mostActiveCore: {
     coreNumber: number;
     value: number;
-  };
-  parkedCores: number;
-  activeThreadsCount: number;
-  threadEfficiency: number;
+  } | null;
+  parkedCores: number | null;
+  activeThreadsCount: number | null;
+  threadEfficiency: number | null;
 }
 export interface OsData {
   uptime: number;

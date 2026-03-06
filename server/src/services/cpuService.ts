@@ -12,37 +12,60 @@ export const getCpuData = async (): Promise<CpuData> => {
     si.currentLoad(),
     si.cpuCurrentSpeed(),
   ]);
-  // Data calculations
-  const coresLoadArray = rawCpuLoad.cpus.map((coreData) => {
-    return formattedFloat(coreData.load);
-  });
-  const totalThreadsCount = coresLoadArray.length;
-  const activeThreadsCount = getActiveThreadsCount(coresLoadArray);
-  const threadEfficiency =
-    totalThreadsCount > 0
-      ? formattedFloat((activeThreadsCount / totalThreadsCount) * 100)
-      : 0;
-  let coreOverload: number = 0;
-  const maxCoreLoad: number =
-    totalThreadsCount > 0 ? Math.max(...coresLoadArray) : 0;
-  if (coresLoadArray && coresLoadArray.length > 0) {
-    coreOverload = formattedFloat(maxCoreLoad - rawCpuLoad.currentLoad);
-  }
-  const mostActiveCore = {
-    coreNumber: coresLoadArray.indexOf(maxCoreLoad),
-    value: maxCoreLoad,
-  };
-  // Declaration of Data to send
+
   const cpuData: CpuData = {
-    load: formattedFloat(rawCpuLoad.currentLoad),
-    speed: rawCpuSpeed.avg,
-    coresLoad: coresLoadArray,
-    coresSpeed: rawCpuSpeed.cores,
-    coreOverload: coreOverload,
-    mostActiveCore: mostActiveCore,
-    parkedCores: getParkedCores(coresLoadArray), //
-    activeThreadsCount: activeThreadsCount, //
-    threadEfficiency: threadEfficiency,
+    load: null,
+    speed: null,
+    coresLoad: null,
+    coresSpeed: null,
+    coreOverload: null,
+    mostActiveCore: null,
+    parkedCores: null,
+    activeThreadsCount: null,
+    threadEfficiency: null,
   };
+
+  const hasLoadData =
+    rawCpuLoad && rawCpuLoad.cpus && rawCpuLoad.cpus.length > 0;
+
+  if (hasLoadData) {
+    cpuData.load = rawCpuLoad.currentLoad;
+
+    cpuData.coresLoad = rawCpuLoad.cpus.map((coreData) => {
+      return formattedFloat(coreData.load);
+    });
+
+    cpuData.activeThreadsCount = getActiveThreadsCount(cpuData.coresLoad);
+
+    cpuData.threadEfficiency =
+      cpuData.activeThreadsCount > 0
+        ? formattedFloat(
+            (cpuData.activeThreadsCount / cpuData.coresLoad.length) * 100
+          )
+        : 100;
+
+    const maxCoreLoad: number = Math.max(...cpuData.coresLoad);
+
+    cpuData.coreOverload = formattedFloat(maxCoreLoad - rawCpuLoad.currentLoad);
+
+    cpuData.parkedCores = getParkedCores(cpuData.coresLoad);
+
+    cpuData.mostActiveCore = {
+      coreNumber: cpuData.coresLoad.indexOf(maxCoreLoad),
+      value: maxCoreLoad,
+    };
+  }
+
+  const hasSpeedData = rawCpuSpeed && rawCpuSpeed.avg > 0;
+
+  if (hasSpeedData) {
+    cpuData.speed = rawCpuSpeed.avg;
+    const firstCoreSpeed = rawCpuSpeed.cores[0];
+    cpuData.coresSpeed =
+      rawCpuSpeed.cores.length > 0 && firstCoreSpeed && firstCoreSpeed > 0
+        ? rawCpuSpeed.cores
+        : null;
+  }
+
   return cpuData;
 };
