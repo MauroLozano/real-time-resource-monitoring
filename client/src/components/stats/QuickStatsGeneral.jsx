@@ -5,7 +5,7 @@ import { useMetrics } from '../../context/MetricsProvider';
 
 import { metricsIds } from '../../constants/metricsIds';
 export default function QuickStatsGeneral() {
-  const { currentData, tempData, maxValues, processesData, computedStats } =
+  const { currentData, cpuTempData, maxValues, processesData, computedStats } =
     useMetrics();
   const {
     cpu,
@@ -15,9 +15,7 @@ export default function QuickStatsGeneral() {
   const {
     cpuLoad: cpuMaxLoad,
     coreSpeed: cpuMaxSpeed,
-    cpuTemp: cpuMaxTemp,
   } = maxValues || {};
-  const { cpuTemp: cpuAvgTemp } = tempData || {};
   return (
     <aside className={styles.quickStats}>
       <QuickStatsElement
@@ -34,13 +32,13 @@ export default function QuickStatsGeneral() {
       />
       <QuickStatsElement
         title="CPU Avg. Temp."
-        data={cpuAvgTemp}
+        data={cpuTempData.cpuTemp}
         id={metricsIds.CPU_AVG_TEMP}
         unit="°C"
       />
       <QuickStatsElement
         title="CPU Max. Temp."
-        data={cpuMaxTemp}
+        data={maxValues.cpuTemp}
         id={metricsIds.CPU_MAX_TEMP}
         unit="°C"
       />

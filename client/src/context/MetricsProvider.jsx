@@ -27,7 +27,7 @@ export const MetricsProvider = ({ children }) => {
 
   const coreMaxTemp = useMemo(() => {
     if (!cpuTempData?.coresTemp || cpuTempData.coresTemp.length === 0)
-      return { index: null, value: null };
+      return { coreNumber: null, value: null };
     return findMaxWithIndex(cpuTempData.coresTemp);
   }, [cpuTempData]);
 

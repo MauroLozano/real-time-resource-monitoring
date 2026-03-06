@@ -22,7 +22,7 @@ export async function getWmiTemperature(): Promise<WmiCpuTempResponse> {
     const filteredCores: CoreTemp[] = data
       .filter(
         (entry) =>
-          entry?.Name?.includes('Core') && !entry?.Name?.includes('Tctl')
+          entry?.Name?.includes('Core') && !entry?.Name?.includes('Tctl') && !entry.Name.includes("GPU") && !entry.Name.inclues("Package") && !entry.Name.inclues("Average")
       )
       .map((entry) => {
         const value = typeof entry.Value === 'number' ? entry.Value : 0;

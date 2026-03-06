@@ -5,12 +5,11 @@ import { useMetrics } from '../../context/MetricsProvider';
 import styles from './QuickStats.module.css';
 import { metricsIds } from '../../constants/metricsIds';
 export default function QuickStatsCores() {
-  const { currentData, tempData, computedStats, maxValues, sensorsHealth } =
+  const { currentData, cpuTempData, computedStats, maxValues, sensorsHealth } =
     useMetrics();
   const {
     cpu: { speed: coreSpeedAvg, mostActiveCore, coreOverload, parkedCores, threadEfficiency, activeThreadsCount },
   } = currentData
-  const { thermalHeadroom } = tempData || {};
   const { coreSpeed: coreMaxSpeed } = maxValues;
   const { coreMaxTemp } = computedStats;
   const { staticData } = useStaticData();
@@ -27,7 +26,7 @@ export default function QuickStatsCores() {
       />
       <QuickStatsElement
         title="Thermal Headroom"
-        data={thermalHeadroom}
+        data={cpuTempData.thermalHeadroom}
         id={metricsIds.THERMAL_HEADROOM}
         unit="°C"
       />

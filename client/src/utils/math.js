@@ -9,15 +9,14 @@ export const getArrayAvg = (data, decimals = 2) => {
 
 export const findMaxWithIndex = (data) => {
   if (!Array.isArray(data) || data.length === 0)
-    return { value: null, index: null };
+    return { coreNumber: null, value: null };
   const result = data.reduce(
     (acc, currentValue, index) => {
       if (acc.value === null || acc.value < currentValue) {
-        return { value: currentValue, index: index };
+        return { coreNumber: index, value: currentValue };
       }
       return acc;
-    },
-    { value: null, index: null }
+    }
   );
   return result;
 };
