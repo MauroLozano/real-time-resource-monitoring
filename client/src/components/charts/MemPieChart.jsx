@@ -42,7 +42,7 @@ const renderCustomizedLabel = ({
   );
 };
 export default function MemPieChart() {
-  const { history: data } = useMetrics();
+  const { history: data, currentData } = useMetrics();
   if (!data || data.length === 0) {
     return (
       <div>
@@ -51,8 +51,8 @@ export default function MemPieChart() {
     );
   }
   const pieData = [
-    { name: 'Free Memory', value: data[data.length - 1].memFree },
-    { name: 'Used Memory', value: data[data.length - 1].memUsed },
+    { name: 'Free Memory', value: currentData.memory.free },
+    { name: 'Used Memory', value: currentData.memory.used },
   ];
   return (
     <ResponsiveContainer width="100%" height="100%">
