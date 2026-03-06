@@ -6,7 +6,7 @@ import { cpu } from 'systeminformation';
 export const getCpuTempData = async (): Promise<CpuTempServiceResponse> => {
   let wmiData = await getWmiTemperature();
   const coresTemp: CoreTemp[] | null = wmiData.coresTemp;
-  let thermalHeadroom: number | null = 0;
+  let thermalHeadroom: number | null = null;
   if (coresTemp && coresTemp?.length > 0) {
     const coresTempValues: number[] = coresTemp.map((entry) => {
       return entry.value;
