@@ -29,7 +29,7 @@ export const getCpuData = async (): Promise<CpuData> => {
     rawCpuLoad && rawCpuLoad.cpus && rawCpuLoad.cpus.length > 0;
 
   if (hasLoadData) {
-    cpuData.load = rawCpuLoad.currentLoad;
+    cpuData.load = formattedFloat(rawCpuLoad.currentLoad);
 
     cpuData.coresLoad = rawCpuLoad.cpus.map((coreData) => {
       return formattedFloat(coreData.load);
